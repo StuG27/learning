@@ -6,6 +6,8 @@ fun main(){
     println("Введите количество чисел")
     val n = readLine()?.toIntOrNull() ?: return
     var number: Int?
+    var gCD: Int
+    var numberForGCD: Int?
     var sum = 0
     var positiveNumbers = 0
     var i = 0
@@ -17,10 +19,12 @@ fun main(){
         if (number > 0) positiveNumbers++
     }
     println("Вы ввели $positiveNumbers положительных чисел")
-    println("Введите число для вычисления НОД")
-    val numberForGCD = readLine()?.toIntOrNull() ?: return
-    val gCD = calculateGCD(numberForGCD, sum)
-    println("Наибольший общий делитель равен $gCD")
+    for (i in 0 until n) {
+        println("Введите число для вычисления НОД")
+        numberForGCD = readLine()?.toIntOrNull() ?:  continue
+        gCD = calculateGCD(numberForGCD, sum)
+        println("Наибольший общий делитель $numberForGCD и $sum равен $gCD")
+    }
 }
 
 tailrec fun calculateGCD(a: Int, b: Int): Int {
