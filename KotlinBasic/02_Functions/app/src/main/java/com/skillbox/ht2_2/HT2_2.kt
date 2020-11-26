@@ -9,16 +9,17 @@ fun main(){
 }
 
 fun solveEquation(a: Int, b: Int, c: Int): Double{
-    val d = b*b - 4*a*c // Вычисление дискриминанта
+    val aDouble=a.toDouble()
+    val d = b*b - 4*aDouble*c // Вычисление дискриминанта
     return when {
         d > 0 -> {
-            val x1 = (-b + sqrt(d.toDouble())) / (2*a) // Вычисление первого корня
-            val x2 = (-b - sqrt(d.toDouble())) / (2*a) // Вычисление второго корня
+            val x1 = (-b + sqrt(d)) / (2*aDouble) // Вычисление первого корня
+            val x2 = (-b - sqrt(d)) / (2*aDouble) // Вычисление второго корня
             println(x1)
             println(x2)
             x1 + x2
         }
-        d == 0 -> -b / (2*a).toDouble() // Вычисление единственного корня
+        d == 0.0 -> -b / (2*aDouble) // Вычисление единственного корня
         else -> Double.NaN
     }
 }
