@@ -1,6 +1,7 @@
 package com.skillbox.ht4
 
 fun main() {
+
     println("Введите число абонентов")
     val n = readLine()?.toInt() ?: return
     var numberList: MutableList<String>
