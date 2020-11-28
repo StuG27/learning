@@ -2,13 +2,16 @@ package com.skillbox.zoo
 
 import kotlin.random.Random
 
-open class Animal (_energy: Int,
+open class Animal (_energy: Int=0,
                    _weight: Int,
                    _age: Int = 0,
                    _maxAge: Int,
                    _name: String
 ){
     var energy = _energy
+        get() {
+            return field
+        }
         private set
     var weight = _weight
         private set

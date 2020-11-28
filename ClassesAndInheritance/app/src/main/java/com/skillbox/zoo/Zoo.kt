@@ -4,7 +4,7 @@ fun main() {
     lifeOfOneAnimal() // Задание 9
 }
 fun lifeOfOneAnimal(){
-    var pet = Animal(10,5,0,10,"Вася")
+    var pet = Bird()
     while (true){
         pet.eat()
         pet.move()
