@@ -2,11 +2,12 @@ package com.skillbox.zoo
 
 import kotlin.random.Random
 
-abstract class Animal (_energy: Int=0,
-                   _weight: Int,
-                   _age: Int = 0,
-                   _name: String
-):AgedAnimal(){
+open class AnimalBeforeTask13 (_energy: Int=0,
+                               _weight: Int,
+                               _age: Int = 0,
+                               _maxAge: Int,
+                               _name: String
+){
     var energy = _energy
         get() {
             return field
@@ -16,6 +17,7 @@ abstract class Animal (_energy: Int=0,
         private set
     var age = _age
         private set
+    /*private - до 12 задания*/protected val maxAge = _maxAge
     val name = _name
     var isTooOld:Boolean = false
     get() = age >= maxAge
@@ -39,7 +41,7 @@ abstract class Animal (_energy: Int=0,
         incrementAgeSometimes()
         println("$name двигается")
     }
-    open fun makeChild(): Animal{
+    open fun makeChild(): AnimalBeforeTask13{
         val childEnergy = Random.nextInt(10)+1
         val childWeight = Random.nextInt(5)+1
         println("Рождено новое животное. " +
@@ -47,10 +49,14 @@ abstract class Animal (_energy: Int=0,
                 "максимальный возраст = ${maxAge}, " +
                 "энергия = $childEnergy, " +
                 "вес = $childWeight")
-        return object : Animal(childEnergy, childWeight, age, name){
-            override val maxAge = this@Animal.maxAge
-        }
+        return AnimalBeforeTask13(
+            _energy = childEnergy,
+            _weight = childWeight,
+            _maxAge = maxAge,
+            _name = name
+        )
     }
+
     private fun incrementAgeSometimes(){
         if (Random.nextBoolean()){
             age +=1
