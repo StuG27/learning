@@ -5,14 +5,14 @@ class Zoo {
     init {
         var i = 0
         val numberOfBird = 5
-        var bird = Bird(0,0,0,"Птица",1)
+        var bird = Bird(0,0,0,"Птица",2)
         while (i < numberOfBird){
             bird = bird.makeChild()
             zooList.add(bird)
             i++
         }
         val numberOfFish = 3
-        var fish = Fish(0,0,0,"Рыба",1)
+        var fish = Fish(0,0,0,"Рыба",4)
         while (i < numberOfBird+numberOfFish){
             fish = fish.makeChild()
             zooList.add(fish)
@@ -27,7 +27,7 @@ class Zoo {
         }
         val numberOfAnimal = 4
         val animal = object : Animal(0,0,0,"Простое Животное"){
-            override val maxAge = 1
+            override val maxAge = 3
         }
         while (i < numberOfBird+numberOfFish+numberOfDog+numberOfAnimal){
             val animal = animal.makeChild()
@@ -36,7 +36,7 @@ class Zoo {
         }
         println("Зоопарк сформирован")
     }
-    fun printZoo(){
-        println(zooList)
-    }
+//    fun printZoo(){
+//        println(zooList)
+//    }
 }

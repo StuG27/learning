@@ -25,7 +25,8 @@ fun main() {
                 zooListToRemove.add(zoo.zooList[j])
             }
         }
-        zoo.zooList = zoo.zooList.filterNotIn(zooListToRemove) as MutableList<Animal>
+        zoo.zooList.removeAll(zooListToRemove)
+//        zoo.zooList = zoo.zooList.filterNotIn(zooListToRemove) as MutableList<Animal>
         i++
         if (zoo.zooList.size == 0) {
             println("В зоопарке все умерли")
@@ -35,10 +36,10 @@ fun main() {
     println("В зоопарке находится ${zoo.zooList.size} животных")
 }
 
-fun <T>Collection<T>.filterNotIn(collection: Collection<T>): Collection<T> {
-    val set = collection.toSet()
-    return filterNot { set.contains(it) }
-}
+//fun <T>Collection<T>.filterNotIn(collection: Collection<T>): Collection<T> {
+//    val set = collection.toSet()
+//    return filterNot { set.contains(it) }
+//}
 
 fun lifeOfOneAnimal(){
     var pet = AnimalBeforeTask13(10,10,0,10,"Пёс")
