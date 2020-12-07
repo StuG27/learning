@@ -1,8 +1,9 @@
 package com.skillbox.extensions_objects_enums
 
 abstract class AbstractWeapon(private val maxOfAmmo: Int, private val fireType: FireType) {
-    private var ammoList: List<Ammo> = listOf()
-    var areThereAmmo = ammoList.size >= fireType.burstSize
+    var ammoList: List<Ammo> = listOf()
+    var ammoListForShooting: MutableList<Ammo> = mutableListOf()
+    var areThereAmmo = false
 
     abstract fun createAmmo(): Ammo
 
@@ -16,15 +17,15 @@ abstract class AbstractWeapon(private val maxOfAmmo: Int, private val fireType: 
             i++
         }
         ammoList = ammoListNew
+        areThereAmmo = true
     }
-    fun getAmmoForShooting(): List<Ammo>{
+    fun getAmmoForShooting(){
         var i = ammoList.lastIndex
-        var ammoListForShooting: MutableList<Ammo> = mutableListOf()
         while (i > ammoList.lastIndex-fireType.burstSize){
             ammoListForShooting.add(ammoList[i])
             i--
         }
         ammoList = ammoList.dropLast(fireType.burstSize)
-        return ammoListForShooting
+        areThereAmmo = ammoList.size >= fireType.burstSize
     }
 }
