@@ -1,4 +1,8 @@
-package com.skillbox.extensions_objects_enums
+package com.skillbox.extensions_objects_enums.weapons
+
+import com.skillbox.extensions_objects_enums.Ammo
+import com.skillbox.extensions_objects_enums.Burst
+import com.skillbox.extensions_objects_enums.Singles
 
 object Weapons {
     fun createRifle(): AbstractWeapon {

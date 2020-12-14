@@ -5,9 +5,9 @@ enum class Ammo(
         private val criticalChance: Int,
         private val criticalDamageCoefficient: Int
 ) {
-    REGULAR(1,20,2),
-    INCENDIARY(2,50, 2),
-    EXPLOSIVE(5,30,2);
+    REGULAR(10,20,2),
+    INCENDIARY(20,50, 2),
+    EXPLOSIVE(50,30,2);
 
 //  Из задания №1
 //    fun calculateDamage(): Int {

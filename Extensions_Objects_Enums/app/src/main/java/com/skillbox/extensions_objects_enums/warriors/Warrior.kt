@@ -1,4 +1,4 @@
-package com.skillbox.extensions_objects_enums
+package com.skillbox.extensions_objects_enums.warriors
 
 interface Warrior {
     var isKilled: Boolean
