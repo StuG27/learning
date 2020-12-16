@@ -1,25 +1,16 @@
 package com.skillbox.extensions_objects_enums
 
-sealed class BattleState() {
-    abstract val sumHPRed: Int
-    abstract val sumHPBlue: Int
-}
+sealed class BattleState
 
 data class Progress(val redTeam: Team,  val blueTeam: Team) : BattleState(){
-    override var sumHPBlue = 0
-    get() = blueTeam.sumHP()
-    override var sumHPRed = 0
-    get() = redTeam.sumHP()
+    var sumHPBlue = 0
+        get() = blueTeam.membersList.sumBy { it.currentHP }
+//        get() = blueTeam.sumHP()
+
+    var sumHPRed = 0
+        get() = redTeam.membersList.sumBy { it.currentHP }
+//        get() = redTeam.sumHP()
 }
-object TeamRedWin : BattleState(){
-    override var sumHPRed = 0
-    override var sumHPBlue = 0
-}
-object TeamBlueWin : BattleState(){
-    override var sumHPRed = 0
-    override var sumHPBlue = 0
-}
-object Draw : BattleState(){
-    override var sumHPBlue = 0
-    override var sumHPRed = 0
-}
+object TeamRedWin : BattleState()
+object TeamBlueWin : BattleState()
+object Draw : BattleState()

@@ -12,7 +12,4 @@ class Rifleman(
         maxHP,
         dodgeChance,
         accuracy,
-        weapon){
-    override var isKilled: Boolean = false
-        get() = currentHP <= 0
-}
+        weapon)

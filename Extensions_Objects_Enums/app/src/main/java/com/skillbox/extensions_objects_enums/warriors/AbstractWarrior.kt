@@ -10,6 +10,8 @@ abstract class AbstractWarrior(
         private val weapon: AbstractWeapon,
         var currentHP: Int = maxHP
 ) : Warrior {
+    override var isKilled: Boolean = false
+        get() = currentHP <= 0
     override fun toAttack(enemy: Warrior) {
         var damage = 0
         if (!weapon.areThereAmmo){
@@ -28,5 +30,6 @@ abstract class AbstractWarrior(
 
     override fun getDamage(damage: Int) {
         currentHP -= damage
+        if (currentHP<0) currentHP = 0
     }
 }

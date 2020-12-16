@@ -20,15 +20,15 @@ class Team(private val numberOfWarriors: Int ) {
             i++
         }
     }
-    fun sumHP() : Int{
-        var i =0
-        var sumHP = 0
-        while (i < numberOfWarriors){
-            if (membersList[i].currentHP > 0){
-                sumHP += membersList[i].currentHP
-            }
-            i++
-        }
-        return sumHP
-    }
+//    fun sumHP() : Int{
+//        var i =0
+//        var sumHP = 0
+//        while (i < numberOfWarriors){
+//            if (membersList[i].currentHP > 0){
+//                sumHP += membersList[i].currentHP
+//            }
+//            i++
+//        }
+//        return sumHP
+//    }
 }

@@ -6,22 +6,22 @@ class Battle(private val redTeam: Team, private val blueTeam: Team) {
         var isRedAlive = isAlive(redTeam)
         var isBlueAlive = isAlive(blueTeam)
         return if (isRedAlive && isBlueAlive) {
-            println("Все живы")
+//            println("Все живы")
             Progress(redTeam, blueTeam)
         }
         else if (isRedAlive) {
             isOver = true
-            println("Победа Красных")
+//            println("Победа Красных")
             TeamRedWin
         }
         else if (isBlueAlive) {
             isOver = true
-            println("Победа Синих")
+//            println("Победа Синих")
             TeamBlueWin
         }
         else {
             isOver = true
-            println("Ничья")
+//           println("Ничья")
             Draw
         }
     }
@@ -30,11 +30,21 @@ class Battle(private val redTeam: Team, private val blueTeam: Team) {
         blueTeam.membersList.shuffle()
         var i = 0
         while (i < redTeam.membersList.size){
-            if (!redTeam.membersList[i].isKilled){
-                redTeam.membersList[i].toAttack(blueTeam.membersList[i])
+            if (i % 2 == 0){
+                if (!blueTeam.membersList[i].isKilled){
+                    blueTeam.membersList[i].toAttack(redTeam.membersList[i])
+                }
+                if (!redTeam.membersList[i].isKilled){
+                    redTeam.membersList[i].toAttack(blueTeam.membersList[i])
+                }
             }
-            if (!blueTeam.membersList[i].isKilled){
-                blueTeam.membersList[i].toAttack(redTeam.membersList[i])
+            else{
+                if (!redTeam.membersList[i].isKilled){
+                    redTeam.membersList[i].toAttack(blueTeam.membersList[i])
+                }
+                if (!blueTeam.membersList[i].isKilled){
+                    blueTeam.membersList[i].toAttack(redTeam.membersList[i])
+                }
             }
             i++
         }
