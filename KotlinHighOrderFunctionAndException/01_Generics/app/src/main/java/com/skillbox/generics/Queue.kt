@@ -1,13 +1,13 @@
 package com.skillbox.generics
 
 class Queue<T> {
-    private var queueList = mutableListOf<T>()
+    var queueList = mutableListOf<T>()
     fun enqueue(item: T){
         queueList.add(item)
     }
     fun dequeue(): T?{
         val item: T? = if (queueList.isEmpty()) null
-        else queueList.last()
+        else queueList.first()
         val temp = queueList.drop(1)
         queueList = temp.toMutableList()
         return item
