@@ -8,51 +8,47 @@ class Battle(private val redTeam: Team, private val blueTeam: Team) {
         return if (isRedAlive && isBlueAlive) {
 //            println("Все живы")
             Progress(redTeam, blueTeam)
-        }
-        else if (isRedAlive) {
+        } else if (isRedAlive) {
             isOver = true
 //            println("Победа Красных")
             TeamRedWin
-        }
-        else if (isBlueAlive) {
+        } else if (isBlueAlive) {
             isOver = true
 //            println("Победа Синих")
             TeamBlueWin
-        }
-        else {
+        } else {
             isOver = true
 //           println("Ничья")
             Draw
         }
     }
-    fun step(){
+    fun step() {
         redTeam.membersList.shuffle()
         blueTeam.membersList.shuffle()
         var i = 0
-        while (i < redTeam.membersList.size){
-            if (i % 2 == 0){
-                if (!blueTeam.membersList[i].isKilled){
+        while (i < redTeam.membersList.size) {
+            if (i % 2 == 0) {
+                if (!blueTeam.membersList[i].isKilled) {
                     blueTeam.membersList[i].toAttack(redTeam.membersList[i])
                 }
-                if (!redTeam.membersList[i].isKilled){
+                if (!redTeam.membersList[i].isKilled) {
                     redTeam.membersList[i].toAttack(blueTeam.membersList[i])
                 }
-            }
-            else{
-                if (!redTeam.membersList[i].isKilled){
+            } else {
+                if (!redTeam.membersList[i].isKilled) {
                     redTeam.membersList[i].toAttack(blueTeam.membersList[i])
                 }
-                if (!blueTeam.membersList[i].isKilled){
+                if (!blueTeam.membersList[i].isKilled) {
                     blueTeam.membersList[i].toAttack(redTeam.membersList[i])
                 }
             }
             i++
         }
     }
-    private fun isAlive(team: Team): Boolean{
+    private fun isAlive(team: Team): Boolean {
         var i = 0
-        while (i < team.membersList.size){
-            if (!team.membersList[i].isKilled){
+        while (i < team.membersList.size) {
+            if (!team.membersList[i].isKilled) {
                 return true
             }
             i++

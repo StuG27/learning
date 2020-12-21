@@ -2,10 +2,14 @@
 buildscript {
     ext.kotlin_version = "1.4.20"
     repositories {
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
         google()
         jcenter()
     }
     dependencies {
+        classpath "org.jmailen.gradle:kotlinter-gradle:3.3.0"
         classpath "com.android.tools.build:gradle:4.1.1"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
 

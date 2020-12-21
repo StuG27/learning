@@ -1,4 +1,3 @@
 package com.skillbox.exceptions
 
-class NoAmmoException(): Throwable() {
-}
+class NoAmmoException() : Throwable()

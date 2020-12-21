@@ -2,17 +2,17 @@ package com.skillbox.exceptions
 
 import com.skillbox.exceptions.warriors.*
 
-
-class Team(private val numberOfWarriors: Int ) {
+class Team(private val numberOfWarriors: Int) {
     var membersList: MutableList<AbstractWarrior> = mutableListOf()
+
     init {
-        var i =0
+        var i = 0
         var probability = 30
-        while (i < numberOfWarriors){
+        while (i < numberOfWarriors) {
             when {
                 probability.isChanceRealized() -> membersList.add(Sniper())
                 probability.isChanceRealized() -> membersList.add(MachineGunner())
-                (probability+20).isChanceRealized() -> membersList.add(SubmachineGunner())
+                (probability + 20).isChanceRealized() -> membersList.add(SubmachineGunner())
                 else -> membersList.add(Rifleman())
             }
             probability = 30

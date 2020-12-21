@@ -2,8 +2,7 @@ package com.skillbox.exceptions
 
 import kotlin.random.Random
 
-
-fun main(){
+fun main() {
 //    println("Добро пожаловать на ВОЙНУ")
 //    println("Введите число бойцов в команде")
 //    val numberOfWarriors = readLine()?.toInt() ?: 10
@@ -22,14 +21,14 @@ fun main(){
     var drawCount = 0
     var teamBlueWinCount = 0
     var teamRedWinCount = 0
-    for (i in 0..10){
+    for (i in 0..10) {
         numberOfWarriors = Random.nextInt(20) + 10
         val battle = Battle(Team(numberOfWarriors), Team(numberOfWarriors))
         var state = battle.getBattleState()
-        if (state is Progress){
+        if (state is Progress) {
             println("Количество бойцов в команде $numberOfWarriors Сумма HP красных ${state.sumHPRed}, сумма HP синих ${state.sumHPBlue}")
         }
-        while (state is Progress){
+        while (state is Progress) {
             battle.step()
             state = battle.getBattleState()
             when (state) {

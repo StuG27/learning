@@ -2,7 +2,7 @@ package com.skillbox.exceptions
 
 sealed class BattleState
 
-data class Progress(val redTeam: Team, val blueTeam: Team) : BattleState(){
+data class Progress(val redTeam: Team, val blueTeam: Team) : BattleState() {
     var sumHPBlue = 0
         get() = blueTeam.membersList.sumBy { it.currentHP }
 //        get() = blueTeam.sumHP()
