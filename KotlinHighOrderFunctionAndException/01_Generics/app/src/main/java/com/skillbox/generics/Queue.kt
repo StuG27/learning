@@ -8,8 +8,9 @@ class Queue<T> {
     fun dequeue(): T?{
         val item: T? = if (queueList.isEmpty()) null
         else queueList.first()
-        val temp = queueList.drop(1)
-        queueList = temp.toMutableList()
+        queueList.removeAt(0)
+//        val temp = queueList.drop(1)
+//        queueList = temp.toMutableList()
         return item
     }
 }
