@@ -6,11 +6,10 @@ class Queue<T> {
         queueList.add(item)
     }
     fun dequeue(): T?{
-        val item: T? = if (queueList.isEmpty()) null
-        else queueList.first()
-        queueList.removeAt(0)
+//        queueList.removeAt(1)
 //        val temp = queueList.drop(1)
 //        queueList = temp.toMutableList()
-        return item
+        return if (queueList.isEmpty()) null
+        else queueList.removeAt(0)
     }
 }

@@ -24,12 +24,13 @@ abstract class AbstractWeapon(private val maxOfAmmo: Int, private val fireType: 
 //        }
         ammoList = ammoListNew
     }
-    fun getAmmoForShooting(){
+    fun getAmmoForShooting(): MutableList<Ammo>{
         var i = ammoList.lastIndex
         while (i > ammoList.lastIndex-fireType.burstSize){
             ammoListForShooting.add(ammoList[i])
             i--
         }
         ammoList = ammoList.dropLast(fireType.burstSize)
+        return ammoListForShooting
     }
 }

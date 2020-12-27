@@ -1,5 +1,6 @@
 package com.skillbox.exceptions.warriors
 
+import com.skillbox.exceptions.Ammo
 import com.skillbox.exceptions.NoAmmoException
 import com.skillbox.exceptions.isChanceRealized
 import com.skillbox.exceptions.weapons.AbstractWeapon
@@ -14,6 +15,7 @@ abstract class AbstractWarrior(
     override var isKilled: Boolean = false
         get() = currentHP <= 0
 
+    private var ammoListForShooting : MutableList<Ammo> = mutableListOf()
     override fun toAttack(enemy: Warrior) {
         var damage = 0
 //        if (!weapon.areThereAmmo){
@@ -21,12 +23,12 @@ abstract class AbstractWarrior(
 //        }
 //        else {
         try {
-            weapon.getAmmoForShooting()
+            ammoListForShooting = weapon.getAmmoForShooting()
         } catch (t: NoAmmoException) {
             println("Поймал исключение")
             weapon.reloading()
         }
-        for (ammo in weapon.ammoListForShooting) {
+        for (ammo in ammoListForShooting) {
             if (accuracy.isChanceRealized() && !enemy.dodgeChance.isChanceRealized()) {
                 damage += ammo.calculateDamage()
             }

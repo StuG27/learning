@@ -25,7 +25,7 @@ abstract class AbstractWeapon(private val maxOfAmmo: Int, private val fireType: 
         ammoList = ammoListNew
     }
 
-    fun getAmmoForShooting() {
+    fun getAmmoForShooting(): MutableList<Ammo> {
         if (ammoList.isEmpty()) throw NoAmmoException()
         var i = ammoList.lastIndex
         while (i > ammoList.lastIndex - fireType.burstSize) {
@@ -33,5 +33,6 @@ abstract class AbstractWeapon(private val maxOfAmmo: Int, private val fireType: 
             i--
         }
         ammoList = ammoList.dropLast(fireType.burstSize)
+        return ammoListForShooting
     }
 }

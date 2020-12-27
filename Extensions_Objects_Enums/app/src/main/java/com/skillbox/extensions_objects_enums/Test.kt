@@ -22,7 +22,7 @@ fun main(){
     var drawCount = 0
     var teamBlueWinCount = 0
     var teamRedWinCount = 0
-    for (i in 0..10){
+    for (i in 0..9){
         numberOfWarriors = Random.nextInt(20) + 10
         val battle = Battle(Team(numberOfWarriors), Team(numberOfWarriors))
         var state = battle.getBattleState()
