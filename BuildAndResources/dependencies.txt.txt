@@ -1,0 +1,196 @@
+D:\SkillBox\android_basic\BuildAndResources>gradlew assembleDebug taskTree --no-repeat
+
+> Task :app:taskTree
+
+------------------------------------------------------------
+Project :app
+------------------------------------------------------------
+
+:app:assembleDebug
++--- :app:assembleFreeDebug
+|    +--- :app:compileFreeDebugSources
+|    |    \--- :app:compileFreeDebugJavaWithJavac
+|    |         +--- :app:compileFreeDebugAidl
+|    |         |    \--- :app:preFreeDebugBuild
+|    |         |         \--- :app:preBuild
+|    |         +--- :app:compileFreeDebugKotlin
+|    |         |    +--- :app:compileFreeDebugAidl *
+|    |         |    +--- :app:compileFreeDebugRenderscript
+|    |         |    |    \--- :app:preFreeDebugBuild *
+|    |         |    +--- :app:generateFreeDebugBuildConfig
+|    |         |    |    \--- :app:preFreeDebugBuild *
+|    |         |    \--- :app:processFreeDebugResources
+|    |         |         +--- :app:checkFreeDebugAarMetadata
+|    |         |         |    \--- :app:preFreeDebugBuild *
+|    |         |         +--- :app:mergeFreeDebugResources
+|    |         |         |    +--- :app:generateFreeDebugResources
+|    |         |         |    |    +--- :app:compileFreeDebugRenderscript *
+|    |         |         |    |    \--- :app:generateFreeDebugResValues
+|    |         |         |    |         \--- :app:preFreeDebugBuild *
+|    |         |         |    \--- :app:preFreeDebugBuild *
+|    |         |         +--- :app:preFreeDebugBuild *
+|    |         |         +--- :app:processFreeDebugManifest
+|    |         |         |    +--- :app:createFreeDebugCompatibleScreenManifests
+|    |         |         |    |    \--- :app:preFreeDebugBuild *
+|    |         |         |    +--- :app:preFreeDebugBuild *
+|    |         |         |    \--- :app:processFreeDebugMainManifest
+|    |         |         |         +--- :app:extractDeepLinksFreeDebug
+|    |         |         |         |    \--- :app:preFreeDebugBuild *
+|    |         |         |         \--- :app:preFreeDebugBuild *
+|    |         |         \--- :app:processFreeDebugManifestForPackage
+|    |         |              +--- :app:preFreeDebugBuild *
+|    |         |              \--- :app:processFreeDebugManifest *
+|    |         +--- :app:compileFreeDebugRenderscript *
+|    |         +--- :app:generateFreeDebugBuildConfig *
+|    |         +--- :app:javaPreCompileFreeDebug
+|    |         |    \--- :app:preFreeDebugBuild *
+|    |         +--- :app:preFreeDebugBuild *
+|    |         \--- :app:processFreeDebugResources *
+|    +--- :app:mergeFreeDebugNativeDebugMetadata
+|    |    \--- :app:preFreeDebugBuild *
+|    \--- :app:packageFreeDebug
+|         +--- :app:compileFreeDebugJavaWithJavac *
+|         +--- :app:compressFreeDebugAssets
+|         |    +--- :app:mergeFreeDebugAssets
+|         |    |    +--- :app:compileFreeDebugShaders
+|         |    |    |    +--- :app:mergeFreeDebugShaders
+|         |    |    |    |    \--- :app:preFreeDebugBuild *
+|         |    |    |    \--- :app:preFreeDebugBuild *
+|         |    |    +--- :app:generateFreeDebugAssets
+|         |    |    |    \--- :app:compileFreeDebugShaders *
+|         |    |    \--- :app:preFreeDebugBuild *
+|         |    \--- :app:preFreeDebugBuild *
+|         +--- :app:mergeExtDexFreeDebug
+|         |    +--- :app:checkFreeDebugDuplicateClasses
+|         |    |    \--- :app:preFreeDebugBuild *
+|         |    +--- :app:desugarFreeDebugFileDependencies
+|         |    |    \--- :app:preFreeDebugBuild *
+|         |    \--- :app:preFreeDebugBuild *
+|         +--- :app:mergeFreeDebugAssets *
+|         +--- :app:mergeFreeDebugJavaResource
+|         |    +--- :app:compileFreeDebugKotlin *
+|         |    +--- :app:preFreeDebugBuild *
+|         |    \--- :app:processFreeDebugJavaRes
+|         |         \--- :app:preFreeDebugBuild *
+|         +--- :app:mergeLibDexFreeDebug
+|         |    +--- :app:checkFreeDebugDuplicateClasses *
+|         |    \--- :app:preFreeDebugBuild *
+|         +--- :app:mergeProjectDexFreeDebug
+|         |    +--- :app:checkFreeDebugDuplicateClasses *
+|         |    +--- :app:dexBuilderFreeDebug
+|         |    |    +--- :app:compileFreeDebugJavaWithJavac *
+|         |    |    +--- :app:compileFreeDebugKotlin *
+|         |    |    +--- :app:preFreeDebugBuild *
+|         |    |    \--- :app:processFreeDebugResources *
+|         |    \--- :app:preFreeDebugBuild *
+|         +--- :app:preFreeDebugBuild *
+|         +--- :app:processFreeDebugManifestForPackage *
+|         +--- :app:processFreeDebugResources *
+|         +--- :app:stripFreeDebugDebugSymbols
+|         |    +--- :app:mergeFreeDebugNativeLibs
+|         |    |    +--- :app:mergeFreeDebugJniLibFolders
+|         |    |    |    \--- :app:preFreeDebugBuild *
+|         |    |    \--- :app:preFreeDebugBuild *
+|         |    \--- :app:preFreeDebugBuild *
+|         \--- :app:validateSigningFreeDebug
+|              \--- :app:preFreeDebugBuild *
+\--- :app:assemblePaidDebug
+     +--- :app:compilePaidDebugSources
+     |    \--- :app:compilePaidDebugJavaWithJavac
+     |         +--- :app:compilePaidDebugAidl
+     |         |    \--- :app:prePaidDebugBuild
+     |         |         \--- :app:preBuild *
+     |         +--- :app:compilePaidDebugKotlin
+     |         |    +--- :app:compilePaidDebugAidl *
+     |         |    +--- :app:compilePaidDebugRenderscript
+     |         |    |    \--- :app:prePaidDebugBuild *
+     |         |    +--- :app:generatePaidDebugBuildConfig
+     |         |    |    \--- :app:prePaidDebugBuild *
+     |         |    \--- :app:processPaidDebugResources
+     |         |         +--- :app:checkPaidDebugAarMetadata
+     |         |         |    \--- :app:prePaidDebugBuild *
+     |         |         +--- :app:mergePaidDebugResources
+     |         |         |    +--- :app:generatePaidDebugResources
+     |         |         |    |    +--- :app:compilePaidDebugRenderscript *
+     |         |         |    |    \--- :app:generatePaidDebugResValues
+     |         |         |    |         \--- :app:prePaidDebugBuild *
+     |         |         |    \--- :app:prePaidDebugBuild *
+     |         |         +--- :app:prePaidDebugBuild *
+     |         |         +--- :app:processPaidDebugManifest
+     |         |         |    +--- :app:createPaidDebugCompatibleScreenManifests
+     |         |         |    |    \--- :app:prePaidDebugBuild *
+     |         |         |    +--- :app:prePaidDebugBuild *
+     |         |         |    \--- :app:processPaidDebugMainManifest
+     |         |         |         +--- :app:extractDeepLinksPaidDebug
+     |         |         |         |    \--- :app:prePaidDebugBuild *
+     |         |         |         \--- :app:prePaidDebugBuild *
+     |         |         \--- :app:processPaidDebugManifestForPackage
+     |         |              +--- :app:prePaidDebugBuild *
+     |         |              \--- :app:processPaidDebugManifest *
+     |         +--- :app:compilePaidDebugRenderscript *
+     |         +--- :app:generatePaidDebugBuildConfig *
+     |         +--- :app:javaPreCompilePaidDebug
+     |         |    \--- :app:prePaidDebugBuild *
+     |         +--- :app:prePaidDebugBuild *
+     |         \--- :app:processPaidDebugResources *
+     +--- :app:mergePaidDebugNativeDebugMetadata
+     |    \--- :app:prePaidDebugBuild *
+     \--- :app:packagePaidDebug
+          +--- :app:compilePaidDebugJavaWithJavac *
+          +--- :app:compressPaidDebugAssets
+          |    +--- :app:mergePaidDebugAssets
+          |    |    +--- :app:compilePaidDebugShaders
+          |    |    |    +--- :app:mergePaidDebugShaders
+          |    |    |    |    \--- :app:prePaidDebugBuild *
+          |    |    |    \--- :app:prePaidDebugBuild *
+          |    |    +--- :app:generatePaidDebugAssets
+          |    |    |    \--- :app:compilePaidDebugShaders *
+          |    |    \--- :app:prePaidDebugBuild *
+          |    \--- :app:prePaidDebugBuild *
+          +--- :app:mergeExtDexPaidDebug
+          |    +--- :app:checkPaidDebugDuplicateClasses
+          |    |    \--- :app:prePaidDebugBuild *
+          |    +--- :app:desugarPaidDebugFileDependencies
+          |    |    \--- :app:prePaidDebugBuild *
+          |    \--- :app:prePaidDebugBuild *
+          +--- :app:mergeLibDexPaidDebug
+          |    +--- :app:checkPaidDebugDuplicateClasses *
+          |    \--- :app:prePaidDebugBuild *
+          +--- :app:mergePaidDebugAssets *
+          +--- :app:mergePaidDebugJavaResource
+          |    +--- :app:compilePaidDebugKotlin *
+          |    +--- :app:prePaidDebugBuild *
+          |    \--- :app:processPaidDebugJavaRes
+          |         \--- :app:prePaidDebugBuild *
+          +--- :app:mergeProjectDexPaidDebug
+          |    +--- :app:checkPaidDebugDuplicateClasses *
+          |    +--- :app:dexBuilderPaidDebug
+          |    |    +--- :app:compilePaidDebugJavaWithJavac *
+          |    |    +--- :app:compilePaidDebugKotlin *
+          |    |    +--- :app:prePaidDebugBuild *
+          |    |    \--- :app:processPaidDebugResources *
+          |    \--- :app:prePaidDebugBuild *
+          +--- :app:prePaidDebugBuild *
+          +--- :app:processPaidDebugManifestForPackage *
+          +--- :app:processPaidDebugResources *
+          +--- :app:stripPaidDebugDebugSymbols
+          |    +--- :app:mergePaidDebugNativeLibs
+          |    |    +--- :app:mergePaidDebugJniLibFolders
+          |    |    |    \--- :app:prePaidDebugBuild *
+          |    |    \--- :app:prePaidDebugBuild *
+          |    \--- :app:prePaidDebugBuild *
+          \--- :app:validateSigningPaidDebug
+               \--- :app:prePaidDebugBuild *
+
+
+(*) - subtree omitted (printed previously)
+To see task dependency tree for a specific task, run gradlew <project-path>:<task> <project-path>:taskTree [--no-repeat] [--task-depth <depth>]
+Executions of all tasks except for taskTree will be skipped. They will be used for building the task graph only.
+
+Add --no-repeat to prevent printing a subtree of the same task more than once.
+
+For example, try running gradlew :app:build :app:taskTree
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 7.0.
+Use '--warning-mode all' to show the individual deprecation warnings.
+See https://docs.gradle.org/6.5/userguide/command_line_interface.html#sec:command_line_warnings
