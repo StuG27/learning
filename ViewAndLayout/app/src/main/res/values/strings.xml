@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">ViewAndLayout</string>
+    <string name="tv_login">LOGIN</string>
+    <string name="et_password">Введите пароль</string>
+    <string name="et_email">Введите адрес электронной почты</string>
+    <string name="cb_agree">Подтвердите, что согласны с условиями</string>
+    <string name="b_login">Авторизация</string>
+    <string name="success">Авторизация прошла успешно</string>
+</resources>
