@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">01_ConstraintLayout</string>
+    <string name="tv_login">LOGIN</string>
+    <string name="iv_head">Head</string>
+    <string name="et_password">Введите пароль</string>
+    <string name="et_email">Введите адрес электронной почты</string>
+    <string name="cb_agree">Я согласен с условиями</string>
+    <string name="b_login">Авторизация</string>
+    <string name="success">Авторизация прошла успешно</string>
+</resources>
