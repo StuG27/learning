@@ -2,16 +2,18 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <LinearLayout
         android:id="@+id/ll_main"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
-    <ImageView
+        <ImageView
             android:id="@+id/iv_head"
             android:layout_width="match_parent"
             android:layout_height="200dp"
+            android:contentDescription="@string/iv_head"
             android:scaleType="centerCrop" />
 
         <TextView
@@ -27,17 +29,19 @@
             android:id="@+id/et_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="@dimen/typo"
             android:hint="@string/et_email"
             android:inputType="textEmailAddress"
-            android:layout_margin="@dimen/typo" />
+            android:autofillHints="email" />
 
         <EditText
             android:id="@+id/et_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="@dimen/typo"
             android:hint="@string/et_password"
             android:inputType="textPassword"
-            android:layout_margin="@dimen/typo" />
+            android:autofillHints="password" />
 
         <CheckBox
             android:id="@+id/cb_agree"
@@ -55,7 +59,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_margin="@dimen/typo"
-            android:text="@string/b_login"
-            android:enabled="false"/>
+            android:enabled="false"
+            android:text="@string/b_login" />
     </LinearLayout>
 </ScrollView>

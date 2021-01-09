@@ -6,4 +6,6 @@
     <string name="cb_agree">Подтвердите, что согласны с условиями</string>
     <string name="b_login">Авторизация</string>
     <string name="success">Авторизация прошла успешно</string>
+    <string name="deny">Введите правильный адрес электронной почты</string>
+    <string name="iv_head">iv_head</string>
 </resources>
