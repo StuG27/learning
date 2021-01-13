@@ -3,12 +3,11 @@ package com.skillbox.viewandlayout
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.Patterns.EMAIL_ADDRESS
 import android.view.Gravity
 import android.view.View
 import android.widget.*
+import androidx.core.widget.doOnTextChanged
 import com.bumptech.glide.Glide
 import com.skillbox.viewandlayout.databinding.ActivityMainBinding
 
@@ -40,21 +39,13 @@ class MainActivity : AppCompatActivity() {
             login()
         }
 
-        binding.etEmail.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun afterTextChanged(s: Editable?) {}
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                check()
-            }
-        })
+        binding.etEmail.doOnTextChanged { _, _, _, _ ->
+            check()
+        }
 
-        binding.etPassword.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun afterTextChanged(s: Editable?) {}
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                check()
-            }
-        })
+        binding.etPassword.doOnTextChanged { _, _, _, _ ->
+            check()
+        }
 
         binding.cbAgree.setOnCheckedChangeListener { _, _ ->
             check()
@@ -63,28 +54,15 @@ class MainActivity : AppCompatActivity() {
 
     private fun check() {
         binding.bLogin.isEnabled = binding.cbAgree.isChecked
-                && binding.etEmail.text.isNotEmpty() && binding.etPassword.text.isNotEmpty()
+                && binding.etPassword.text.isNotEmpty()
                 && (emailValidate(binding.etEmail.text.toString()))
     }
 
     private fun login() {
-
-        var child: View
-        var i = 2
-        while (i < binding.llMain.childCount) {
-            child = binding.llMain.getChildAt(i)
-            child.isEnabled = false
-            i++
-        }
-
+        setFormEnable(false)
         binding.llMain.addView(progress)
-
         Handler().postDelayed({
-            while (i > 1) {
-                child = binding.llMain.getChildAt(i)
-                child.isEnabled = true
-                i--
-            }
+            setFormEnable(true)
             binding.llMain.removeView(progress)
             Toast.makeText(this, R.string.success, Toast.LENGTH_SHORT).show()
         }, 2000)
@@ -93,5 +71,14 @@ class MainActivity : AppCompatActivity() {
     private fun emailValidate(string: String): Boolean {
         val myPattern = EMAIL_ADDRESS
         return string.matches(Regex(myPattern.toString()))
+    }
+    private fun setFormEnable(value: Boolean) {
+        var child: View
+        var i = 2
+        while (i < binding.llMain.childCount) {
+            child = binding.llMain.getChildAt(i)
+            child.isEnabled = value
+            i++
+        }
     }
 }

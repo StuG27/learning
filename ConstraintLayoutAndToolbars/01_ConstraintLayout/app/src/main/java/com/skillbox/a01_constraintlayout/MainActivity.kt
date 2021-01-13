@@ -2,8 +2,6 @@ package com.skillbox.a01_constraintlayout
 
 import android.os.Bundle
 import android.os.Handler
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.Patterns
 import android.view.View
 import android.widget.ImageView
@@ -12,6 +10,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
+import androidx.core.widget.doOnTextChanged
 import com.bumptech.glide.Glide
 import com.skillbox.a01_constraintlayout.databinding.ActivityMainBinding
 
@@ -43,21 +42,13 @@ class MainActivity : AppCompatActivity() {
             login()
         }
 
-        binding.etEmail.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun afterTextChanged(s: Editable?) {}
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                check()
-            }
-        })
+        binding.etEmail.doOnTextChanged { _, _, _, _ ->
+            check()
+        }
 
-        binding.etPassword.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun afterTextChanged(s: Editable?) {}
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                check()
-            }
-        })
+        binding.etPassword.doOnTextChanged { _, _, _, _ ->
+            check()
+        }
 
         binding.cbAgree.setOnCheckedChangeListener { _, _ ->
             check()
@@ -66,7 +57,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun check() {
         binding.bLogin.isEnabled = binding.cbAgree.isChecked
-                && binding.etEmail.text.isNotEmpty() && binding.etPassword.text.isNotEmpty()
+                && binding.etPassword.text.isNotEmpty()
                 && (emailValidate(binding.etEmail.text.toString()))
     }
 
