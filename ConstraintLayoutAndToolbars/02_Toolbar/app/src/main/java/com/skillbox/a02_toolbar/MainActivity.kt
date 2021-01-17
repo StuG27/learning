@@ -29,24 +29,20 @@ class MainActivity : AppCompatActivity() {
         initToolbar()
     }
 
-    private fun toast(text:String){
-        Toast.makeText(this, text, Toast.LENGTH_SHORT).show()
-    }
-
     private fun initToolbar(){
         binding.toolbar.title = "Toolbar"
         binding.toolbar.setNavigationOnClickListener {
-            toast("Navigation clicked")
+            Toast.makeText(this, "Navigation clicked", Toast.LENGTH_SHORT).show()
         }
 
         binding.toolbar.setOnMenuItemClickListener {
             when (it.itemId){
                 R.id.attachment ->{
-                    toast("Attachment")
+                    Toast.makeText(this, "Attachment", Toast.LENGTH_SHORT).show()
                     true
                 }
                 R.id.action ->{
-                    toast("action_2")
+                    Toast.makeText(this, "action_2", Toast.LENGTH_SHORT).show()
                     true
                 }
                 else -> false

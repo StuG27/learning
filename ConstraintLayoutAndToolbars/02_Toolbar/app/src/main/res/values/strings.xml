@@ -1,8 +1,9 @@
 <resources>
-    <string name="app_name">02_Toolbar</string>
+    <string name="app_name">Toolbar</string>
     <string name="attachment">Attachment</string>
     <string name="action">Action</string>
     <string name="search">Search</string>
+    <string name="image">Image</string>
     <string name="search_expanded">Search expanded</string>
     <string name="search_collapsed">Search collapsed</string>
 

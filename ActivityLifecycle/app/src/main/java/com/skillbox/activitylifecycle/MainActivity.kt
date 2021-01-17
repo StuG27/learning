@@ -107,13 +107,13 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun checkValidate(){
-        if (!(emailValidate(binding.etEmail.text.toString()))){
-            updateValidate(false, getString(R.string.wrong_email))
-        } else {
-            if (!(passwordValidate(binding.etPassword.text.toString()))){
+        when {
+            !emailValidate(binding.etEmail.text.toString()) ->
+                updateValidate(false, getString(R.string.wrong_email))
+            !passwordValidate(binding.etPassword.text.toString()) ->
                 updateValidate(false, getString(R.string.wrong_password))
-            } else {
-                updateValidate(true,"")
+            else -> {
+                updateValidate(true, "")
                 login()
             }
         }
