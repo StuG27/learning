@@ -1,31 +1,32 @@
-package com.skillbox.activitylifecycle
+package com.skillbox.intents
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
-import android.util.Log
 import android.util.Patterns
 import android.view.View
 import android.widget.ImageView
 import android.widget.ProgressBar
-import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.widget.doOnTextChanged
 import com.bumptech.glide.Glide
-import com.skillbox.activitylifecycle.databinding.ActivityMainBinding
+import com.skillbox.intents.databinding.ActivityLoginBinding
 
-class MainActivity : AppCompatActivity() {
+
+class LoginActivity : AppCompatActivity() {
 
     private lateinit var progress: ProgressBar
-    private lateinit var binding: ActivityMainBinding
-    private val tag = "MainActivity"
+    private lateinit var binding: ActivityLoginBinding
     private var validate = FormState(false,"")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
+        binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        handleIntentData()
 
         progress = ProgressBar(this).apply {
             layoutParams = ConstraintLayout.LayoutParams(
@@ -40,51 +41,27 @@ class MainActivity : AppCompatActivity() {
                 .load("https://i1.sndcdn.com/avatars-000494353437-cuy9dz-t500x500.jpg")
                 .into(imageView)
 
-        binding.ANRButton.setOnClickListener {
-            Thread.sleep(10000)
-        }
-
         binding.bLogin.setOnClickListener {
-            checkValidate()
+            login()
+            startActivity(MainActivity.getIntent(this))
         }
 
         binding.etEmail.doOnTextChanged { _, _, _, _ ->
-            check()
+            checkValidate()
         }
 
         binding.etPassword.doOnTextChanged { _, _, _, _ ->
-            check()
+            checkValidate()
         }
 
         binding.cbAgree.setOnCheckedChangeListener { _, _ ->
-            check()
+            checkValidate()
         }
-        Log.println(Log.VERBOSE, tag, "onCreate")
-    }
-
-    override fun onStart() {
-        super.onStart()
-        Log.println(Log.DEBUG, tag, "onStart")
-    }
-
-    override fun onResume() {
-        super.onResume()
-        Log.println(Log.INFO, tag, "onResume")
-    }
-
-    override fun onPause() {
-        super.onPause()
-        Log.println(Log.WARN, tag, "onPause")
     }
 
     override fun onStop() {
         super.onStop()
-        Log.println(Log.ERROR, tag, "onStop")
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        Log.println(Log.ASSERT, tag, "onDestroy")
+        //finish()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -99,21 +76,31 @@ class MainActivity : AppCompatActivity() {
         updateValidate(validate.valid, validate.message)
     }
 
-    private fun check() {
-        binding.bLogin.isEnabled = binding.cbAgree.isChecked
-                && binding.etPassword.text.isNotEmpty()
-                && binding.etEmail.text.isNotEmpty()
+    private fun handleIntentData() {
+        intent.data?.path?.let{
+            binding.tvUrl.text = it
+        }
+    }
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        intent?.data?.path?.let{
+            binding.tvUrl.text = it
+        }
     }
 
     private fun checkValidate(){
+        binding.bLogin.isEnabled = false
         when {
             !emailValidate(binding.etEmail.text.toString()) ->
                 updateValidate(false, getString(R.string.wrong_email))
             !passwordValidate(binding.etPassword.text.toString()) ->
                 updateValidate(false, getString(R.string.wrong_password))
+            !binding.cbAgree.isChecked ->
+                updateValidate(false, getString(R.string.agree))
             else -> {
                 updateValidate(true, "")
-                login()
+                binding.bLogin.isEnabled = true
             }
         }
     }
@@ -121,11 +108,11 @@ class MainActivity : AppCompatActivity() {
     private fun login() {
         progress.id = View.generateViewId()
         val set = ConstraintSet()
-        binding.ClMain.addView(progress)
-        set.clone(binding.ClMain)
-        set.connect(progress.id, ConstraintSet.TOP, R.id.ANRButton, ConstraintSet.BOTTOM,24)
+        binding.ClLogin.addView(progress)
+        set.clone(binding.ClLogin)
+        set.connect(progress.id, ConstraintSet.TOP, R.id.tv_url, ConstraintSet.BOTTOM,24)
         set.centerHorizontally(progress.id, ConstraintSet.PARENT_ID)
-        set.applyTo(binding.ClMain)
+        set.applyTo(binding.ClLogin)
 
         binding.group.referencedIds.forEach {
             findViewById<View>(it).isEnabled = false
@@ -134,8 +121,7 @@ class MainActivity : AppCompatActivity() {
             binding.group.referencedIds.forEach {
                 findViewById<View>(it).isEnabled = true
             }
-            binding.ClMain.removeView(progress)
-            Toast.makeText(this, R.string.success, Toast.LENGTH_SHORT).show()
+            binding.ClLogin.removeView(progress)
         }, 2000)
     }
 
@@ -152,8 +138,6 @@ class MainActivity : AppCompatActivity() {
     private fun updateValidate(valid: Boolean, message: String){
         validate.valid = valid
         validate.message = message
-        if (valid) binding.tvIsValidate.text = getString(R.string.is_validate)
-        else binding.tvIsValidate.text = ""
         binding.tvValidate.text = validate.message
     }
 
