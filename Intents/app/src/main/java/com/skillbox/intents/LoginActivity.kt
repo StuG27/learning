@@ -19,49 +19,24 @@ class LoginActivity : AppCompatActivity() {
 
     private lateinit var progress: ProgressBar
     private lateinit var binding: ActivityLoginBinding
-    private var validate = FormState(false,"")
+    private var validate = FormState(false, "")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        handleIntentData()
+        initProgressBar()
 
-        progress = ProgressBar(this).apply {
-            layoutParams = ConstraintLayout.LayoutParams(
-                    ConstraintLayout.LayoutParams.WRAP_CONTENT,
-                    ConstraintLayout.LayoutParams.WRAP_CONTENT
-            )
-        }
+        setHeadImage()
 
-        val imageView = findViewById<ImageView>(R.id.iv_head);
-        Glide
-                .with(this)
-                .load("https://i1.sndcdn.com/avatars-000494353437-cuy9dz-t500x500.jpg")
-                .into(imageView)
+        dataInput()
 
         binding.bLogin.setOnClickListener {
             login()
             startActivity(MainActivity.getIntent(this))
+            finish()
         }
-
-        binding.etEmail.doOnTextChanged { _, _, _, _ ->
-            checkValidate()
-        }
-
-        binding.etPassword.doOnTextChanged { _, _, _, _ ->
-            checkValidate()
-        }
-
-        binding.cbAgree.setOnCheckedChangeListener { _, _ ->
-            checkValidate()
-        }
-    }
-
-    override fun onStop() {
-        super.onStop()
-        //finish()
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -72,24 +47,13 @@ class LoginActivity : AppCompatActivity() {
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
         validate = savedInstanceState.getParcelable(FORM_STATE)
-                ?: FormState(false,"")
+            ?: FormState(false, "")
         updateValidate(validate.valid, validate.message)
     }
 
-    private fun handleIntentData() {
-        intent.data?.path?.let{
-            binding.tvUrl.text = it
-        }
-    }
 
-    override fun onNewIntent(intent: Intent?) {
-        super.onNewIntent(intent)
-        intent?.data?.path?.let{
-            binding.tvUrl.text = it
-        }
-    }
 
-    private fun checkValidate(){
+    private fun checkValidate() {
         binding.bLogin.isEnabled = false
         when {
             !emailValidate(binding.etEmail.text.toString()) ->
@@ -105,12 +69,43 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
+    private fun dataInput() {
+        binding.etEmail.doOnTextChanged { _, _, _, _ ->
+            checkValidate()
+        }
+
+        binding.etPassword.doOnTextChanged { _, _, _, _ ->
+            checkValidate()
+        }
+
+        binding.cbAgree.setOnCheckedChangeListener { _, _ ->
+            checkValidate()
+        }
+    }
+
+    private fun initProgressBar() {
+        progress = ProgressBar(this).apply {
+            layoutParams = ConstraintLayout.LayoutParams(
+                ConstraintLayout.LayoutParams.WRAP_CONTENT,
+                ConstraintLayout.LayoutParams.WRAP_CONTENT
+            )
+        }
+    }
+
+    private fun setHeadImage() {
+        val imageView = findViewById<ImageView>(R.id.iv_head);
+        Glide
+            .with(this)
+            .load("https://i1.sndcdn.com/avatars-000494353437-cuy9dz-t500x500.jpg")
+            .into(imageView)
+    }
+
     private fun login() {
         progress.id = View.generateViewId()
         val set = ConstraintSet()
         binding.ClLogin.addView(progress)
         set.clone(binding.ClLogin)
-        set.connect(progress.id, ConstraintSet.TOP, R.id.tv_url, ConstraintSet.BOTTOM,24)
+        set.connect(progress.id, ConstraintSet.TOP, R.id.tv_validate, ConstraintSet.BOTTOM, 24)
         set.centerHorizontally(progress.id, ConstraintSet.PARENT_ID)
         set.applyTo(binding.ClLogin)
 
@@ -135,13 +130,13 @@ class LoginActivity : AppCompatActivity() {
         return string.matches(Regex(myPattern))
     }
 
-    private fun updateValidate(valid: Boolean, message: String){
+    private fun updateValidate(valid: Boolean, message: String) {
         validate.valid = valid
         validate.message = message
         binding.tvValidate.text = validate.message
     }
 
-    companion object{
+    companion object {
         private const val FORM_STATE = "formState"
     }
 }

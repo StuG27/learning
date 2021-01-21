@@ -67,4 +67,16 @@
         app:layout_constraintStart_toStartOf="@+id/guideline1"
         app:layout_constraintTop_toBottomOf="@+id/et_phone_number" />
 
+    <TextView
+        android:id="@+id/tv_url"
+        android:layout_width="376dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/guideline1"
+        app:layout_constraintTop_toBottomOf="@+id/b_call"
+        tools:text="@string/url" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

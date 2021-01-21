@@ -24,11 +24,9 @@ class MainActivity : AppCompatActivity() {
 
         Toast.makeText(this, R.string.success, Toast.LENGTH_SHORT).show()
 
-        val imageView = findViewById<ImageView>(R.id.iv_head);
-        Glide
-            .with(this)
-            .load("https://i1.sndcdn.com/avatars-000494353437-cuy9dz-t500x500.jpg")
-            .into(imageView)
+        setHeadImage()
+
+        handleIntentData()
 
         binding.bCall.setOnClickListener {
             val phoneNumber = binding.etPhoneNumber.text.toString()
@@ -61,6 +59,27 @@ class MainActivity : AppCompatActivity() {
         val myPattern = Patterns.PHONE
         binding.bCall.isEnabled = binding.etPhoneNumber.text.toString()
             .matches(Regex(myPattern.toString()))
+    }
+
+    private fun setHeadImage(){
+        val imageView = findViewById<ImageView>(R.id.iv_head);
+        Glide
+            .with(this)
+            .load("https://i1.sndcdn.com/avatars-000494353437-cuy9dz-t500x500.jpg")
+            .into(imageView)
+    }
+
+    private fun handleIntentData() {
+        intent.data?.path?.let {
+            binding.tvUrl.text = it
+        }
+    }
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        intent?.data?.path?.let {
+            binding.tvUrl.text = it
+        }
     }
 
     companion object {
