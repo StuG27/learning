@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+
+<resources>
+    <string name="app_name">Fragments</string>
+    <string name="tv_login">LOGIN</string>
+    <string name="tv_phone">Введите номер телефона</string>
+    <string name="iv_head">Head</string>
+    <string name="et_password">Введите пароль</string>
+    <string name="et_email">Введите адрес электронной почты</string>
+    <string name="cb_agree">Я согласен с условиями</string>
+    <string name="b_login">Авторизация</string>
+    <string name="success">Авторизация прошла успешно</string>
+    <string name="wrong_password">Некорректный пароль. Пароль должен содержать хотя бы одну цифру,
+        заглавные и строчные буквы латиницы. Минимальная длина - 8 символов.
+    </string>
+    <string name="agree">Согласитесь с условиями</string>
+    <string name="wrong_email">Некорректный E-mail</string>
+    <string name="is_validate">formState.validate = true</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="et_phone_number">Номер телефона</string>
+    <string name="b_call">Позвонить</string>
+    <string name="result_ok">Звонок сделан</string>
+    <string name="result_no">Звонок не сделан</string>
+    <string name="url">http://my.com/login</string>
+
+</resources>
