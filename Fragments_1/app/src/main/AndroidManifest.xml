@@ -12,24 +12,20 @@
         <activity android:name="com.skillbox.fragments.MainActivity"
             android:launchMode="singleInstance">
             <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
 
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
+<!--                <action android:name="android.intent.action.VIEW" />-->
+<!--                <category android:name="android.intent.category.DEFAULT" />-->
+<!--                <category android:name="android.intent.category.BROWSABLE" />-->
+<!--                <data-->
+<!--                    android:scheme="http"-->
+<!--                    android:host="my.com"-->
+<!--                    android:pathPrefix="/login" />-->
 
-                <data
-                    android:scheme="http"
-                    android:host="my.com"
-                    android:pathPrefix="/login" />
-            </intent-filter>
-        </activity>
-        <activity android:name="com.skillbox.fragments.LoginActivity">
-            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
     </application>
 
 </manifest>

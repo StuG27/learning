@@ -1,29 +1,46 @@
 package com.skillbox.fragments
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.util.Patterns
+import android.view.LayoutInflater
 import android.view.View
-import android.widget.ImageView
+import android.view.ViewGroup
 import android.widget.ProgressBar
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.widget.doOnTextChanged
+import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
-import com.skillbox.fragments.databinding.ActivityLoginBinding
+import com.skillbox.fragments.databinding.FragmentLoginBinding
 
 
-class LoginActivity : AppCompatActivity() {
+class LoginFragment : Fragment() {
+
+
+    private val openMainFragment: OnOpenNewFragment?
+        get() = activity?.let { it as? OnOpenNewFragment}
 
     private lateinit var progress: ProgressBar
-    private lateinit var binding: ActivityLoginBinding
     private var validate = FormState(false, "")
+    private lateinit var binding: FragmentLoginBinding
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityLoginBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        super.onCreateView(inflater, container, savedInstanceState)
+        binding = FragmentLoginBinding.inflate(inflater)
+        return binding.root
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+//        validate = savedInstanceState?.getParcelable(FORM_STATE)
+//            ?: FormState(false, "")
+//        updateValidate(validate.valid, validate.message)
 
         initProgressBar()
 
@@ -33,23 +50,13 @@ class LoginActivity : AppCompatActivity() {
 
         binding.bLogin.setOnClickListener {
             login()
-            startActivity(MainActivity.getIntent(this))
-            finish()
         }
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putParcelable(FORM_STATE, validate)
-    }
-
-    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
-        super.onRestoreInstanceState(savedInstanceState)
-        validate = savedInstanceState.getParcelable(FORM_STATE)
-            ?: FormState(false, "")
-        updateValidate(validate.valid, validate.message)
-    }
-
+//    override fun onSaveInstanceState(outState: Bundle) {
+//        super.onSaveInstanceState(outState)
+//        outState.putParcelable(FORM_STATE, validate)
+//    }
 
 
     private fun checkValidate() {
@@ -83,7 +90,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun initProgressBar() {
-        progress = ProgressBar(this).apply {
+        progress = ProgressBar(context).apply {
             layoutParams = ConstraintLayout.LayoutParams(
                 ConstraintLayout.LayoutParams.WRAP_CONTENT,
                 ConstraintLayout.LayoutParams.WRAP_CONTENT
@@ -92,30 +99,40 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun setHeadImage() {
-        val imageView = findViewById<ImageView>(R.id.iv_head);
         Glide
             .with(this)
             .load("https://i1.sndcdn.com/avatars-000494353437-cuy9dz-t500x500.jpg")
-            .into(imageView)
+            .into(binding.ivHead)
     }
 
     private fun login() {
         progress.id = View.generateViewId()
         val set = ConstraintSet()
-        binding.ClLogin.addView(progress)
-        set.clone(binding.ClLogin)
-        set.connect(progress.id, ConstraintSet.TOP, R.id.tv_validate, ConstraintSet.BOTTOM, 24)
+        binding.login.addView(progress)
+        set.clone(binding.login)
+        set.connect(progress.id, ConstraintSet.TOP, binding.tvValidate.id, ConstraintSet.BOTTOM, 24)
         set.centerHorizontally(progress.id, ConstraintSet.PARENT_ID)
-        set.applyTo(binding.ClLogin)
+        set.applyTo(binding.login)
 
-        binding.group.referencedIds.forEach {
-            findViewById<View>(it).isEnabled = false
-        }
+
+        binding.cbAgree.isEnabled = false
+        binding.etEmail.isEnabled = false
+        binding.etPassword.isEnabled = false
+        binding.bLogin.isEnabled = false
+
+//        binding.group.referencedIds.forEach {
+//            findViewById<View>(it).isEnabled = false
+//        }
         Handler().postDelayed({
-            binding.group.referencedIds.forEach {
-                findViewById<View>(it).isEnabled = true
-            }
-            binding.ClLogin.removeView(progress)
+            binding.cbAgree.isEnabled = true
+            binding.etEmail.isEnabled = true
+            binding.etPassword.isEnabled = true
+            binding.bLogin.isEnabled = true
+//            binding.group.referencedIds.forEach {
+//                findViewById<View>(it).isEnabled = true
+//            }
+            binding.login.removeView(progress)
+            openMainFragment?.openMainFragment()
         }, 2000)
     }
 
@@ -135,8 +152,15 @@ class LoginActivity : AppCompatActivity() {
         binding.tvValidate.text = validate.message
     }
 
+
+
     companion object {
-        private const val FORM_STATE = "formState"
+//        private const val FORM_STATE = "formState"
+
+        fun newInstance(): LoginFragment {
+            return LoginFragment().withArguments{
+            }
+        }
     }
 }
 

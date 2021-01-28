@@ -2,18 +2,17 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/Cl_login"
+    android:id="@+id/login"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".LoginActivity">
+    android:layout_height="match_parent">
 
     <ImageView
-        android:id="@+id/iv_head"
+        android:id="@+id/ivHead"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:contentDescription="@string/iv_head"
         android:scaleType="centerCrop"
-        app:layout_constraintDimensionRatio=""
+        app:layout_constraintDimensionRatio="2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -34,32 +33,32 @@
         app:layout_constraintGuide_end="16dp" />
 
     <TextView
-        android:id="@+id/tv_login"
+        android:id="@+id/tvLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:text="@string/tv_login"
         android:textSize="20sp"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintStart_toStartOf="@+id/guideline1"
-        app:layout_constraintTop_toBottomOf="@+id/iv_head" />
+        app:layout_constraintTop_toBottomOf="@+id/ivHead" />
 
     <EditText
-        android:id="@+id/et_email"
+        android:id="@+id/etEmail"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:autofillHints=""
         android:ems="10"
         android:hint="@string/et_email"
         android:inputType="textEmailAddress"
-        app:layout_constraintBottom_toTopOf="@+id/et_password"
+        app:layout_constraintBottom_toTopOf="@+id/etPassword"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintStart_toStartOf="@+id/guideline1"
-        app:layout_constraintTop_toBottomOf="@+id/tv_login"
+        app:layout_constraintTop_toBottomOf="@+id/tvLogin"
         app:layout_constraintVertical_chainStyle="spread" />
 
     <EditText
-        android:id="@+id/et_password"
+        android:id="@+id/etPassword"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:autofillHints=""
@@ -69,60 +68,60 @@
         app:layout_constraintBottom_toTopOf="@+id/guideline3"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintStart_toStartOf="@+id/guideline1"
-        app:layout_constraintTop_toBottomOf="@+id/et_email" />
+        app:layout_constraintTop_toBottomOf="@+id/etEmail" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.36" />
+        app:layout_constraintGuide_percent="0.55" />
 
     <CheckBox
-        android:id="@+id/cb_agree"
+        android:id="@+id/cbAgree"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:text="@string/cb_agree"
-        app:layout_constraintEnd_toStartOf="@+id/b_login"
+        app:layout_constraintEnd_toStartOf="@+id/bLogin"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="@+id/guideline1"
         app:layout_constraintTop_toTopOf="@+id/guideline3" />
 
     <Button
-        android:id="@+id/b_login"
+        android:id="@+id/bLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:enabled="false"
         android:text="@string/b_login"
-        app:layout_constraintBaseline_toBaselineOf="@+id/cb_agree"
+        app:layout_constraintBaseline_toBaselineOf="@+id/cbAgree"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/cb_agree" />
+        app:layout_constraintStart_toEndOf="@+id/cbAgree" />
 
     <androidx.constraintlayout.widget.Group
         android:id="@+id/group"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:constraint_referenced_ids="et_email,et_password,b_login,cb_agree" />
+        app:constraint_referenced_ids="etEmail,etPassword,bLogin,cbAgree" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.55" />
+        app:layout_constraintGuide_percent="0.66" />
 
     <TextView
-        android:id="@+id/tv_validate"
+        android:id="@+id/tvValidate"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="4dp"
-        tools:text="@string/wrong_password"
+        android:gravity="center"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintHorizontal_bias="1.0"
-        android:gravity="center"
         app:layout_constraintStart_toStartOf="@+id/guideline1"
-        app:layout_constraintTop_toTopOf="@+id/guideline4" />
+        app:layout_constraintTop_toTopOf="@+id/guideline4"
+        tools:text="@string/wrong_password" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -22,5 +22,10 @@
     <string name="result_ok">Звонок сделан</string>
     <string name="result_no">Звонок не сделан</string>
     <string name="url">http://my.com/login</string>
+    <string name="element_1">Кнопка 1</string>
+    <string name="element_2">Кнопка 2</string>
+    <string name="element_3">Кнопка 3</string>
+    <string name="element_4">Кнопка 4</string>
+    <string name="element_5">Кнопка 5</string>
 
 </resources>

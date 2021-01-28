@@ -1,91 +1,57 @@
 package com.skillbox.fragments
 
-import android.app.Activity
-import android.content.Context
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
-import android.util.Patterns
-import android.widget.ImageView
-import android.widget.Toast
+import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.widget.doOnTextChanged
-import com.bumptech.glide.Glide
 import com.skillbox.fragments.databinding.ActivityMainBinding
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), OnOpenNewFragment {
 
+    private var state: Int = 0
     private lateinit var binding: ActivityMainBinding
+    private val loginFragment = LoginFragment.newInstance()
+    private val mainFragment = MainFragment.newInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        Toast.makeText(this, R.string.success, Toast.LENGTH_SHORT).show()
-
-        setHeadImage()
-
-        handleIntentData()
-
-        binding.bCall.setOnClickListener {
-            val phoneNumber = binding.etPhoneNumber.text.toString()
-            val callIntent = Intent(Intent.ACTION_DIAL).apply {
-                data = Uri.parse("tel:$phoneNumber")
-            }
-            if (callIntent.resolveActivity(packageManager) != null) {
-                startActivityForResult(callIntent, IS_CALL)
-            }
-        }
-
-        binding.etPhoneNumber.doOnTextChanged { _, _, _, _ ->
-            phoneNumberValidate()
-        }
+        openLoginFragment()
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == IS_CALL){
-            if (resultCode == Activity.RESULT_OK) {
-                Toast.makeText(this, R.string.result_ok, Toast.LENGTH_SHORT).show()
-            } else {
-                Toast.makeText(this, R.string.result_no, Toast.LENGTH_SHORT).show()
-            }
+    override fun onBackPressed() {
+        if (state == 1){
+            supportFragmentManager.popBackStack("Main fragment",1)
+            state = 0
         } else {
-            super.onActivityResult(requestCode, resultCode, data)
+            finish()
         }
     }
 
-    private fun phoneNumberValidate() {
-        val myPattern = Patterns.PHONE
-        binding.bCall.isEnabled = binding.etPhoneNumber.text.toString()
-            .matches(Regex(myPattern.toString()))
+    private fun openLoginFragment() {
+        supportFragmentManager.beginTransaction()
+                .add(binding.mainActivityContainer.id, loginFragment
+                )
+                .commit()
     }
 
-    private fun setHeadImage(){
-        val imageView = findViewById<ImageView>(R.id.iv_head);
-        Glide
-            .with(this)
-            .load("https://i1.sndcdn.com/avatars-000494353437-cuy9dz-t500x500.jpg")
-            .into(imageView)
+    override fun openMainFragment() {
+        supportFragmentManager.beginTransaction()
+                .remove(loginFragment)
+                .commit()
+
+        supportFragmentManager.beginTransaction()
+                .replace(binding.mainActivityContainer.id, mainFragment)
+                .addToBackStack("Main fragment")
+                .commit()
+        state = 1
     }
 
-    private fun handleIntentData() {
-        intent.data?.path?.let {
-            binding.tvUrl.text = it
-        }
-    }
-
-    override fun onNewIntent(intent: Intent?) {
-        super.onNewIntent(intent)
-        intent?.data?.path?.let {
-            binding.tvUrl.text = it
-        }
-    }
-
-    companion object {
-        fun getIntent(context: Context): Intent {
-            return Intent(context, MainActivity::class.java)
-        }
-        private const val IS_CALL = 100
+    override fun openDetailFragment(text: String) {
+        mainFragment.childFragmentManager.beginTransaction()
+            .replace(
+                findViewById<FrameLayout>(R.id.mainFragmentContainer).id,
+                DetailFragment.newInstance(text)
+            ).commit()
     }
 }
