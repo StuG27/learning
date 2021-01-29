@@ -27,5 +27,6 @@
     <string name="element_3">Кнопка 3</string>
     <string name="element_4">Кнопка 4</string>
     <string name="element_5">Кнопка 5</string>
+    <string name="main_fragment">Main Fragment</string>
 
 </resources>

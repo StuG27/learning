@@ -9,6 +9,8 @@ import com.skillbox.fragments.databinding.FragmentMainBinding
 
 class MainFragment : Fragment() {
 
+    private val openListFragment: OnOpenNewFragment?
+        get() = activity?.let { it as? OnOpenNewFragment }
 
     private lateinit var binding: FragmentMainBinding
 
@@ -24,11 +26,7 @@ class MainFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        childFragmentManager.popBackStack("List Fragment", 0)
-        childFragmentManager.beginTransaction()
-            .replace(binding.mainFragmentContainer.id, ListFragment.newInstance())
-            .addToBackStack("List Fragment")
-            .commit()
+        openListFragment?.openListFragment()
     }
 
     companion object {

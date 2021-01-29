@@ -1,6 +1,8 @@
 package com.skillbox.fragments
 
+import android.app.Activity
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,8 +10,6 @@ import androidx.fragment.app.Fragment
 import com.skillbox.fragments.databinding.FragmentDetailBinding
 
 class DetailFragment : Fragment(){
-
-
 
     private lateinit var binding: FragmentDetailBinding
 
@@ -27,7 +27,6 @@ class DetailFragment : Fragment(){
         super.onActivityCreated(savedInstanceState)
         binding.textView.text = requireArguments().getString(KEY_TEXT)
     }
-
 
     companion object {
 

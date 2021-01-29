@@ -13,7 +13,8 @@ import com.skillbox.fragments.databinding.FragmentListBinding
 class ListFragment: Fragment(){
 
     private val openDetailFragment: OnOpenNewFragment?
-        get() = activity?.let { it as? OnOpenNewFragment}
+        get() = parentFragment?.let { it as? OnOpenNewFragment }
+            ?: activity?.let { it as? OnOpenNewFragment }
 
     private lateinit var binding: FragmentListBinding
 

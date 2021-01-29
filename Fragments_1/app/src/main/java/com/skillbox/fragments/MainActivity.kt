@@ -7,7 +7,8 @@ import com.skillbox.fragments.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity(), OnOpenNewFragment {
 
-    private var state: Int = 0
+
+    private var state = 0
     private lateinit var binding: ActivityMainBinding
     private val loginFragment = LoginFragment.newInstance()
     private val mainFragment = MainFragment.newInstance()
@@ -20,17 +21,18 @@ class MainActivity : AppCompatActivity(), OnOpenNewFragment {
     }
 
     override fun onBackPressed() {
-        if (state == 1){
-            supportFragmentManager.popBackStack("Main fragment",1)
+        if (state == 1) {
+            mainFragment.childFragmentManager.popBackStack("List Fragment", 0)
             state = 0
-        } else {
-            finish()
+        }
+        else {
+            super.onBackPressed()
         }
     }
 
     private fun openLoginFragment() {
         supportFragmentManager.beginTransaction()
-                .add(binding.mainActivityContainer.id, loginFragment
+                .replace(binding.mainActivityContainer.id, loginFragment
                 )
                 .commit()
     }
@@ -42,9 +44,7 @@ class MainActivity : AppCompatActivity(), OnOpenNewFragment {
 
         supportFragmentManager.beginTransaction()
                 .replace(binding.mainActivityContainer.id, mainFragment)
-                .addToBackStack("Main fragment")
                 .commit()
-        state = 1
     }
 
     override fun openDetailFragment(text: String) {
@@ -53,5 +53,16 @@ class MainActivity : AppCompatActivity(), OnOpenNewFragment {
                 findViewById<FrameLayout>(R.id.mainFragmentContainer).id,
                 DetailFragment.newInstance(text)
             ).commit()
+        state = 1
+    }
+
+    override fun openListFragment() {
+        mainFragment.childFragmentManager.beginTransaction()
+            .replace(
+                findViewById<FrameLayout>(R.id.mainFragmentContainer).id,
+                ListFragment.newInstance()
+            ).addToBackStack("List Fragment")
+            .commit()
     }
 }
+
