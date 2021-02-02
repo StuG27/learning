@@ -38,10 +38,6 @@ class LoginFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-//        validate = savedInstanceState?.getParcelable(FORM_STATE)
-//            ?: FormState(false, "")
-//        updateValidate(validate.valid, validate.message)
-
         initProgressBar()
 
         setHeadImage()
@@ -52,12 +48,6 @@ class LoginFragment : Fragment() {
             login()
         }
     }
-
-//    override fun onSaveInstanceState(outState: Bundle) {
-//        super.onSaveInstanceState(outState)
-//        outState.putParcelable(FORM_STATE, validate)
-//    }
-
 
     private fun checkValidate() {
         binding.bLogin.isEnabled = false
@@ -114,28 +104,20 @@ class LoginFragment : Fragment() {
         set.centerHorizontally(progress.id, ConstraintSet.PARENT_ID)
         set.applyTo(binding.login)
 
-
-        binding.cbAgree.isEnabled = false
-        binding.etEmail.isEnabled = false
-        binding.etPassword.isEnabled = false
-        binding.bLogin.isEnabled = false
-
-//        binding.group.referencedIds.forEach {
-//            findViewById<View>(it).isEnabled = false
-//        }
+        isViewEnable(false)
         Handler().postDelayed({
-            binding.cbAgree.isEnabled = true
-            binding.etEmail.isEnabled = true
-            binding.etPassword.isEnabled = true
-            binding.bLogin.isEnabled = true
-//            binding.group.referencedIds.forEach {
-//                findViewById<View>(it).isEnabled = true
-//            }
+            isViewEnable(true)
             binding.login.removeView(progress)
             openMainFragment?.openMainFragment()
         }, 2000)
     }
 
+    private fun isViewEnable (state: Boolean) {
+        binding.cbAgree.isEnabled = state
+        binding.etEmail.isEnabled = state
+        binding.etPassword.isEnabled = state
+        binding.bLogin.isEnabled = state
+    }
     private fun emailValidate(string: String): Boolean {
         val myPattern = Patterns.EMAIL_ADDRESS
         return string.matches(Regex(myPattern.toString()))
@@ -152,11 +134,7 @@ class LoginFragment : Fragment() {
         binding.tvValidate.text = validate.message
     }
 
-
-
     companion object {
-//        private const val FORM_STATE = "formState"
-
         fun newInstance(): LoginFragment {
             return LoginFragment().withArguments{
             }

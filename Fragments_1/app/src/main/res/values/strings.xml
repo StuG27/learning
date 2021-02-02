@@ -11,11 +11,9 @@
     <string name="b_login">Авторизация</string>
     <string name="success">Авторизация прошла успешно</string>
     <string name="wrong_password">Некорректный пароль. Пароль должен содержать хотя бы одну цифру,
-        заглавные и строчные буквы латиницы. Минимальная длина - 8 символов.
-    </string>
+        заглавные и строчные буквы латиницы. Минимальная длина - 8 символов.</string>
     <string name="agree">Согласитесь с условиями</string>
     <string name="wrong_email">Некорректный E-mail</string>
-    <string name="is_validate">formState.validate = true</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="et_phone_number">Номер телефона</string>
     <string name="b_call">Позвонить</string>
@@ -27,6 +25,5 @@
     <string name="element_3">Кнопка 3</string>
     <string name="element_4">Кнопка 4</string>
     <string name="element_5">Кнопка 5</string>
-    <string name="main_fragment">Main Fragment</string>
 
 </resources>

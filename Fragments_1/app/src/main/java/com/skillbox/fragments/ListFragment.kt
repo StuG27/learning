@@ -1,5 +1,6 @@
 package com.skillbox.fragments
 
+
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,9 +13,10 @@ import com.skillbox.fragments.databinding.FragmentListBinding
 
 class ListFragment: Fragment(){
 
-    private val openDetailFragment: OnOpenNewFragment?
-        get() = parentFragment?.let { it as? OnOpenNewFragment }
-            ?: activity?.let { it as? OnOpenNewFragment }
+    private val openDetailFragment: OnOpenNewChildFragment?
+        get() = parentFragment?.let { it as? OnOpenNewChildFragment }
+            ?: activity?.let { it as? OnOpenNewChildFragment }
+
 
     private lateinit var binding: FragmentListBinding
 
