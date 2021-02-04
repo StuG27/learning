@@ -30,8 +30,8 @@ class MainFragment : Fragment(), OnOpenNewChildFragment {
 
     private fun openListFragment() {
         val screenLayout = resources.configuration.screenLayout
-        if (screenLayout and Configuration.SCREENLAYOUT_SIZE_MASK
-            != Configuration.SCREENLAYOUT_SIZE_XLARGE){
+        if (screenLayout and Configuration.SCREENLAYOUT_LAYOUTDIR_MASK
+            == Configuration.SCREENLAYOUT_SIZE_XLARGE){
             childFragmentManager.beginTransaction()
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                 .replace(
