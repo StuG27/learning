@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Fragments_2</string>
+    <string name="article1">Статья про самолёт</string>
+    <string name="article2">Статья про микроавтобус</string>
+    <string name="article3">Статья про бесконечность</string>
+    <string name="article4">Статья про якорь</string>
+    <string name="article5">Статья про дом</string>
+    <string name="show_dialog">Показать простой диалог</string>
+    <string name="show_dialog_button">Показать диалог с кнопками</string>
+    <string name="show_dialog_one_choice">Показать диалог с выбором</string>
+    <string name="show_dialog_layout">Показать диалог с кастомным вью</string>
+    <string name="show_dialog_fragment">Показать диалог в фрагменте</string>
+    <string name="show_dialog_bottomsheet">Показать диалог снизу</string>
+    <string name="attention">Attention</string>
+    <string name="news">Сгенерировать событие</string>
+    <string name="action">Фильтр</string>
+</resources>
