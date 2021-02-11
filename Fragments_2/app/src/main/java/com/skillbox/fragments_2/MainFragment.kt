@@ -12,35 +12,39 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.skillbox.fragments_2.databinding.FragmentMainBinding
 import kotlin.random.Random
 
-class MainFragment: Fragment(), ArticleInterface {
+class MainFragment: Fragment(), MainFragmentInterface {
 
     private lateinit var binding: FragmentMainBinding
     private var dialog: AlertDialog? = null
+    private var savedState = BooleanArray(6)
 
-
-    private val nameTab: List<String> = listOf("Самолет","Автобус","Бесконечность","Якорь","Дом")
     private val screens: List<Articles> = listOf(
         Articles(
+            "Самолет",
             R.string.article1,
             R.drawable.image1,
             listOf(ArticleTag.PLANE, ArticleTag.TRANSPORT)
         ),
         Articles(
+            "Автобус",
             R.string.article2,
             R.drawable.image2,
             listOf(ArticleTag.BUS, ArticleTag.TRANSPORT)
         ),
         Articles(
+            "Бесконечность",
             R.string.article3,
             R.drawable.image3,
             listOf(ArticleTag.INFINITY)
         ),
         Articles(
+            "Якорь",
             R.string.article4,
             R.drawable.image4,
             listOf(ArticleTag.ANCHOR)
         ),
         Articles(
+            "Дом",
             R.string.article5,
             R.drawable.image5,
             listOf(ArticleTag.HOUSE)
@@ -59,8 +63,27 @@ class MainFragment: Fragment(), ArticleInterface {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        savedState.fill(true)
         initToolbar()
         initAdapter(screens)
+    }
+
+    override fun filterArticles(articleTag : MutableList<ArticleTag>, state: BooleanArray) {
+        var selectedScreens = mutableListOf<Articles>()
+        savedState = state
+        for (i in screens) {
+            for (j in articleTag){
+                if (i.tags.contains(j)){
+                    if (!selectedScreens.contains(i)){
+                        selectedScreens.add(i)
+                    }
+                }
+            }
+        }
+        if (selectedScreens.isEmpty()){
+            selectedScreens = screens.toMutableList()
+        }
+        initAdapter(selectedScreens)
     }
 
     override fun buttonClick() {
@@ -91,14 +114,14 @@ class MainFragment: Fragment(), ArticleInterface {
 
     private fun initAdapter(articles: List<Articles>){
         val viewPager = binding.vP
-        val adapter = ArticlesAdapter(articles, requireActivity())
         val dotsIndicator = binding.dI
+        val adapter = ArticlesAdapter(articles, requireActivity())
         viewPager.adapter = adapter
-        dotsIndicator.setViewPager2(viewPager)
         viewPager.setPageTransformer(object : DepthTransformation(){})
         TabLayoutMediator(binding.tL, viewPager) {
-                tab, position -> tab.text = nameTab[position]
+                tab, position -> tab.text = articles[position].tabName
         }.attach()
+        dotsIndicator.setViewPager2(viewPager)
     }
 
     override fun onDestroy() {
@@ -107,7 +130,7 @@ class MainFragment: Fragment(), ArticleInterface {
     }
 
     private fun showDialogFragment() {
-        MyDialogFragment()
+        MyDialogFragment.newInstance(savedState)
             .show(childFragmentManager, "dialog")
     }
 

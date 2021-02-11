@@ -12,9 +12,9 @@ import com.skillbox.fragments_2.databinding.FragmentArticleBinding
 
 class ArticleFragment: Fragment() {
 
-    private val articleInterface: ArticleInterface?
-        get() = MainFragment.let { it as? ArticleInterface }
-            ?: activity?.let { it as? ArticleInterface }
+    private val mainFragmentInterface: MainFragmentInterface?
+        get() = parentFragment.let { it as? MainFragmentInterface }
+            ?: activity?.let { it as? MainFragmentInterface }
 
     private lateinit var binding: FragmentArticleBinding
 
@@ -35,8 +35,8 @@ class ArticleFragment: Fragment() {
         binding.tV.setText(requireArguments().getInt(KEY_TEXT))
         binding.iV.setImageResource(requireArguments().getInt(KEY_IMAGE))
         binding.b.setOnClickListener {
-            Toast.makeText(context, "$articleInterface", Toast.LENGTH_SHORT).show()
-            articleInterface?.buttonClick()
+            Toast.makeText(context, "$mainFragmentInterface", Toast.LENGTH_SHORT).show()
+            mainFragmentInterface?.buttonClick()
         }
     }
 
