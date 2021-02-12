@@ -50,14 +50,14 @@ class MyDialogFragment: DialogFragment() {
             .setTitle("Выберите интересующие темы")
             .setMultiChoiceItems(
                 items,
-                state,
+                state
 //                formState.state,
-                DialogInterface.OnMultiChoiceClickListener { _, itemNumber, itemState ->
-                    when (itemState) {
-                        true -> selectedArticles.add(allArticles[itemNumber])
-                        false -> selectedArticles.removeAll { it == allArticles[itemNumber]}
-                    }
-                })
+            ) { _, itemNumber, itemState ->
+                when (itemState) {
+                    true -> selectedArticles.add(allArticles[itemNumber])
+                    false -> selectedArticles.removeAll { it == allArticles[itemNumber] }
+                }
+            }
             .setNegativeButton("Назад") { _, _ ->
             }
             .setPositiveButton("Отфильтровать") { _, _ ->

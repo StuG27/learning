@@ -16,7 +16,8 @@ class ArticlesAdapter(
         val screen: Articles = screens[position]
         return ArticleFragment.newInstance(
             screen.textRes,
-            screen.drawableRes
+            screen.drawableRes,
+            screen.colorRes
         )
     }
 }

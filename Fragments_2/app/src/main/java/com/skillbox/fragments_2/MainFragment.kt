@@ -23,30 +23,35 @@ class MainFragment: Fragment(), MainFragmentInterface {
             "Самолет",
             R.string.article1,
             R.drawable.image1,
+            R.color.color1,
             listOf(ArticleTag.PLANE, ArticleTag.TRANSPORT)
         ),
         Articles(
             "Автобус",
             R.string.article2,
             R.drawable.image2,
+            R.color.color2,
             listOf(ArticleTag.BUS, ArticleTag.TRANSPORT)
         ),
         Articles(
             "Бесконечность",
             R.string.article3,
             R.drawable.image3,
+            R.color.color3,
             listOf(ArticleTag.INFINITY)
         ),
         Articles(
             "Якорь",
             R.string.article4,
             R.drawable.image4,
+            R.color.color4,
             listOf(ArticleTag.ANCHOR)
         ),
         Articles(
             "Дом",
             R.string.article5,
             R.drawable.image5,
+            R.color.color5,
             listOf(ArticleTag.HOUSE)
         )
     )
