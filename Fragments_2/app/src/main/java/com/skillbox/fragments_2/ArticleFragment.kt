@@ -4,18 +4,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.annotation.ColorRes
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
+import com.google.android.material.badge.BadgeDrawable
+import com.google.android.material.tabs.TabLayout
 import com.skillbox.fragments_2.databinding.FragmentArticleBinding
+import kotlin.random.Random
 
 class ArticleFragment: Fragment() {
-
-    private val mainFragmentInterface: MainFragmentInterface?
-        get() = parentFragment.let { it as? MainFragmentInterface }
-            ?: activity?.let { it as? MainFragmentInterface }
 
     private lateinit var binding: FragmentArticleBinding
 
@@ -36,8 +34,11 @@ class ArticleFragment: Fragment() {
         binding.tV.setText(requireArguments().getInt(KEY_TEXT))
         binding.iV.setImageResource(requireArguments().getInt(KEY_IMAGE))
         binding.b.setOnClickListener {
-            Toast.makeText(context, "$mainFragmentInterface", Toast.LENGTH_SHORT).show()
-            mainFragmentInterface?.buttonClick()
+            val tabLayout = (requireActivity() as AppActivity).findViewById<TabLayout>(R.id.tL)
+            tabLayout.getTabAt(Random.nextInt(tabLayout.tabCount))?.orCreateBadge?.apply {
+                number++
+                badgeGravity = BadgeDrawable.TOP_END
+            }
         }
     }
 

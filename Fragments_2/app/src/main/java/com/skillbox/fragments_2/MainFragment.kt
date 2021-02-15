@@ -91,19 +91,6 @@ class MainFragment: Fragment(), MainFragmentInterface {
         initAdapter(selectedScreens)
     }
 
-    override fun buttonClick() {
-        binding.tL.getTabAt(Random.nextInt(screens.size))?.orCreateBadge?.apply {
-            number++
-            badgeGravity = BadgeDrawable.TOP_END
-        }
-        binding.vP.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback(){
-            override fun onPageSelected(position: Int) {
-                super.onPageSelected(position)
-                binding.tL.getTabAt(position)?.removeBadge()
-            }
-        })
-    }
-
     private fun initToolbar() {
         binding.toolbar.title = "Статьи"
         binding.toolbar.setOnMenuItemClickListener {
@@ -127,6 +114,13 @@ class MainFragment: Fragment(), MainFragmentInterface {
                 tab, position -> tab.text = articles[position].tabName
         }.attach()
         dotsIndicator.setViewPager2(viewPager)
+
+        binding.vP.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback(){
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                binding.tL.getTabAt(position)?.removeBadge()
+            }
+        })
     }
 
     override fun onDestroy() {
