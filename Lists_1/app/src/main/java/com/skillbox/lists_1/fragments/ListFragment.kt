@@ -20,7 +20,7 @@ class ListFragment : Fragment() {
 
     private lateinit var binding: FragmentListBinding
     private var personAdapter: PersonAdapter? = null
-    private var persons = listOf(
+    private var persons = arrayListOf(
         Person.Actor(
             "Том Хэнкс",
             "https://avatars.mds.yandex.net/get-kinopoisk-image/1773646/3acd328c-721a-47ac-a7bf-fe7d5efb69fc/280x420",
@@ -132,6 +132,11 @@ class ListFragment : Fragment() {
         personAdapter?.notifyDataSetChanged()
     }
 
+//    override fun onSaveInstanceState(outState: Bundle) {
+//        super.onSaveInstanceState(outState)
+//        outState.putParcelableArrayList(PERSONS, persons)
+//    }
+
     private fun initList() {
         personAdapter = PersonAdapter { position -> deletePerson(position) }
         with(binding.rV) {
@@ -150,7 +155,7 @@ class ListFragment : Fragment() {
 //    }
 
     private fun deletePerson(position: Int) {
-        persons = persons.filterIndexed { index, _ -> index != position }
+        persons = persons.filterIndexed{ index, _ -> index != position } as ArrayList<Person>
         personAdapter?.update(persons)
         personAdapter?.notifyItemRemoved(position)
         if (persons.isEmpty()) {
@@ -179,7 +184,7 @@ class ListFragment : Fragment() {
                         cBOscar.isChecked,
                         eTBestFilm.text.toString()
                     )
-                    persons = listOf(newPerson) + persons
+                    persons = (listOf(newPerson) + persons) as ArrayList<Person>
                 } else {
                     val newPerson = Person.Actor(
                         eTName.text.toString(),
@@ -187,7 +192,7 @@ class ListFragment : Fragment() {
                         eTAge.text.toString().toInt(),
                         cBOscar.isChecked
                     )
-                    persons = listOf(newPerson) + persons
+                    persons = (listOf(newPerson) + persons) as ArrayList<Person>
                 }
                 personAdapter?.update(persons)
                 personAdapter?.notifyItemInserted(0)
@@ -205,6 +210,7 @@ class ListFragment : Fragment() {
     }
 
     companion object {
+        const val PERSONS = "persons"
         fun newInstance(): ListFragment {
             return ListFragment().withArguments {
             }

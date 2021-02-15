@@ -1,5 +1,6 @@
 package com.skillbox.lists_1.data
 
+
 sealed class Person{
 
     data class Actor(
