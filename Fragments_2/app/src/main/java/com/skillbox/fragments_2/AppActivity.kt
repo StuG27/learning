@@ -15,7 +15,9 @@ class AppActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityAppBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        openMainFragment()
+        if (savedInstanceState == null) {
+            openMainFragment()
+        }
     }
 
     private fun openMainFragment() {

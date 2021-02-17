@@ -29,7 +29,7 @@ class ArticleFragment: Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        requireView().setBackgroundColor(requireArguments().getInt(KEY_COLOR))
+        //requireView().setBackgroundColor(requireArguments().getInt(KEY_COLOR))
         //requireView().setBackgroundColor(context?.resources!!.getColor(requireArguments().getInt(KEY_COLOR)))
         binding.tV.setText(requireArguments().getInt(KEY_TEXT))
         binding.iV.setImageResource(requireArguments().getInt(KEY_IMAGE))
