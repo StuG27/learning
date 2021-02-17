@@ -131,7 +131,7 @@ class MainFragment: Fragment(), MainFragmentInterface {
 
     private fun saveTabState(){
         var i = 0
-        while (i < binding.tL.tabCount) {
+        while (i < 6) {
             val a = binding.tL.getTabAt(i)?.badge?.number
             tabState[i] = a ?: 0
             i++
@@ -166,7 +166,7 @@ class MainFragment: Fragment(), MainFragmentInterface {
 
     private fun restoreTabState(){
         var i = 0
-        while (i < binding.tL.tabCount) {
+        while (i < 6) {
             binding.tL.getTabAt(i)?.orCreateBadge?.apply {
                 if (tabState[i] != 0) {
                     number = tabState[i]
