@@ -5,7 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
-import android.widget.TextView
+import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,6 +15,7 @@ import com.skillbox.lists_1.adapters.PersonAdapter
 import com.skillbox.lists_1.data.Person
 import com.skillbox.lists_1.databinding.FragmentListBinding
 import com.skillbox.lists_1.extensions.withArguments
+
 
 
 class ListFragment : Fragment() {
@@ -134,15 +136,29 @@ class ListFragment : Fragment() {
 
 //    override fun onSaveInstanceState(outState: Bundle) {
 //        super.onSaveInstanceState(outState)
-//        outState.putParcelableArrayList(PERSONS, persons)
+//        outState.putCharSequenceArrayList(PERSONS, persons)
 //    }
 
     private fun initList() {
         personAdapter = PersonAdapter { position -> deletePerson(position) }
         with(binding.rV) {
             adapter = personAdapter
-            layoutManager = LinearLayoutManager(context)
+            layoutManager = LinearLayoutManager(requireContext())
+//                .apply {
+//                orientation = RecyclerView.HORIZONTAL
+//            layoutManager = GridLayoutManager(context, 2).apply {
+//                orientation = RecyclerView.HORIZONTAL
+//                spanSizeLookup = object : GridLayoutManager.SpanSizeLookup(){
+//                    override fun getSpanSize(position: Int): Int {
+//                        return  if (position % 3 == 0) 2 else 1
+//                    }
+//                }
+//            }
             setHasFixedSize(true)
+//            val dividerItemDecoration = DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL)
+//            addItemDecoration(dividerItemDecoration)
+//            addItemDecoration(ItemOffsetDecoration(requireContext()))
+//            itemAnimator = SlideInRightAnimator()
         }
     }
 
@@ -164,18 +180,17 @@ class ListFragment : Fragment() {
     }
 
     private fun showAddPersonLayout() {
-        val dialog = AlertDialog.Builder(context!!)
-        val inflater = activity!!.layoutInflater
-        val view = inflater.inflate(R.layout.add_actor_dialog, null);
+        val dialog = AlertDialog.Builder(requireContext())
+        val view = layoutInflater.inflate(R.layout.add_actor_dialog, null)
         dialog.setTitle("Добавление нового персонажа")
-            .setView(R.layout.add_actor_dialog)
+            .setView(view)
             .setPositiveButton("Да") { _, _ ->
-                val eTName: TextView = view.findViewById(R.id.eTName)
-                val eTAvatarLink: TextView = view.findViewById(R.id.eTAvatarLink)
-                val eTAge: TextView = view.findViewById(R.id.eTAge)
+                val eTName: EditText = view.findViewById(R.id.eTName)
+                Toast.makeText(context, eTName.text.toString(), Toast.LENGTH_SHORT).show()
+                val eTAvatarLink: EditText = view.findViewById(R.id.eTAvatarLink)
+                val eTAge: EditText = view.findViewById(R.id.eTAge)
                 val cBOscar: CheckBox = view.findViewById(R.id.cBOscar)
-                val eTBestFilm: TextView = view.findViewById(R.id.eTBestFilm)
-
+                val eTBestFilm: EditText = view.findViewById(R.id.eTBestFilm)
                 if (eTBestFilm.text.isNotEmpty()) {
                     val newPerson = Person.Producer(
                         eTName.text.toString(),

@@ -15,7 +15,9 @@ class AppActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityAppBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        openListFragment()
+        if (savedInstanceState == null) {
+            openListFragment()
+        }
     }
 
     private fun openListFragment() {

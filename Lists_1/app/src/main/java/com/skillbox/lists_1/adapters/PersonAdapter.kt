@@ -1,5 +1,6 @@
 package com.skillbox.lists_1.adapters
 
+
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -9,6 +10,7 @@ import com.bumptech.glide.Glide
 import com.skillbox.lists_1.R
 import com.skillbox.lists_1.data.Person
 import com.skillbox.lists_1.extensions.inflate
+
 
 class PersonAdapter(
     private val onItemClick: (position: Int) -> Unit
@@ -87,7 +89,7 @@ class PersonAdapter(
                 .with(itemView)
                 .load(avatarLink)
                 .placeholder(R.drawable.ic_baseline_portrait_24)
-                .error(R.drawable.ic_baseline_portrait_24)
+                .error(R.drawable.ic_baseline_error_24)
                 .into(iVAvatar)
         }
     }
