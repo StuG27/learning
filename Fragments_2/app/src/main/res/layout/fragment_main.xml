@@ -37,21 +37,20 @@
         app:layout_constraintTop_toBottomOf="@+id/tL"
         app:layout_constraintVertical_bias="0.0" />
 
-    <com.tbuonomo.viewpagerdotsindicator.DotsIndicator
+    <com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
         android:id="@+id/dI"
-        android:layout_width="205dp"
-        android:layout_height="24dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_marginTop="500dp"
-        app:dotsColor="@color/white"
-        app:dotsCornerRadius="8dp"
-        app:dotsSize="12dp"
-        app:dotsSpacing="12dp"
-        app:dotsWidthFactor="3"
+        app:dotsColor="@color/teal_700"
+        app:dotsCornerRadius="1dp"
+        app:dotsSize="16dp"
+        app:dotsSpacing="4dp"
+        app:dotsStrokeColor="@color/teal_700"
+        app:dotsStrokeWidth="2dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/vP"
-        app:layout_constraintTop_toBottomOf="@+id/tL"
-        app:progressMode="true"
-        app:selectedDotColor="@color/purple_700" />
+        app:layout_constraintTop_toBottomOf="@+id/tL" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

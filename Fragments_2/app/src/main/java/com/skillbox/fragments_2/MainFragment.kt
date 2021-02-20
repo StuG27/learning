@@ -4,13 +4,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
+import androidx.viewpager.widget.ViewPager
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.badge.BadgeDrawable
+import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.skillbox.fragments_2.databinding.FragmentMainBinding
-
+import com.tbuonomo.viewpagerdotsindicator.DotsIndicator
+import com.tbuonomo.viewpagerdotsindicator.WormDotsIndicator
 
 
 class MainFragment: Fragment(), MainFragmentInterface {
@@ -19,7 +23,7 @@ class MainFragment: Fragment(), MainFragmentInterface {
     private var dialog: AlertDialog? = null
     private var filter = BooleanArray(6)
     private var tabState = IntArray(6)
-    private var tab = IntArray(6)
+    private var tab: MutableMap<String, Int > = mutableMapOf()
     private var isSaved = false
 
     private val screens: List<Articles> = listOf(
@@ -124,49 +128,22 @@ class MainFragment: Fragment(), MainFragmentInterface {
             selectedScreens = screens.toMutableList()
             filterArray.fill(true)
         }
-        saveTab()
         filter = filterArray
         initAdapter(selectedScreens)
     }
 
     private fun saveTabState(){
         var i = 0
-        while (i < 6) {
+        while (i < 5) {
             val a = binding.tL.getTabAt(i)?.badge?.number
             tabState[i] = a ?: 0
             i++
         }
     }
 
-    private fun saveTab(){
-        var i = 0
-        while (i < 6) {
-            val a = binding.tL.getTabAt(i)?.badge?.number
-            if (a != 0) {
-                tab[i] = a ?: 0
-            }
-            i++
-        }
-    }
-
-    private fun restoreTab(){
-        var i = 0
-        while (i < 6) {
-            binding.tL.getTabAt(i)?.orCreateBadge?.apply {
-                if (tab[i] != 0) {
-                    number = tab[i]
-                    badgeGravity = BadgeDrawable.TOP_END
-                } else {
-                    binding.tL.getTabAt(i)?.removeBadge()
-                }
-            }
-            i++
-        }
-    }
-
     private fun restoreTabState(){
         var i = 0
-        while (i < 6) {
+        while (i < 5) {
             binding.tL.getTabAt(i)?.orCreateBadge?.apply {
                 if (tabState[i] != 0) {
                     number = tabState[i]
@@ -204,12 +181,9 @@ class MainFragment: Fragment(), MainFragmentInterface {
         if (isSaved) {
             restoreTabState()
             isSaved = false
-        } else {
-            restoreTab()
         }
-        val dotsIndicator = binding.dI
-        dotsIndicator.setViewPager2(viewPager)
-
+        val wormDotsIndicator = binding.dI
+        wormDotsIndicator.setViewPager2(viewPager)
         binding.vP.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback(){
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)

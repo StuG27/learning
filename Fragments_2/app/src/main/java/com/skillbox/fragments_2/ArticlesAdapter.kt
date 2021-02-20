@@ -12,6 +12,8 @@ class ArticlesAdapter(
         return screens.size
     }
 
+
+
     override fun createFragment(position: Int): Fragment {
         val screen: Articles = screens[position]
         return ArticleFragment.newInstance(
