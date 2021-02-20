@@ -12,16 +12,17 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.skillbox.lists_1.R
 import com.skillbox.lists_1.adapters.PersonAdapter
+import com.skillbox.lists_1.autoCleared
 import com.skillbox.lists_1.data.Person
 import com.skillbox.lists_1.databinding.FragmentListBinding
 import com.skillbox.lists_1.extensions.withArguments
 
 
-
 class ListFragment : Fragment() {
 
     private lateinit var binding: FragmentListBinding
-    private var personAdapter: PersonAdapter? = null
+    private var personAdapter: PersonAdapter by autoCleared()
+
     private var persons = arrayListOf(
         Person.Actor(
             "Том Хэнкс",
@@ -130,35 +131,16 @@ class ListFragment : Fragment() {
         binding.fABAdd.setOnClickListener {
             showAddPersonLayout()
         }
-        personAdapter?.update(persons)
-        personAdapter?.notifyDataSetChanged()
+        personAdapter.update(persons)
+        personAdapter.notifyDataSetChanged()
     }
-
-//    override fun onSaveInstanceState(outState: Bundle) {
-//        super.onSaveInstanceState(outState)
-//        outState.putCharSequenceArrayList(PERSONS, persons)
-//    }
 
     private fun initList() {
         personAdapter = PersonAdapter { position -> deletePerson(position) }
         with(binding.rV) {
             adapter = personAdapter
             layoutManager = LinearLayoutManager(requireContext())
-//                .apply {
-//                orientation = RecyclerView.HORIZONTAL
-//            layoutManager = GridLayoutManager(context, 2).apply {
-//                orientation = RecyclerView.HORIZONTAL
-//                spanSizeLookup = object : GridLayoutManager.SpanSizeLookup(){
-//                    override fun getSpanSize(position: Int): Int {
-//                        return  if (position % 3 == 0) 2 else 1
-//                    }
-//                }
-//            }
             setHasFixedSize(true)
-//            val dividerItemDecoration = DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL)
-//            addItemDecoration(dividerItemDecoration)
-//            addItemDecoration(ItemOffsetDecoration(requireContext()))
-//            itemAnimator = SlideInRightAnimator()
         }
     }
 
@@ -172,60 +154,62 @@ class ListFragment : Fragment() {
 
     private fun deletePerson(position: Int) {
         persons = persons.filterIndexed{ index, _ -> index != position } as ArrayList<Person>
-        personAdapter?.update(persons)
-        personAdapter?.notifyItemRemoved(position)
+        personAdapter.update(persons)
+        personAdapter.notifyItemRemoved(position)
         if (persons.isEmpty()) {
             binding.tV.visibility = View.VISIBLE
         }
     }
 
     private fun showAddPersonLayout() {
-        val dialog = AlertDialog.Builder(requireContext())
         val view = layoutInflater.inflate(R.layout.add_actor_dialog, null)
-        dialog.setTitle("Добавление нового персонажа")
+        var i = 0
+        AlertDialog.Builder(requireContext())
+            .setTitle("Добавление нового персонажа")
             .setView(view)
             .setPositiveButton("Да") { _, _ ->
                 val eTName: EditText = view.findViewById(R.id.eTName)
-                Toast.makeText(context, eTName.text.toString(), Toast.LENGTH_SHORT).show()
                 val eTAvatarLink: EditText = view.findViewById(R.id.eTAvatarLink)
                 val eTAge: EditText = view.findViewById(R.id.eTAge)
                 val cBOscar: CheckBox = view.findViewById(R.id.cBOscar)
                 val eTBestFilm: EditText = view.findViewById(R.id.eTBestFilm)
-                if (eTBestFilm.text.isNotEmpty()) {
-                    val newPerson = Person.Producer(
-                        eTName.text.toString(),
-                        eTAvatarLink.text.toString(),
-                        eTAge.text.toString().toInt(),
-                        cBOscar.isChecked,
-                        eTBestFilm.text.toString()
-                    )
+                if (eTName.text.isNotEmpty() && eTBestFilm.text.isNotEmpty()
+                    && eTAge.text.isNotEmpty() && eTAvatarLink.text.isNotEmpty()) {
+                        val newPerson = Person.Producer(
+                            eTName.text.toString(),
+                            eTAvatarLink.text.toString(),
+                            eTAge.text.toString().toInt(),
+                            cBOscar.isChecked,
+                            eTBestFilm.text.toString()
+                        )
+                    i = 1
                     persons = (listOf(newPerson) + persons) as ArrayList<Person>
-                } else {
+
+                } else if (eTName.text.isNotEmpty() && eTAge.text.isNotEmpty()
+                    && eTAvatarLink.text.isNotEmpty()) {
                     val newPerson = Person.Actor(
                         eTName.text.toString(),
                         eTAvatarLink.text.toString(),
                         eTAge.text.toString().toInt(),
                         cBOscar.isChecked
                     )
+                    i = 1
                     persons = (listOf(newPerson) + persons) as ArrayList<Person>
+                } else {
+                    Toast.makeText(context, "Необходимо заполнить все поля", Toast.LENGTH_SHORT).show()
                 }
-                personAdapter?.update(persons)
-                personAdapter?.notifyItemInserted(0)
-                binding.rV.scrollToPosition(0)
+                if (i == 1) {
+                    personAdapter.update(persons)
+                    personAdapter.notifyItemInserted(0)
+                    binding.rV.scrollToPosition(0)
+                }
             }
             .setNegativeButton("Отмена") { _, _ -> }
             .create()
             .show()
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        personAdapter = null
-// AutoClearedValue
-    }
-
     companion object {
-        const val PERSONS = "persons"
         fun newInstance(): ListFragment {
             return ListFragment().withArguments {
             }
