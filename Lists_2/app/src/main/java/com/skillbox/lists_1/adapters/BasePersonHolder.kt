@@ -6,11 +6,12 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.skillbox.lists_1.R
+import kotlinx.android.extensions.LayoutContainer
 
 abstract class BasePersonHolder(
-    view: View,
+    override val containerView: View?,
     onItemClick: (position: Int) -> Unit
-) : RecyclerView.ViewHolder(view) {
+) : RecyclerView.ViewHolder(containerView), LayoutContainer {
 
     init {
         view.setOnClickListener {

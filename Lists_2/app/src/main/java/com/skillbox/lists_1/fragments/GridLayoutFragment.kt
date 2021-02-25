@@ -18,6 +18,7 @@ import com.skillbox.lists_1.adapters.PersonAdapterShort
 import com.skillbox.lists_1.autoCleared
 import com.skillbox.lists_1.data.Person
 import com.skillbox.lists_1.databinding.FragmentGridLayoutBinding
+import com.skillbox.lists_1.extensions.EndlessRecyclerViewScrollListener
 import com.skillbox.lists_1.extensions.withArguments
 import jp.wasabeef.recyclerview.animators.SlideInRightAnimator
 import kotlin.random.Random
@@ -157,7 +158,7 @@ class GridLayoutFragment : Fragment() {
         personAdapter = PersonAdapterShort { position -> deletePerson(position) }
         with(binding.rV) {
             adapter = personAdapter
-            layoutManager = GridLayoutManager(context, 2).apply {
+            layoutManager = GridLayoutManager(context, 1).apply {
                 orientation = RecyclerView.VERTICAL
 //                spanSizeLookup = object : GridLayoutManager.SpanSizeLookup(){
 //                    override fun getSpanSize(position: Int): Int {
@@ -166,10 +167,27 @@ class GridLayoutFragment : Fragment() {
 //                }
             }
             setHasFixedSize(true)
-            val dividerItemDecoration = DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL)
+            val dividerItemDecoration = DividerItemDecoration(
+                requireContext(),
+                DividerItemDecoration.VERTICAL
+            )
             addItemDecoration(dividerItemDecoration)
             addItemDecoration(ItemOffsetDecoration(requireContext()))
             itemAnimator = SlideInRightAnimator()
+
+            val scrollListener = object : EndlessRecyclerViewScrollListener(layoutManager as GridLayoutManager) {
+                override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView) {
+                    loadNextDataFromApi(page)
+                }
+            }
+            binding.rV.addOnScrollListener(scrollListener)
+        }
+    }
+
+    private fun loadNextDataFromApi(offset : Int) {
+        if (offset < 2) {
+            Toast.makeText(context, "Загружаю", Toast.LENGTH_SHORT).show()
+            personAdapter.items = persons + persons
         }
     }
 

@@ -18,6 +18,7 @@ import com.skillbox.lists_1.adapters.PersonAdapterShort
 import com.skillbox.lists_1.autoCleared
 import com.skillbox.lists_1.data.Person
 import com.skillbox.lists_1.databinding.FragmentStaggeredGridLayoutBinding
+import com.skillbox.lists_1.extensions.EndlessRecyclerViewScrollListener
 import com.skillbox.lists_1.extensions.withArguments
 import jp.wasabeef.recyclerview.animators.SlideInRightAnimator
 import kotlin.random.Random
@@ -160,7 +161,10 @@ class StaggeredGridLayoutFragment : Fragment() {
             adapter = personAdapter
             layoutManager = StaggeredGridLayoutManager(1, RecyclerView.VERTICAL)
             setHasFixedSize(true)
-            val dividerItemDecoration = DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL)
+            val dividerItemDecoration = DividerItemDecoration(
+                requireContext(),
+                DividerItemDecoration.VERTICAL
+            )
             addItemDecoration(dividerItemDecoration)
             addItemDecoration(ItemOffsetDecoration(requireContext()))
             itemAnimator = SlideInRightAnimator()
