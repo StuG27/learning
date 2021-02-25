@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+    <EditText
+        android:id="@+id/eTName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:hint="@string/name_hint"
+        android:inputType="textPersonName" />
+
+    <EditText
+        android:id="@+id/eTAge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:hint="@string/age_hint"
+        android:inputType="number" />
+
+    <EditText
+        android:id="@+id/eTAvatarLink"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:hint="@string/avatar_link_hint"
+        android:inputType="textUri" />
+
+    <CheckBox
+        android:id="@+id/cBOscar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="@string/is_has_oscar" />
+
+    <EditText
+        android:id="@+id/eTBestFilm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:hint="@string/best_film_hint"
+        android:visibility="visible"
+        android:inputType="text" />
+</LinearLayout>

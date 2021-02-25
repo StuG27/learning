@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="8dp"
+    android:background="?attr/selectableItemBackground">
+
+    <ImageView
+        android:id="@+id/iVAvatar"
+        android:layout_width="100dp"
+        android:layout_height="150dp"
+        android:contentDescription="@string/avatar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@tools:sample/avatars" />
+
+    <TextView
+        android:gravity="end"
+        android:id="@+id/tVName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/tVAge"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintEnd_toStartOf="@id/iVAvatar"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="@tools:sample/full_names" />
+
+    <TextView
+        android:gravity="end"
+        android:id="@+id/tVAge"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/tVIsHasOscar"
+        app:layout_constraintEnd_toEndOf="@id/tVName"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@id/tVName"
+        app:layout_constraintTop_toBottomOf="@+id/tVName"
+        tools:text="Возраст 30 лет" />
+
+    <TextView
+        android:gravity="end"
+        android:id="@+id/tVIsHasOscar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/oscar"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@id/tVBestFilm"
+        app:layout_constraintEnd_toEndOf="@id/tVName"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@id/tVName"
+        app:layout_constraintTop_toBottomOf="@+id/tVAge" />
+
+    <TextView
+        android:gravity="end"
+        android:id="@+id/tVBestFilm"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        tools:text="Лучший фильм"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/tVName"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@id/tVName"
+        app:layout_constraintTop_toBottomOf="@+id/tVIsHasOscar" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
