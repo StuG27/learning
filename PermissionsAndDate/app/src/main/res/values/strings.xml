@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Permissions</string>
+    <string name="image">Изображение</string>
+    <string name="location">Разрешить</string>
+    <string name="get_location">Получить локацию</string>
+    <string name="send">Послать</string>
+    <string name="hint_eT">Введите сообщение</string>
+    <string name="time_set">Выбрать время</string>
+    <string name="need_location_permission">Для отображения списка локаций необходимо разрешение</string>
+    <string name="list_is_empty">Список местоположений пуст</string>
+</resources>
