@@ -1,9 +1,9 @@
 package com.skillbox.permissionsanddate
 
-import android.view.View
+import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.hannesdorfmann.adapterdelegates4.AbsListItemAdapterDelegate
-import com.skillbox.permissionsanddate.extentions.inflate
+import com.skillbox.permissionsanddate.databinding.ItemMessageWithDateBinding
 import org.threeten.bp.ZoneId
 import org.threeten.bp.format.DateTimeFormatter
 
@@ -17,7 +17,9 @@ class DataSetWithLocationAdapterDelegate(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup): DataSetWithLocationHolder {
-        return DataSetWithLocationHolder(parent.inflate(R.layout.item_message_with_date), onItemClick)
+        val layoutInflater = LayoutInflater.from(parent.context)
+        val binding = ItemMessageWithDateBinding.inflate(layoutInflater, parent, false)
+        return DataSetWithLocationHolder(binding, onItemClick)
     }
 
     override fun onBindViewHolder(
@@ -28,7 +30,7 @@ class DataSetWithLocationAdapterDelegate(
         holder.bind(item)
     }
 
-    class DataSetWithLocationHolder(view: View, onItemClick: (position: Int) -> Unit) : BaseDataSetHolder(view, onItemClick) {
+    class DataSetWithLocationHolder(binding: ItemMessageWithDateBinding, onItemClick: (position: Int) -> Unit) : BaseDataSetHolder(binding, onItemClick) {
 
         private  val formatter = DateTimeFormatter.ofPattern("HH:mm dd.MM.yyyy")
             .withZone(ZoneId.systemDefault())

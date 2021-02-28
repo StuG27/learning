@@ -1,24 +1,24 @@
 package com.skillbox.permissionsanddate
 
-import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.skillbox.permissionsanddate.databinding.ItemMessageWithDateBinding
 
-abstract class BaseDataSetHolder(view: View, onItemClick: (position: Int) -> Unit): RecyclerView.ViewHolder(view){
+abstract class BaseDataSetHolder(binding: ItemMessageWithDateBinding, onItemClick: (position: Int) -> Unit): RecyclerView.ViewHolder(binding.root){
 
     init {
-        view.setOnClickListener {
+        binding.root.setOnClickListener {
             onItemClick(adapterPosition)
         }
     }
 
-    private val tVTime: TextView = view.findViewById(R.id.tVTime)
-    private val tVLatitude: TextView = view.findViewById(R.id.tVLatitude)
-    private val tVLongitude: TextView = view.findViewById(R.id.tVLongitude)
-    private val tVAltitude: TextView = view.findViewById(R.id.tVAltitude)
-    private val iVImage: ImageView = view.findViewById(R.id.iVImage)
+    private val tVTime: TextView = binding.tVTime
+    private val tVLatitude: TextView = binding.tVLatitude
+    private val tVLongitude: TextView = binding.tVLongitude
+    private val tVAltitude: TextView = binding.tVAltitude
+    private val iVImage: ImageView = binding.iVImage
 
     protected fun bindMainInfo(
             createdAt: String,
