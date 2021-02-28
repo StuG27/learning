@@ -1,11 +1,11 @@
 package com.skillbox.lists_1.adapters
 
-import android.view.View
+import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.hannesdorfmann.adapterdelegates4.AbsListItemAdapterDelegate
-import com.skillbox.lists_1.R
 import com.skillbox.lists_1.data.Person
-import com.skillbox.lists_1.extensions.inflate
+import com.skillbox.lists_1.databinding.ItemActorBinding
+
 
 class ActorAdapterDelegate(
     private val onItemClick: (position: Int) -> Unit
@@ -17,7 +17,9 @@ class ActorAdapterDelegate(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup): ActorHolder {
-        return ActorHolder(parent.inflate(R.layout.item_actor), onItemClick)
+        val layoutInflater = LayoutInflater.from(parent.context)
+        val binding = ItemActorBinding.inflate(layoutInflater, parent, false)
+        return ActorHolder(binding, onItemClick)
     }
 
     override fun onBindViewHolder(
@@ -29,9 +31,9 @@ class ActorAdapterDelegate(
     }
 
     class ActorHolder(
-        view: View,
+        binding: ItemActorBinding,
         onItemClick: (position: Int) -> Unit
-    ) : BasePersonHolder(view, onItemClick) {
+    ) : BasePersonHolder(binding, onItemClick) {
 
         fun bind(actor: Person.Actor) {
             bindMainInfo(actor.name, actor.age, actor.avatarLink, actor.isHasOscar)

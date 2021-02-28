@@ -1,12 +1,12 @@
 package com.skillbox.lists_1.adapters
 
-import android.view.View
+import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.TextView
 import com.hannesdorfmann.adapterdelegates4.AbsListItemAdapterDelegate
 import com.skillbox.lists_1.R
 import com.skillbox.lists_1.data.Person
-import com.skillbox.lists_1.extensions.inflate
+import com.skillbox.lists_1.databinding.ItemProducerBinding
+
 
 class ProducerAdapterDelegate(
     private val onItemClick: (position: Int) -> Unit
@@ -18,7 +18,9 @@ class ProducerAdapterDelegate(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup): ProducerHolder {
-        return ProducerHolder(parent.inflate(R.layout.item_producer), onItemClick)
+        val layoutInflater = LayoutInflater.from(parent.context)
+        val binding = ItemProducerBinding.inflate(layoutInflater, parent, false)
+        return ProducerHolder(binding, onItemClick)
     }
 
     override fun onBindViewHolder(
@@ -30,12 +32,12 @@ class ProducerAdapterDelegate(
     }
 
     class ProducerHolder(
-        view: View,
+        binding: ItemProducerBinding,
         onItemClick: (position: Int) -> Unit
-    ) : BasePersonHolder(view, onItemClick) {
+    ) : BasePersonHolder(binding, onItemClick) {
 
-        private val context = view.context
-        private val tVBestFilm: TextView = view.findViewById(R.id.tVBestFilm)
+        private val context = binding.root.context
+        private val tVBestFilm = binding.tVBestFilm
 
         fun bind(producer: Person.Producer) {
             bindMainInfo(producer.name, producer.age, producer.avatarLink, producer.isHasOscar)

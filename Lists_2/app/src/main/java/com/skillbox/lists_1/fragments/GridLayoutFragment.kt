@@ -176,7 +176,7 @@ class GridLayoutFragment : Fragment() {
             itemAnimator = SlideInRightAnimator()
 
             val scrollListener = object : EndlessRecyclerViewScrollListener(layoutManager as GridLayoutManager) {
-                override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView) {
+                override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView?) {
                     loadNextDataFromApi(page)
                 }
             }
@@ -184,10 +184,11 @@ class GridLayoutFragment : Fragment() {
         }
     }
 
-    private fun loadNextDataFromApi(offset : Int) {
-        if (offset < 2) {
-            Toast.makeText(context, "Загружаю", Toast.LENGTH_SHORT).show()
-            personAdapter.items = persons + persons
+    private fun loadNextDataFromApi(page: Int) {
+        if (page <= 2) {
+            persons = (persons + persons) as ArrayList<Person>
+            personAdapter.items = persons
+            Toast.makeText(context, "Загружаю страницу $page", Toast.LENGTH_SHORT).show()
         }
     }
 

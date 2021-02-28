@@ -1,29 +1,49 @@
 package com.skillbox.lists_1.adapters
 
 import android.view.View
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewbinding.ViewBinding
 import com.bumptech.glide.Glide
 import com.skillbox.lists_1.R
-import kotlinx.android.extensions.LayoutContainer
+import com.skillbox.lists_1.databinding.ItemActorBinding
+import com.skillbox.lists_1.databinding.ItemProducerBinding
 
 abstract class BasePersonHolder(
-    override val containerView: View?,
+    binding: ViewBinding,
     onItemClick: (position: Int) -> Unit
-) : RecyclerView.ViewHolder(containerView), LayoutContainer {
+) : RecyclerView.ViewHolder(binding.root){
 
     init {
-        view.setOnClickListener {
+        binding.root.setOnClickListener {
             onItemClick(adapterPosition)
         }
     }
 
-    private val context = view.context
-    private val tVName: TextView = view.findViewById(R.id.tVName)
-    private val tVAge: TextView = view.findViewById(R.id.tVAge)
-    private val tVIsHasOscar: TextView = view.findViewById(R.id.tVIsHasOscar)
-    private val iVAvatar: ImageView = view.findViewById(R.id.iVAvatar)
+    private val context = when (binding) {
+        is ItemActorBinding -> binding.root.context
+        is ItemProducerBinding -> binding.root.context
+        else -> null
+    }
+    private val tVName = when (binding) {
+        is ItemActorBinding -> binding.tVName
+        is ItemProducerBinding -> binding.tVName
+        else -> null
+    }
+    private val tVAge = when (binding) {
+        is ItemActorBinding -> binding.tVAge
+        is ItemProducerBinding -> binding.tVAge
+        else -> null
+    }
+    private val tVIsHasOscar = when (binding) {
+        is ItemActorBinding -> binding.tVIsHasOscar
+        is ItemProducerBinding -> binding.tVIsHasOscar
+        else -> null
+    }
+    private val iVAvatar = when (binding) {
+        is ItemActorBinding -> binding.iVAvatar
+        is ItemProducerBinding -> binding.iVAvatar
+        else -> null
+    }
 
     protected fun bindMainInfo(
         name: String,
@@ -31,18 +51,18 @@ abstract class BasePersonHolder(
         avatarLink: String,
         isHasOscar: Boolean
     ) {
-        tVName.text = name
-        tVAge.text = context.getString(R.string.age, age)
+        tVName?.text = name
+        tVAge?.text = context?.getString(R.string.age, age)
         if (!isHasOscar) {
-            tVIsHasOscar.visibility = View.GONE
+            tVIsHasOscar?.visibility = View.GONE
         } else {
-            tVIsHasOscar.visibility = View.VISIBLE
+            tVIsHasOscar?.visibility = View.VISIBLE
         }
         Glide
             .with(itemView)
             .load(avatarLink)
             .placeholder(R.drawable.ic_baseline_portrait_24)
             .error(R.drawable.ic_baseline_error_24)
-            .into(iVAvatar)
+            .into(iVAvatar!!)
     }
 }
