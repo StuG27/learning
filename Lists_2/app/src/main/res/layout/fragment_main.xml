@@ -8,41 +8,40 @@
 
     <FrameLayout
         android:id="@+id/mainFragmentContainer"
-        android:layout_width="match_parent"
-        android:layout_height="550dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/bLL"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-    </FrameLayout>
+        app:layout_constraintTop_toTopOf="parent" />
+
 
     <Button
         android:id="@+id/bLL"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/linear"
+        app:layout_constraintBottom_toTopOf="@+id/bGL"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/mainFragmentContainer" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/bGL"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/grid"
+        app:layout_constraintBottom_toTopOf="@+id/bSGL"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bLL" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/bSGL"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/staggered_grid"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bGL" />
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

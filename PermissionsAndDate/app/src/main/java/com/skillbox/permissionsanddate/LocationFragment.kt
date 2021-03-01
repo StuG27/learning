@@ -16,6 +16,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.gms.location.LocationServices
 import com.skillbox.permissionsanddate.databinding.FragmentLocationBinding
 import com.skillbox.permissionsanddate.extentions.autoCleared
@@ -46,6 +47,10 @@ class LocationFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        val isGooglePlayServicesAvailable = GoogleApiAvailability
+                .getInstance()
+                .isGooglePlayServicesAvailable(context)
+        Toast.makeText(context, "Сервисы $isGooglePlayServicesAvailable", Toast.LENGTH_SHORT).show()
         locationPermissionCheck()
     }
 
