@@ -49,7 +49,7 @@ class LocationFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         val isGooglePlayServicesAvailable = GoogleApiAvailability
                 .getInstance()
-                .isGooglePlayServicesAvailable(context)
+                .isGooglePlayServicesAvailable(requireContext())
         Toast.makeText(context, "Сервисы $isGooglePlayServicesAvailable", Toast.LENGTH_SHORT).show()
         locationPermissionCheck()
     }
@@ -103,12 +103,18 @@ class LocationFragment : Fragment() {
                 .show()
     }
 
+    @SuppressLint("MissingPermission")
     private fun locationPermissionGranted() {
         initList()
         binding.tV1.visibility = View.GONE
         binding.tV2.visibility = View.VISIBLE
         binding.b1.visibility = View.GONE
         binding.b2.visibility = View.VISIBLE
+        LocationServices.getFusedLocationProviderClient(requireContext())
+                .lastLocation
+                .addOnSuccessListener {}
+                .addOnCanceledListener {}
+                .addOnFailureListener {}
         binding.b2.setOnClickListener {
             addLocationInfo()
         }
@@ -160,10 +166,10 @@ class LocationFragment : Fragment() {
             addItemDecoration(ItemOffsetDecoration(requireContext()))
             itemAnimator = SlideInRightAnimator()
         }
-        myAdapter.items = locations
     }
 
     private fun changeTime(position: Int) {
+        Toast.makeText(context, "Нажал на позицию $position" , Toast.LENGTH_SHORT).show()
         val item = locations[position] as DataSet.DataSetWithLocation
         val itemInstant = item.createdAt
         val currentDateTime = LocalDateTime.ofInstant(itemInstant, ZoneId.systemDefault())
