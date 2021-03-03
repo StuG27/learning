@@ -183,7 +183,7 @@ class LocationFragment : Fragment() {
                                         .atZone(ZoneId.systemDefault())
                                 Toast.makeText(context, "Время выбрано", Toast.LENGTH_SHORT).show()
                                 selectedInstant = zoneDateTime.toInstant()
-                                val newItem = item.copy(createdAt = selectedInstant ?: itemInstant)
+                                val newItem = item.copy(id = Random.nextLong(), createdAt = selectedInstant ?: itemInstant)
                                 locations[position] = newItem
                                 selectedInstant = null
                                 myAdapter.items = locations
