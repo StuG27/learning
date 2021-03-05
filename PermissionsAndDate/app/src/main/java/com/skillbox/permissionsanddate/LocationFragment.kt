@@ -33,7 +33,7 @@ class LocationFragment : Fragment() {
     private lateinit var binding: FragmentLocationBinding
     private var myAdapter: Adapter by autoCleared()
     private var selectedInstant: Instant? = null
-    private var locations = arrayListOf<DataSet>()
+    private var locations = mutableListOf<DataSet>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -110,11 +110,6 @@ class LocationFragment : Fragment() {
         binding.tV2.visibility = View.VISIBLE
         binding.b1.visibility = View.GONE
         binding.b2.visibility = View.VISIBLE
-        LocationServices.getFusedLocationProviderClient(requireContext())
-                .lastLocation
-                .addOnSuccessListener {}
-                .addOnCanceledListener {}
-                .addOnFailureListener {}
         binding.b2.setOnClickListener {
             addLocationInfo()
         }
@@ -125,7 +120,7 @@ class LocationFragment : Fragment() {
         LocationServices.getFusedLocationProviderClient(requireContext())
                 .lastLocation
                 .addOnSuccessListener { it?.let{
-                    val newLocation = DataSet.DataSetWithLocation(
+                    val newLocation = DataSet(
                             Random.nextLong(),
                             Instant.now(),
                             it.latitude.toString(),
@@ -133,7 +128,7 @@ class LocationFragment : Fragment() {
                             it.altitude.toString(),
                             ""
                     )
-                    locations = (listOf(newLocation) + locations) as ArrayList<DataSet>
+                    locations = (mutableListOf(newLocation) + locations).toMutableList()
                 } ?: Toast.makeText(context, "Локация отсутствует" , Toast.LENGTH_SHORT).show()}
                 .addOnCanceledListener { Toast.makeText(context, "Запрос отменён" , Toast.LENGTH_SHORT).show() }
                 .addOnFailureListener { Toast.makeText(context, "Запрос завершился неудачей" , Toast.LENGTH_SHORT).show() }
@@ -170,7 +165,8 @@ class LocationFragment : Fragment() {
 
     private fun changeTime(position: Int) {
         Toast.makeText(context, "Нажал на позицию $position" , Toast.LENGTH_SHORT).show()
-        val item = locations[position] as DataSet.DataSetWithLocation
+        val item = locations[position]
+        locations.removeAt(position)
         val itemInstant = item.createdAt
         val currentDateTime = LocalDateTime.ofInstant(itemInstant, ZoneId.systemDefault())
         DatePickerDialog(

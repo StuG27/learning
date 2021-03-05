@@ -6,7 +6,7 @@ plugins {
 
 android {
     compileSdkVersion 30
-    buildToolsVersion "30.0.2"
+    buildToolsVersion "30.0.3"
 
     buildFeatures {
         viewBinding true
@@ -67,7 +67,7 @@ dependencies {
     // Saved state module for ViewModel
     implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:$lifecycle_version"
     // Jetpack Compose Integration for ViewModel
-    implementation "androidx.lifecycle:lifecycle-viewmodel-compose:1.0.0-alpha01"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-compose:1.0.0-alpha02"
     // Annotation processor
     kapt "androidx.lifecycle:lifecycle-compiler:$lifecycle_version"
     // alternately - if using Java8, use the following instead of lifecycle-compiler

@@ -10,10 +10,10 @@ import org.threeten.bp.format.DateTimeFormatter
 class DataSetWithLocationAdapterDelegate(
         private val onItemClick: (position: Int) -> Unit
 ):
-    AbsListItemAdapterDelegate<DataSet.DataSetWithLocation, DataSet, DataSetWithLocationAdapterDelegate.DataSetWithLocationHolder>() {
+    AbsListItemAdapterDelegate<DataSet, DataSet, DataSetWithLocationAdapterDelegate.DataSetWithLocationHolder>() {
 
     override fun isForViewType(item: DataSet, items: MutableList<DataSet>, position: Int): Boolean {
-        return item is DataSet.DataSetWithLocation
+        return true
     }
 
     override fun onCreateViewHolder(parent: ViewGroup): DataSetWithLocationHolder {
@@ -23,7 +23,7 @@ class DataSetWithLocationAdapterDelegate(
     }
 
     override fun onBindViewHolder(
-            item: DataSet.DataSetWithLocation,
+            item: DataSet,
             holder: DataSetWithLocationHolder,
             payloads: MutableList<Any>
     ) {
@@ -35,7 +35,7 @@ class DataSetWithLocationAdapterDelegate(
         private  val formatter = DateTimeFormatter.ofPattern("HH:mm dd.MM.yyyy")
             .withZone(ZoneId.systemDefault())
 
-        fun bind(dataSet: DataSet.DataSetWithLocation) {
+        fun bind(dataSet: DataSet) {
             bindMainInfo(formatter.format(dataSet.createdAt), dataSet.latitude, dataSet.longitude, dataSet.altitude, dataSet.link)
         }
     }

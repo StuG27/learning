@@ -2,15 +2,13 @@ package com.skillbox.permissionsanddate
 
 import org.threeten.bp.Instant
 
-sealed class DataSet {
 
-    data class DataSetWithLocation(
+data class DataSet(
         val id: Long,
-        val createdAt: Instant,
+        var createdAt: Instant,
         val latitude: String,
         val longitude: String,
         val altitude: String,
         val link: String
-    ) : DataSet()
+        )
 
-}

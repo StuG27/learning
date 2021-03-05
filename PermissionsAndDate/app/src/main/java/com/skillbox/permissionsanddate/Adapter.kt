@@ -13,12 +13,8 @@ class Adapter( onItemClick: (position: Int) -> Unit
 
     class PersonDiffUtilCallback : DiffUtil.ItemCallback<DataSet>() {
 
-        override fun areItemsTheSame(oldItem: DataSet, newItem: DataSet): Boolean {
-            return when {
-                oldItem is DataSet.DataSetWithLocation && newItem is DataSet.DataSetWithLocation -> oldItem.id == newItem.id
-                else -> false
-            }
-        }
+        override fun areItemsTheSame(oldItem: DataSet, newItem: DataSet): Boolean =
+            oldItem.id == newItem.id
 
         override fun areContentsTheSame(oldItem: DataSet, newItem: DataSet): Boolean {
             return oldItem == newItem
