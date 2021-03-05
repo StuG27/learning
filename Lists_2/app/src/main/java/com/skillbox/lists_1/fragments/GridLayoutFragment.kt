@@ -186,7 +186,7 @@ class GridLayoutFragment : Fragment() {
 
     private fun loadNextDataFromApi(page: Int) {
         if (page <= 2) {
-            persons = (persons + persons) as ArrayList<Person>
+            persons = (persons + persons) as ArrayList
             personAdapter.items = persons
             Toast.makeText(context, "Загружаю страницу $page", Toast.LENGTH_SHORT).show()
         }
