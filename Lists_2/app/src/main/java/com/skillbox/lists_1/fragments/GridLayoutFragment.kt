@@ -186,7 +186,8 @@ class GridLayoutFragment : Fragment() {
 
     private fun loadNextDataFromApi(page: Int) {
         if (page <= 2) {
-            persons = (persons + persons) as ArrayList
+            val persons2 = changeId(persons)
+            persons = (persons + persons2) as ArrayList
             personAdapter.items = persons
             Toast.makeText(context, "Загружаю страницу $page", Toast.LENGTH_SHORT).show()
         }
@@ -247,6 +248,23 @@ class GridLayoutFragment : Fragment() {
             .setNegativeButton("Отмена") { _, _ -> }
             .create()
             .show()
+    }
+
+    private fun changeId(persons: ArrayList<Person>): ArrayList<Person> {
+        val newPersons = arrayListOf<Person>()
+        for (i in persons){
+            when (i) {
+                is Person.Producer -> {
+                    val newPerson = i.copy(Random.nextLong())
+                    newPersons.add(newPerson)
+                }
+                is Person.Actor -> {
+                    val newPerson = i.copy(Random.nextLong())
+                    newPersons.add(newPerson)
+                }
+            }
+        }
+        return newPersons
     }
 
     companion object {
