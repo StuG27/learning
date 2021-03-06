@@ -5,8 +5,13 @@ import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
+import android.content.ActivityNotFoundException
+import android.content.Intent
 import android.content.pm.PackageManager
+import android.location.Location
+import android.net.Uri
 import android.os.Bundle
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,7 +22,8 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.common.GoogleApiAvailability
-import com.google.android.gms.location.LocationServices
+import com.google.android.gms.location.*
+import com.google.android.gms.location.LocationServices.getFusedLocationProviderClient
 import com.skillbox.permissionsanddate.databinding.FragmentLocationBinding
 import com.skillbox.permissionsanddate.extentions.autoCleared
 import com.skillbox.permissionsanddate.extentions.withArguments
@@ -27,6 +33,7 @@ import org.threeten.bp.LocalDateTime
 import org.threeten.bp.ZoneId
 import kotlin.random.Random
 
+
 class LocationFragment : Fragment() {
 
     private var rationaleDialog: AlertDialog? = null
@@ -34,29 +41,62 @@ class LocationFragment : Fragment() {
     private var myAdapter: Adapter by autoCleared()
     private var selectedInstant: Instant? = null
     private var locations = mutableListOf<DataSet>()
+    private var dialog: AlertDialog? = null
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View {
         super.onCreateView(inflater, container, savedInstanceState)
         binding = FragmentLocationBinding.inflate(inflater)
         return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         val isGooglePlayServicesAvailable = GoogleApiAvailability
                 .getInstance()
                 .isGooglePlayServicesAvailable(requireContext())
         Toast.makeText(context, "Сервисы $isGooglePlayServicesAvailable", Toast.LENGTH_SHORT).show()
+        if (isGooglePlayServicesAvailable == 1) {
+            errorDialog()
+        } else if (isGooglePlayServicesAvailable == 2) {
+            updateDialog()
+        }
         locationPermissionCheck()
+    }
+
+    private fun errorDialog(){
+        dialog = AlertDialog.Builder(requireContext())
+                .setTitle("Ошибка")
+                .setMessage("На вашем устройстве отсутствуют GooglePlayServices")
+                .setCancelable(false)
+                .create()
+        dialog?.show()
+    }
+
+    private fun updateDialog(){
+        dialog = AlertDialog.Builder(requireContext())
+                .setTitle("Ошибка")
+                .setMessage("GooglePlayServices устарели")
+                .setPositiveButton("Обновить!") { _, _ ->
+                    try {
+                        startActivity(Intent(Intent.ACTION_VIEW,
+                                Uri.parse("market://details?id=com.google.android.gms")))
+                    } catch (e: ActivityNotFoundException) {
+                        startActivity(Intent(Intent.ACTION_VIEW,
+                                Uri.parse("https://play.google.com/store/apps/details?id=com.google.android.gms")))
+                    }
+                }
+                .setCancelable(false)
+                .create()
+        dialog?.show()
     }
 
     private fun locationPermissionCheck() {
         val isLocationPermissionGranted = ActivityCompat.checkSelfPermission(
-            requireContext(), Manifest.permission.ACCESS_FINE_LOCATION
+                requireContext(), Manifest.permission.ACCESS_FINE_LOCATION
         ) == PackageManager.PERMISSION_GRANTED
         if (isLocationPermissionGranted) {
             locationPermissionGranted()
@@ -77,9 +117,9 @@ class LocationFragment : Fragment() {
     }
 
     override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
+            requestCode: Int,
+            permissions: Array<out String>,
+            grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (grantResults.all { it == PackageManager.PERMISSION_GRANTED }) {
@@ -91,6 +131,8 @@ class LocationFragment : Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
+        dialog?.dismiss()
+        dialog = null
         rationaleDialog?.dismiss()
         rationaleDialog = null
     }
@@ -110,14 +152,16 @@ class LocationFragment : Fragment() {
         binding.tV2.visibility = View.VISIBLE
         binding.b1.visibility = View.GONE
         binding.b2.visibility = View.VISIBLE
+
         binding.b2.setOnClickListener {
             addLocationInfo()
+//            startLocationUpdates()
         }
     }
 
     @SuppressLint("MissingPermission")
     private fun addLocationInfo() {
-        LocationServices.getFusedLocationProviderClient(requireContext())
+        getFusedLocationProviderClient(requireContext())
                 .lastLocation
                 .addOnSuccessListener { it?.let{
                     val newLocation = DataSet(
@@ -129,9 +173,9 @@ class LocationFragment : Fragment() {
                             ""
                     )
                     locations = (mutableListOf(newLocation) + locations).toMutableList()
-                } ?: Toast.makeText(context, "Локация отсутствует" , Toast.LENGTH_SHORT).show()}
-                .addOnCanceledListener { Toast.makeText(context, "Запрос отменён" , Toast.LENGTH_SHORT).show() }
-                .addOnFailureListener { Toast.makeText(context, "Запрос завершился неудачей" , Toast.LENGTH_SHORT).show() }
+                } ?: Toast.makeText(context, "Локация отсутствует", Toast.LENGTH_SHORT).show()}
+                .addOnCanceledListener { Toast.makeText(context, "Запрос отменён", Toast.LENGTH_SHORT).show() }
+                .addOnFailureListener { Toast.makeText(context, "Запрос завершился неудачей", Toast.LENGTH_SHORT).show() }
         if (locations.isNotEmpty()) {
             binding.rV.visibility = View.VISIBLE
             binding.tV2.visibility = View.GONE
@@ -164,9 +208,8 @@ class LocationFragment : Fragment() {
     }
 
     private fun changeTime(position: Int) {
-        Toast.makeText(context, "Нажал на позицию $position" , Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, "Нажал на позицию $position", Toast.LENGTH_SHORT).show()
         val item = locations[position]
-        locations.removeAt(position)
         val itemInstant = item.createdAt
         val currentDateTime = LocalDateTime.ofInstant(itemInstant, ZoneId.systemDefault())
         DatePickerDialog(
@@ -179,7 +222,8 @@ class LocationFragment : Fragment() {
                                         .atZone(ZoneId.systemDefault())
                                 Toast.makeText(context, "Время выбрано", Toast.LENGTH_SHORT).show()
                                 selectedInstant = zoneDateTime.toInstant()
-                                val newItem = item.copy(id = Random.nextLong(), createdAt = selectedInstant ?: itemInstant)
+                                val newItem = item.copy(id = Random.nextLong(), createdAt = selectedInstant
+                                        ?: itemInstant)
                                 locations[position] = newItem
                                 selectedInstant = null
                                 myAdapter.items = locations
@@ -194,6 +238,48 @@ class LocationFragment : Fragment() {
                 currentDateTime.month.value - 1,
                 currentDateTime.dayOfMonth)
                 .show()
+    }
+
+    @SuppressLint("MissingPermission")
+    private fun startLocationUpdates() {
+        binding.b2.visibility = View.GONE
+        val mLocationRequest = LocationRequest()
+        mLocationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+        mLocationRequest.interval = 5000
+        mLocationRequest.fastestInterval = 1000
+
+        val builder = LocationSettingsRequest.Builder()
+        builder.addLocationRequest(mLocationRequest)
+        val locationSettingsRequest = builder.build()
+
+        val settingsClient = LocationServices.getSettingsClient(requireActivity())
+        settingsClient.checkLocationSettings(locationSettingsRequest)
+
+
+        getFusedLocationProviderClient(requireActivity()).requestLocationUpdates(mLocationRequest, object : LocationCallback() {
+            override fun onLocationResult(locationResult: LocationResult) {
+                onLocationChanged(locationResult.lastLocation)
+            }
+        },
+                Looper.myLooper())
+    }
+
+    fun onLocationChanged(location: Location) {
+        val newLocation = DataSet(
+                Random.nextLong(),
+                Instant.now(),
+                location.latitude.toString(),
+                location.longitude.toString(),
+                location.altitude.toString(),
+                ""
+        )
+        locations = (mutableListOf(newLocation) + locations).toMutableList()
+        if (locations.isNotEmpty()) {
+            binding.rV.visibility = View.VISIBLE
+            binding.tV2.visibility = View.GONE
+        }
+        myAdapter.items = locations
+        binding.rV.scrollToPosition(0)
     }
 
     companion object {
