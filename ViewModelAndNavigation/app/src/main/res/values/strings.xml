@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">ViewModel</string>
+    <string name="avatar">Аватар</string>
+    <string name="oscar">Есть оскар</string>
+    <string name="age">Возраст - %1$d</string>
+    <string name="best_film">Лучший фильм - %1$s</string>
+    <string name="actionButton">Кнопка</string>
+    <string name="empty">Список персон пуст</string>
+    <string name="name_hint">Имя</string>
+    <string name="age_hint">Возраст</string>
+    <string name="avatar_link_hint">Ссылка на изображение</string>
+    <string name="is_producer">Режиссёр?</string>
+    <string name="best_film_hint">Лучший фильм (только для режиссера)</string>
+    <string name="is_has_oscar">Есть оскар?</string>
+    <string name="linear">Linear</string>
+    <string name="grid">Grid</string>
+    <string name="staggered_grid">Staggered grid</string>
+    <string name="detail_information">Экран с детальной информацией о персонаже с ID:</string>
+</resources>

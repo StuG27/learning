@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/linearLayoutFragment">
+
+    <fragment
+        android:id="@+id/linearLayoutFragment"
+        android:name="com.skillbox.viewmodelandnavigation.fragments.LinearLayoutFragment"
+        tools:layout="@layout/fragment_linear_layout"
+        android:label="LinearLayoutFragment" >
+        <action
+            android:id="@+id/action_linearLayoutFragment_to_detailsFragment"
+            app:destination="@id/detailsFragment" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/detailsFragment"
+        android:name="com.skillbox.viewmodelandnavigation.fragments.DetailsFragment"
+        android:label="DetailsFragment"
+        tools:layout="@layout/fragment_details">
+        <argument
+            android:name="personId"
+            app:argType="long" />
+    </fragment>
+
+
+</navigation>
