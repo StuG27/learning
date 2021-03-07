@@ -7,7 +7,7 @@ import com.hannesdorfmann.adapterdelegates4.AbsListItemAdapterDelegate
 import com.skillbox.myapplication.R
 import com.skillbox.viewmodelandnavigation.data.Person
 import com.skillbox.viewmodelandnavigation.extensions.inflate
-import java.text.FieldPosition
+
 
 class ProducerAdapterDelegate(
     private val onItemClick: (id: Long) -> Unit,

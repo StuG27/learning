@@ -7,16 +7,15 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.Navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.skillbox.viewmodelandnavigation.ItemOffsetDecoration
+import com.skillbox.viewmodelandnavigation.extensions.ItemOffsetDecoration
 import com.skillbox.viewmodelandnavigation.adapters.PersonAdapterShort
-import com.skillbox.viewmodelandnavigation.autoCleared
 import com.skillbox.myapplication.databinding.FragmentLinearLayoutBinding
 import com.skillbox.viewmodelandnavigation.data.PersonListViewModel
+import com.skillbox.viewmodelandnavigation.extensions.autoCleared
 import jp.wasabeef.recyclerview.animators.SlideInRightAnimator
 
 
@@ -75,15 +74,18 @@ class LinearLayoutFragment : Fragment() {
 
     private fun addPerson() {
         personListViewModel.addPerson()
-        binding.rV.scrollToPosition(0) //Не работает
     }
 
     private fun observeViewModelState() {
         personListViewModel.persons
             .observe(viewLifecycleOwner) { newPersons -> personAdapter.items = newPersons }
-        personListViewModel.showToast
+        personListViewModel.showAddToast
             .observe(viewLifecycleOwner) {
                 Toast.makeText(context, "Добавили персону", Toast.LENGTH_SHORT).show()
+            }
+        personListViewModel.showRemoveToast
+            .observe(viewLifecycleOwner) {
+                Toast.makeText(context, "Персона удалена", Toast.LENGTH_SHORT).show()
             }
     }
 }

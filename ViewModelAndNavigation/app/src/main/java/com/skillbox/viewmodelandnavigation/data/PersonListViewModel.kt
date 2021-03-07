@@ -10,25 +10,30 @@ class PersonListViewModel: ViewModel() {
     private val repository = PersonRepository()
 
     private val personLiveData = MutableLiveData(repository.persons)
-
     val persons: LiveData<ArrayList<Person>>
         get() = personLiveData
 
-    private val showToastLiveData = SingleLiveEvent<Unit>()
+    private val showAddToastLiveData = SingleLiveEvent<Unit>()
+    val showAddToast: LiveData<Unit>
+        get() = showAddToastLiveData
 
-    val showToast: LiveData<Unit>
-        get() = showToastLiveData
+//    private val showRemoveToastLiveData = MutableLiveData<Unit>()
+    private val showRemoveToastLiveData = SingleLiveEvent<Unit>()
+    val showRemoveToast: LiveData<Unit>
+        get() = showRemoveToastLiveData
+
 
     fun addPerson() {
         val newPerson = repository.createPerson()
         val updatedList = (listOf(newPerson) + personLiveData.value!!) as ArrayList<Person>
         personLiveData.postValue(updatedList)
-        showToastLiveData.postValue(Unit)
+        showAddToastLiveData.postValue(Unit)
     }
 
     fun deletePerson(position: Int) {
         personLiveData.postValue(
             repository.deletePerson(personLiveData.value!!, position) as ArrayList<Person>
         )
+        showRemoveToastLiveData.postValue(Unit)
     }
 }

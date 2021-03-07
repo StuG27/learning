@@ -1,4 +1,4 @@
-package com.skillbox.viewmodelandnavigation
+package com.skillbox.viewmodelandnavigation.extensions
 
 
 import androidx.annotation.NonNull
