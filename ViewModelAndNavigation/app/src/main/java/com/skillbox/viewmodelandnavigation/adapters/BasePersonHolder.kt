@@ -1,37 +1,58 @@
 package com.skillbox.viewmodelandnavigation.adapters
 
 import android.view.View
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewbinding.ViewBinding
 import com.bumptech.glide.Glide
 import com.skillbox.myapplication.R
+import com.skillbox.myapplication.databinding.ItemActorBinding
+import com.skillbox.myapplication.databinding.ItemProducerBinding
 
 abstract class BasePersonHolder(
-    view: View,
-    onItemClick: (id: Long) -> Unit,
-    onLongItemClick: (position: Int) -> Unit
-) : RecyclerView.ViewHolder(view) {
+        binding: ViewBinding,
+        onItemClick: (id: Long) -> Unit,
+        onLongItemClick: (position: Int) -> Unit
+) : RecyclerView.ViewHolder(binding.root) {
 
     private var currentId: Long? = null
 
     init {
-        view.setOnClickListener {
+        binding.root.setOnClickListener {
             currentId?.let{
                 onItemClick(it)
             }
         }
-        view.setOnLongClickListener {
+        binding.root.setOnLongClickListener {
             onLongItemClick(adapterPosition)
             return@setOnLongClickListener true
         }
     }
 
-    private val context = view.context
-    private val tVName: TextView = view.findViewById(R.id.tVName)
-    private val tVAge: TextView = view.findViewById(R.id.tVAge)
-    private val tVIsHasOscar: TextView = view.findViewById(R.id.tVIsHasOscar)
-    private val iVAvatar: ImageView = view.findViewById(R.id.iVAvatar)
+    private val context = when (binding) {
+        is ItemActorBinding -> binding.root.context
+        is ItemProducerBinding -> binding.root.context
+        else -> null
+    }
+    private val tVName = when (binding) {
+        is ItemActorBinding -> binding.tVName
+        is ItemProducerBinding -> binding.tVName
+        else -> null
+    }
+    private val tVAge = when (binding) {
+        is ItemActorBinding -> binding.tVAge
+        is ItemProducerBinding -> binding.tVAge
+        else -> null
+    }
+    private val tVIsHasOscar = when (binding) {
+        is ItemActorBinding -> binding.tVIsHasOscar
+        is ItemProducerBinding -> binding.tVIsHasOscar
+        else -> null
+    }
+    private val iVAvatar = when (binding) {
+        is ItemActorBinding -> binding.iVAvatar
+        is ItemProducerBinding -> binding.iVAvatar
+        else -> null
+    }
 
     protected fun bindMainInfo(
         id: Long,
@@ -41,18 +62,18 @@ abstract class BasePersonHolder(
         isHasOscar: Boolean
     ) {
         currentId = id
-        tVName.text = name
-        tVAge.text = context.getString(R.string.age, age)
+        tVName?.text = name
+        tVAge?.text = context?.getString(R.string.age, age)
         if (!isHasOscar) {
-            tVIsHasOscar.visibility = View.GONE
+            tVIsHasOscar?.visibility = View.GONE
         } else {
-            tVIsHasOscar.visibility = View.VISIBLE
+            tVIsHasOscar?.visibility = View.VISIBLE
         }
         Glide
             .with(itemView)
             .load(avatarLink)
             .placeholder(R.drawable.ic_baseline_portrait_24)
             .error(R.drawable.ic_baseline_error_24)
-            .into(iVAvatar)
+            .into(iVAvatar!!)
     }
 }

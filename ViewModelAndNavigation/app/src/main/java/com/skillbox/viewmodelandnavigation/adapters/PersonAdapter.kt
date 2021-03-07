@@ -5,7 +5,7 @@ import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
 import com.skillbox.viewmodelandnavigation.data.Person
 
 
-class PersonAdapterShort(
+class PersonAdapter(
     onItemClick: (id: Long) -> Unit,
     onLongItemClick: (position: Int) -> Unit
 ) : AsyncListDifferDelegationAdapter<Person>(PersonDiffUtilCallback()) {

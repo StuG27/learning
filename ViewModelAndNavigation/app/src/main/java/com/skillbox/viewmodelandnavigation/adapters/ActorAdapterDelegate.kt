@@ -1,12 +1,11 @@
 package com.skillbox.viewmodelandnavigation.adapters
 
-import android.view.View
+import android.view.LayoutInflater
 import android.view.ViewGroup
 import com.hannesdorfmann.adapterdelegates4.AbsListItemAdapterDelegate
-import com.skillbox.myapplication.R
+import com.skillbox.myapplication.databinding.ItemActorBinding
 import com.skillbox.viewmodelandnavigation.data.Person
 
-import com.skillbox.viewmodelandnavigation.extensions.inflate
 
 class ActorAdapterDelegate(
     private val onItemClick: (id: Long) -> Unit,
@@ -19,7 +18,9 @@ class ActorAdapterDelegate(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup): ActorHolder {
-        return ActorHolder(parent.inflate(R.layout.item_actor), onItemClick, onLongItemClick)
+        val layoutInflater = LayoutInflater.from(parent.context)
+        val binding = ItemActorBinding.inflate(layoutInflater, parent, false)
+        return ActorHolder(binding, onItemClick, onLongItemClick)
     }
 
     override fun onBindViewHolder(
@@ -31,10 +32,10 @@ class ActorAdapterDelegate(
     }
 
     class ActorHolder(
-        view: View,
-        onItemClick: (id: Long) -> Unit,
-        onLongItemClick: (position: Int) -> Unit
-    ) : BasePersonHolder(view, onItemClick, onLongItemClick) {
+            binding: ItemActorBinding,
+            onItemClick: (id: Long) -> Unit,
+            onLongItemClick: (position: Int) -> Unit
+    ) : BasePersonHolder(binding, onItemClick, onLongItemClick) {
 
         fun bind(actor: Person.Actor) {
             bindMainInfo(actor.id, actor.name, actor.age, actor.avatarLink, actor.isHasOscar)

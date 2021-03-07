@@ -1,12 +1,11 @@
 package com.skillbox.viewmodelandnavigation.adapters
 
-import android.view.View
+import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.TextView
 import com.hannesdorfmann.adapterdelegates4.AbsListItemAdapterDelegate
 import com.skillbox.myapplication.R
+import com.skillbox.myapplication.databinding.ItemProducerBinding
 import com.skillbox.viewmodelandnavigation.data.Person
-import com.skillbox.viewmodelandnavigation.extensions.inflate
 
 
 class ProducerAdapterDelegate(
@@ -20,7 +19,9 @@ class ProducerAdapterDelegate(
     }
 
     override fun onCreateViewHolder(parent: ViewGroup): ProducerHolder {
-        return ProducerHolder(parent.inflate(R.layout.item_producer), onItemClick, onLongItemClick)
+        val layoutInflater = LayoutInflater.from(parent.context)
+        val binding = ItemProducerBinding.inflate(layoutInflater, parent, false)
+        return ProducerHolder(binding, onItemClick, onLongItemClick)
     }
 
     override fun onBindViewHolder(
@@ -32,13 +33,13 @@ class ProducerAdapterDelegate(
     }
 
     class ProducerHolder(
-        view: View,
-        onItemClick: (id: Long) -> Unit,
-        onLongItemClick: (position: Int) -> Unit
-    ) : BasePersonHolder(view, onItemClick, onLongItemClick) {
+            binding: ItemProducerBinding,
+            onItemClick: (id: Long) -> Unit,
+            onLongItemClick: (position: Int) -> Unit
+    ) : BasePersonHolder(binding, onItemClick, onLongItemClick) {
 
-        private val context = view.context
-        private val tVBestFilm: TextView = view.findViewById(R.id.tVBestFilm)
+        private val context = binding.root.context
+        private val tVBestFilm = binding.tVBestFilm
 
         fun bind(producer: Person.Producer) {
             bindMainInfo(producer.id, producer.name, producer.age, producer.avatarLink, producer.isHasOscar)

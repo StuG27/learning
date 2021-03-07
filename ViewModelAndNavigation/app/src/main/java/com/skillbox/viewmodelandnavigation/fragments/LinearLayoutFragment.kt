@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.skillbox.viewmodelandnavigation.extensions.ItemOffsetDecoration
-import com.skillbox.viewmodelandnavigation.adapters.PersonAdapterShort
+import com.skillbox.viewmodelandnavigation.adapters.PersonAdapter
 import com.skillbox.myapplication.databinding.FragmentLinearLayoutBinding
 import com.skillbox.viewmodelandnavigation.data.PersonListViewModel
 import com.skillbox.viewmodelandnavigation.extensions.autoCleared
@@ -22,7 +22,7 @@ import jp.wasabeef.recyclerview.animators.SlideInRightAnimator
 class LinearLayoutFragment : Fragment() {
 
     private lateinit var binding: FragmentLinearLayoutBinding
-    private var personAdapter: PersonAdapterShort by autoCleared()
+    private var personAdapter: PersonAdapter by autoCleared()
     private val personListViewModel: PersonListViewModel by viewModels()
 
     override fun onCreateView(
@@ -45,7 +45,7 @@ class LinearLayoutFragment : Fragment() {
     }
 
     private fun initList() {
-        personAdapter = PersonAdapterShort({
+        personAdapter = PersonAdapter({
                 id  -> val actions = LinearLayoutFragmentDirections
             .actionLinearLayoutFragmentToDetailsFragment(id)
             findNavController().navigate(actions)},
