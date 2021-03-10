@@ -225,7 +225,7 @@ class LocationFragment : Fragment() {
                                         ?: itemInstant)
                                 locations.add(position, newItem)
                                 selectedInstant = null
-                                binding.rV.scrollToPosition(position)
+                                myAdapter.items = locations
                             },
                             currentDateTime.hour,
                             currentDateTime.minute,
