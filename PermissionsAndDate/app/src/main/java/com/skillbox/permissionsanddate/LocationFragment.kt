@@ -172,14 +172,13 @@ class LocationFragment : Fragment() {
                                 it.altitude.toString(),
                                 ""
                         )
-                        locations = (mutableListOf(newLocation) + locations).toMutableList()
+                        locations = (locations + mutableListOf(newLocation)).toMutableList()
                         isNotEmpty()
+                        myAdapter.items = locations
                     } ?: Toast.makeText(context, "Локация отсутствует", Toast.LENGTH_SHORT).show()
                 }
                 .addOnCanceledListener { Toast.makeText(context, "Запрос отменён", Toast.LENGTH_SHORT).show() }
                 .addOnFailureListener { Toast.makeText(context, "Запрос завершился неудачей", Toast.LENGTH_SHORT).show() }
-        myAdapter.items = locations
-        binding.rV.scrollToPosition(0)
     }
 
     private fun isNotEmpty() {
@@ -209,6 +208,8 @@ class LocationFragment : Fragment() {
         Toast.makeText(context, "Нажал на позицию $position", Toast.LENGTH_SHORT).show()
         val item = locations[position]
         val itemInstant = item.createdAt
+        locations.removeAt(position)
+        myAdapter.items = locations
         val currentDateTime = LocalDateTime.ofInstant(itemInstant, ZoneId.systemDefault())
         DatePickerDialog(
                 requireContext(),
@@ -222,9 +223,8 @@ class LocationFragment : Fragment() {
                                 selectedInstant = zoneDateTime.toInstant()
                                 val newItem = item.copy(id = Random.nextLong(), createdAt = selectedInstant
                                         ?: itemInstant)
-                                locations[position] = newItem
+                                locations.add(position, newItem)
                                 selectedInstant = null
-                                myAdapter.items = locations
                                 binding.rV.scrollToPosition(position)
                             },
                             currentDateTime.hour,
@@ -272,12 +272,8 @@ class LocationFragment : Fragment() {
                 ""
         )
         locations = (mutableListOf(newLocation) + locations).toMutableList()
-        if (locations.isNotEmpty()) {
-            binding.rV.visibility = View.VISIBLE
-            binding.tV2.visibility = View.GONE
-        }
+        isNotEmpty()
         myAdapter.items = locations
-        binding.rV.scrollToPosition(0)
     }
 
     companion object {
