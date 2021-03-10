@@ -1,4 +1,4 @@
-package com.skillbox.viewmodelandnavigation.fragments
+package com.skillbox.viewmodelandnavigation.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -26,9 +26,9 @@ class LinearLayoutFragment : Fragment() {
     private val personListViewModel: PersonListViewModel by viewModels()
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View {
         super.onCreateView(inflater, container, savedInstanceState)
         binding = FragmentLinearLayoutBinding.inflate(inflater)
@@ -45,11 +45,12 @@ class LinearLayoutFragment : Fragment() {
     }
 
     private fun initList() {
-        personAdapter = PersonAdapter({
-                id  -> val actions = LinearLayoutFragmentDirections
-            .actionLinearLayoutFragmentToDetailsFragment(id)
-            findNavController().navigate(actions)},
-            {  position -> deletePerson(position)  }
+        personAdapter = PersonAdapter({ id ->
+            val actions = LinearLayoutFragmentDirections
+                    .actionLinearLayoutFragmentToDetailsFragment(id)
+            findNavController().navigate(actions)
+        },
+                { position -> deletePerson(position) }
         )
 
 
@@ -60,7 +61,7 @@ class LinearLayoutFragment : Fragment() {
             }
             setHasFixedSize(true)
             val dividerItemDecoration =
-                DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL)
+                    DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL)
             addItemDecoration(dividerItemDecoration)
             addItemDecoration(ItemOffsetDecoration(requireContext()))
             itemAnimator = SlideInRightAnimator()
@@ -78,14 +79,14 @@ class LinearLayoutFragment : Fragment() {
 
     private fun observeViewModelState() {
         personListViewModel.persons
-            .observe(viewLifecycleOwner) { newPersons -> personAdapter.items = newPersons }
+                .observe(viewLifecycleOwner) { newPersons -> personAdapter.items = newPersons }
         personListViewModel.showAddToast
-            .observe(viewLifecycleOwner) {
-                Toast.makeText(context, "Добавили персону", Toast.LENGTH_SHORT).show()
-            }
+                .observe(viewLifecycleOwner) {
+                    Toast.makeText(context, "Добавили персону", Toast.LENGTH_SHORT).show()
+                }
         personListViewModel.showRemoveToast
-            .observe(viewLifecycleOwner) {
-                Toast.makeText(context, "Персона удалена", Toast.LENGTH_SHORT).show()
-            }
+                .observe(viewLifecycleOwner) {
+                    Toast.makeText(context, "Персона удалена", Toast.LENGTH_SHORT).show()
+                }
     }
 }

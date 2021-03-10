@@ -15,9 +15,6 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         openLocationFragment()
-//        ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION),
-//            PERMISSION_REQUEST_CODE
-//        )
     }
 
     private fun openLocationFragment() {
@@ -26,8 +23,4 @@ class MainActivity : AppCompatActivity() {
                 .replace(binding.appActivityContainer.id, locationFragment)
                 .commit()
     }
-
-//    companion object {
-//        private const val PERMISSION_REQUEST_CODE = 1
-//    }
 }

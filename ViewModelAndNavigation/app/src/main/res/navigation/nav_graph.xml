@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/linearLayoutFragment"
-        android:name="com.skillbox.viewmodelandnavigation.fragments.LinearLayoutFragment"
+        android:name="com.skillbox.viewmodelandnavigation.ui.LinearLayoutFragment"
         tools:layout="@layout/fragment_linear_layout"
         android:label="LinearLayoutFragment" >
         <action
@@ -18,7 +18,7 @@
 
     <fragment
         android:id="@+id/detailsFragment"
-        android:name="com.skillbox.viewmodelandnavigation.fragments.DetailsFragment"
+        android:name="com.skillbox.viewmodelandnavigation.ui.DetailsFragment"
         android:label="DetailsFragment"
         tools:layout="@layout/fragment_details">
         <argument

@@ -18,7 +18,7 @@ abstract class BasePersonHolder(
 
     init {
         binding.root.setOnClickListener {
-            currentId?.let{
+            currentId?.let {
                 onItemClick(it)
             }
         }
@@ -55,11 +55,11 @@ abstract class BasePersonHolder(
     }
 
     protected fun bindMainInfo(
-        id: Long,
-        name: String,
-        age: Int,
-        avatarLink: String,
-        isHasOscar: Boolean
+            id: Long,
+            name: String,
+            age: Int,
+            avatarLink: String,
+            isHasOscar: Boolean
     ) {
         currentId = id
         tVName?.text = name
@@ -70,10 +70,10 @@ abstract class BasePersonHolder(
             tVIsHasOscar?.visibility = View.VISIBLE
         }
         Glide
-            .with(itemView)
-            .load(avatarLink)
-            .placeholder(R.drawable.ic_baseline_portrait_24)
-            .error(R.drawable.ic_baseline_error_24)
-            .into(iVAvatar!!)
+                .with(itemView)
+                .load(avatarLink)
+                .placeholder(R.drawable.ic_baseline_portrait_24)
+                .error(R.drawable.ic_baseline_error_24)
+                .into(iVAvatar!!)
     }
 }

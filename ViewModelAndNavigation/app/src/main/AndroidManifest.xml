@@ -11,7 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MyApplication">
-        <activity android:name="com.skillbox.viewmodelandnavigation.AppActivity">
+        <activity android:name="com.skillbox.viewmodelandnavigation.ui.AppActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

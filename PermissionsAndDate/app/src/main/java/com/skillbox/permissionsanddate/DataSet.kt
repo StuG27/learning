@@ -10,5 +10,5 @@ data class DataSet(
         val longitude: String,
         val altitude: String,
         val link: String
-        )
+)
 

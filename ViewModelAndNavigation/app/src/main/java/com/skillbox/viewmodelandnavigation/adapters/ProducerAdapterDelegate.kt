@@ -9,10 +9,10 @@ import com.skillbox.viewmodelandnavigation.data.Person
 
 
 class ProducerAdapterDelegate(
-    private val onItemClick: (id: Long) -> Unit,
-    private val onLongItemClick: (position: Int) -> Unit
-):
-    AbsListItemAdapterDelegate<Person.Producer, Person, ProducerAdapterDelegate.ProducerHolder>() {
+        private val onItemClick: (id: Long) -> Unit,
+        private val onLongItemClick: (position: Int) -> Unit
+) :
+        AbsListItemAdapterDelegate<Person.Producer, Person, ProducerAdapterDelegate.ProducerHolder>() {
 
     override fun isForViewType(item: Person, items: MutableList<Person>, position: Int): Boolean {
         return item is Person.Producer
@@ -25,9 +25,9 @@ class ProducerAdapterDelegate(
     }
 
     override fun onBindViewHolder(
-        item: Person.Producer,
-        holder: ProducerHolder,
-        payloads: MutableList<Any>
+            item: Person.Producer,
+            holder: ProducerHolder,
+            payloads: MutableList<Any>
     ) {
         holder.bind(item)
     }

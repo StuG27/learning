@@ -6,13 +6,13 @@ import com.skillbox.viewmodelandnavigation.data.Person
 
 
 class PersonAdapter(
-    onItemClick: (id: Long) -> Unit,
-    onLongItemClick: (position: Int) -> Unit
+        onItemClick: (id: Long) -> Unit,
+        onLongItemClick: (position: Int) -> Unit
 ) : AsyncListDifferDelegationAdapter<Person>(PersonDiffUtilCallback()) {
 
     init {
         delegatesManager.addDelegate(ActorAdapterDelegate(onItemClick, onLongItemClick))
-            .addDelegate(ProducerAdapterDelegate(onItemClick, onLongItemClick))
+                .addDelegate(ProducerAdapterDelegate(onItemClick, onLongItemClick))
     }
 
     class PersonDiffUtilCallback : DiffUtil.ItemCallback<Person>() {

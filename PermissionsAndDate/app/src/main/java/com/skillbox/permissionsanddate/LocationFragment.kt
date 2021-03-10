@@ -18,7 +18,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.gms.common.GoogleApiAvailability
@@ -67,7 +66,7 @@ class LocationFragment : Fragment() {
         locationPermissionCheck()
     }
 
-    private fun errorDialog(){
+    private fun errorDialog() {
         dialog = AlertDialog.Builder(requireContext())
                 .setTitle("Ошибка")
                 .setMessage("На вашем устройстве отсутствуют GooglePlayServices")
@@ -76,7 +75,7 @@ class LocationFragment : Fragment() {
         dialog?.show()
     }
 
-    private fun updateDialog(){
+    private fun updateDialog() {
         dialog = AlertDialog.Builder(requireContext())
                 .setTitle("Ошибка")
                 .setMessage("GooglePlayServices устарели")
@@ -155,7 +154,7 @@ class LocationFragment : Fragment() {
 
         binding.b2.setOnClickListener {
             addLocationInfo()
-//            startLocationUpdates()
+//            startLocationUpdates()  //Старт автоматического добавления локации в список.
         }
     }
 
@@ -163,27 +162,32 @@ class LocationFragment : Fragment() {
     private fun addLocationInfo() {
         getFusedLocationProviderClient(requireContext())
                 .lastLocation
-                .addOnSuccessListener { it?.let{
-                    val newLocation = DataSet(
-                            Random.nextLong(),
-                            Instant.now(),
-                            it.latitude.toString(),
-                            it.longitude.toString(),
-                            it.altitude.toString(),
-                            ""
-                    )
-                    locations = (mutableListOf(newLocation) + locations).toMutableList()
-                } ?: Toast.makeText(context, "Локация отсутствует", Toast.LENGTH_SHORT).show()}
+                .addOnSuccessListener {
+                    it?.let {
+                        val newLocation = DataSet(
+                                Random.nextLong(),
+                                Instant.now(),
+                                it.latitude.toString(),
+                                it.longitude.toString(),
+                                it.altitude.toString(),
+                                ""
+                        )
+                        locations = (mutableListOf(newLocation) + locations).toMutableList()
+                        isNotEmpty()
+                    } ?: Toast.makeText(context, "Локация отсутствует", Toast.LENGTH_SHORT).show()
+                }
                 .addOnCanceledListener { Toast.makeText(context, "Запрос отменён", Toast.LENGTH_SHORT).show() }
                 .addOnFailureListener { Toast.makeText(context, "Запрос завершился неудачей", Toast.LENGTH_SHORT).show() }
-        if (locations.isNotEmpty()) {
-            binding.rV.visibility = View.VISIBLE
-            binding.tV2.visibility = View.GONE
-        }
         myAdapter.items = locations
         binding.rV.scrollToPosition(0)
     }
 
+    private fun isNotEmpty() {
+        if (locations.isNotEmpty()) {
+            binding.rV.visibility = View.VISIBLE
+            binding.tV2.visibility = View.GONE
+        }
+    }
 
     private fun requestLocationPermission() {
         requestPermissions(arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), PERMISSION_REQUEST_CODE)
@@ -197,12 +201,6 @@ class LocationFragment : Fragment() {
                 orientation = RecyclerView.VERTICAL
             }
             setHasFixedSize(true)
-            val dividerItemDecoration = DividerItemDecoration(
-                    requireContext(),
-                    DividerItemDecoration.VERTICAL
-            )
-            addItemDecoration(dividerItemDecoration)
-            addItemDecoration(ItemOffsetDecoration(requireContext()))
             itemAnimator = SlideInRightAnimator()
         }
     }

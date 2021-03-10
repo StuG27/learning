@@ -8,10 +8,10 @@ import com.skillbox.viewmodelandnavigation.data.Person
 
 
 class ActorAdapterDelegate(
-    private val onItemClick: (id: Long) -> Unit,
-    private val onLongItemClick: (position: Int) -> Unit
-):
-    AbsListItemAdapterDelegate<Person.Actor, Person, ActorAdapterDelegate.ActorHolder>() {
+        private val onItemClick: (id: Long) -> Unit,
+        private val onLongItemClick: (position: Int) -> Unit
+) :
+        AbsListItemAdapterDelegate<Person.Actor, Person, ActorAdapterDelegate.ActorHolder>() {
 
     override fun isForViewType(item: Person, items: MutableList<Person>, position: Int): Boolean {
         return item is Person.Actor
@@ -24,9 +24,9 @@ class ActorAdapterDelegate(
     }
 
     override fun onBindViewHolder(
-        item: Person.Actor,
-        holder: ActorHolder,
-        payloads: MutableList<Any>
+            item: Person.Actor,
+            holder: ActorHolder,
+            payloads: MutableList<Any>
     ) {
         holder.bind(item)
     }

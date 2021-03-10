@@ -4,7 +4,7 @@ import androidx.recyclerview.widget.DiffUtil
 import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
 
 
-class Adapter( onItemClick: (position: Int) -> Unit
+class Adapter(onItemClick: (position: Int) -> Unit
 ) : AsyncListDifferDelegationAdapter<DataSet>(PersonDiffUtilCallback()) {
 
     init {
@@ -14,7 +14,7 @@ class Adapter( onItemClick: (position: Int) -> Unit
     class PersonDiffUtilCallback : DiffUtil.ItemCallback<DataSet>() {
 
         override fun areItemsTheSame(oldItem: DataSet, newItem: DataSet): Boolean =
-            oldItem.id == newItem.id
+                oldItem.id == newItem.id
 
         override fun areContentsTheSame(oldItem: DataSet, newItem: DataSet): Boolean {
             return oldItem == newItem

@@ -1,4 +1,4 @@
-package com.skillbox.viewmodelandnavigation.fragments
+package com.skillbox.viewmodelandnavigation.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,7 +9,6 @@ import androidx.navigation.fragment.navArgs
 import com.skillbox.myapplication.databinding.FragmentDetailsBinding
 
 
-
 class DetailsFragment : Fragment() {
 
     private lateinit var binding: FragmentDetailsBinding
@@ -17,9 +16,9 @@ class DetailsFragment : Fragment() {
 
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View {
         super.onCreateView(inflater, container, savedInstanceState)
         binding = FragmentDetailsBinding.inflate(inflater)

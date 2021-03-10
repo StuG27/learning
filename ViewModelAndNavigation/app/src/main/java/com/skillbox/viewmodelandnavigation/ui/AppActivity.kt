@@ -1,4 +1,4 @@
-package com.skillbox.viewmodelandnavigation
+package com.skillbox.viewmodelandnavigation.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

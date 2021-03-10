@@ -5,9 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.skillbox.viewmodelandnavigation.extensions.SingleLiveEvent
 
-class PersonListViewModel: ViewModel() {
+class PersonListViewModel : ViewModel() {
 
-    private val repository = PersonRepository()
+    private val repository = PersonRepository
 
     private val personLiveData = MutableLiveData(repository.persons)
     val persons: LiveData<ArrayList<Person>>
@@ -17,7 +17,7 @@ class PersonListViewModel: ViewModel() {
     val showAddToast: LiveData<Unit>
         get() = showAddToastLiveData
 
-//    private val showRemoveToastLiveData = MutableLiveData<Unit>()
+
     private val showRemoveToastLiveData = SingleLiveEvent<Unit>()
     val showRemoveToast: LiveData<Unit>
         get() = showRemoveToastLiveData
@@ -32,7 +32,7 @@ class PersonListViewModel: ViewModel() {
 
     fun deletePerson(position: Int) {
         personLiveData.postValue(
-            repository.deletePerson(personLiveData.value!!, position) as ArrayList<Person>
+                repository.deletePerson(personLiveData.value!!, position) as ArrayList<Person>
         )
         showRemoveToastLiveData.postValue(Unit)
     }

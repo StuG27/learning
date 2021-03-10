@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.skillbox.permissionsanddate.databinding.ItemMessageWithDateBinding
 
-abstract class BaseDataSetHolder(binding: ItemMessageWithDateBinding, onItemClick: (position: Int) -> Unit): RecyclerView.ViewHolder(binding.root){
+abstract class BaseDataSetHolder(binding: ItemMessageWithDateBinding, onItemClick: (position: Int) -> Unit) : RecyclerView.ViewHolder(binding.root) {
 
     init {
         binding.root.setOnClickListener {
