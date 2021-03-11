@@ -12,8 +12,5 @@
     <string name="is_producer">Режиссёр?</string>
     <string name="best_film_hint">Лучший фильм (только для режиссера)</string>
     <string name="is_has_oscar">Есть оскар?</string>
-    <string name="linear">Linear</string>
-    <string name="grid">Grid</string>
-    <string name="staggered_grid">Staggered grid</string>
     <string name="detail_information">Экран с детальной информацией о персонаже с ID:</string>
 </resources>

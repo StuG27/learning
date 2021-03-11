@@ -17,11 +17,9 @@ class PersonListViewModel : ViewModel() {
     val showAddToast: LiveData<Unit>
         get() = showAddToastLiveData
 
-
     private val showRemoveToastLiveData = SingleLiveEvent<Unit>()
     val showRemoveToast: LiveData<Unit>
         get() = showRemoveToastLiveData
-
 
     fun addPerson() {
         val newPerson = repository.createPerson()

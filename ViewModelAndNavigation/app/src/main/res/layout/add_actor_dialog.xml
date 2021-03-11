@@ -42,6 +42,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:hint="@string/best_film_hint"
-        android:visibility="visible"
-        android:inputType="text" />
+        android:inputType="text"
+        android:visibility="visible" />
 </LinearLayout>

@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="8dp"
-    android:background="?attr/selectableItemBackground">
+    android:background="?attr/selectableItemBackground"
+    android:padding="8dp">
 
     <ImageView
         android:id="@+id/iVAvatar"
@@ -17,24 +17,24 @@
         tools:src="@tools:sample/avatars" />
 
     <TextView
-        android:gravity="end"
         android:id="@+id/tVName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
+        android:gravity="end"
         android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/tVAge"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintEnd_toStartOf="@id/iVAvatar"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="@tools:sample/full_names" />
 
     <TextView
-        android:gravity="end"
         android:id="@+id/tVAge"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:gravity="end"
         android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/tVIsHasOscar"
         app:layout_constraintEnd_toEndOf="@id/tVName"
@@ -44,10 +44,10 @@
         tools:text="Возраст 30 лет" />
 
     <TextView
-        android:gravity="end"
         android:id="@+id/tVIsHasOscar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:gravity="end"
         android:text="@string/oscar"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@id/tVBestFilm"
@@ -57,16 +57,16 @@
         app:layout_constraintTop_toBottomOf="@+id/tVAge" />
 
     <TextView
-        android:gravity="end"
         android:id="@+id/tVBestFilm"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        tools:text="Лучший фильм"
+        android:gravity="end"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/tVName"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="@id/tVName"
-        app:layout_constraintTop_toBottomOf="@+id/tVIsHasOscar" />
+        app:layout_constraintTop_toBottomOf="@+id/tVIsHasOscar"
+        tools:text="Лучший фильм" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

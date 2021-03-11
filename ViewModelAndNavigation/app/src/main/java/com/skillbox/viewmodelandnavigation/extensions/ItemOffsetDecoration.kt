@@ -5,7 +5,13 @@ import android.graphics.Rect
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 
-class ItemOffsetDecoration(private val context: Context) : RecyclerView.ItemDecoration() {
+class ItemOffsetDecoration(
+        private val context: Context,
+        private val leftOffset: Int,
+        private val rightOffset: Int,
+        private val topOffset: Int,
+        private val bottomOffset: Int
+) : RecyclerView.ItemDecoration() {
 
     override fun getItemOffsets(
             outRect: Rect,
@@ -13,13 +19,11 @@ class ItemOffsetDecoration(private val context: Context) : RecyclerView.ItemDeco
             parent: RecyclerView,
             state: RecyclerView.State
     ) {
-        val offset = 10.fromDPToPixels(context)
         with(outRect) {
-            left = offset
-            right = offset
-            top = offset
-            bottom = offset
+            left = leftOffset.fromDPToPixels(context)
+            right = rightOffset.fromDPToPixels(context)
+            top = topOffset.fromDPToPixels(context)
+            bottom = bottomOffset.fromDPToPixels(context)
         }
     }
-
 }

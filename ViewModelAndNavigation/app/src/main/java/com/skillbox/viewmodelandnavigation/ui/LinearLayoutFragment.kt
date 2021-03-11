@@ -52,8 +52,6 @@ class LinearLayoutFragment : Fragment() {
         },
                 { position -> deletePerson(position) }
         )
-
-
         with(binding.rV) {
             adapter = personAdapter
             layoutManager = LinearLayoutManager(context).apply {
@@ -63,11 +61,16 @@ class LinearLayoutFragment : Fragment() {
             val dividerItemDecoration =
                     DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL)
             addItemDecoration(dividerItemDecoration)
-            addItemDecoration(ItemOffsetDecoration(requireContext()))
+            addItemDecoration(ItemOffsetDecoration(
+                    requireContext(),
+                    10,
+                    10,
+                    10,
+                    10
+            ))
             itemAnimator = SlideInRightAnimator()
         }
     }
-
 
     private fun deletePerson(position: Int) {
         personListViewModel.deletePerson(position)

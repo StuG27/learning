@@ -16,7 +16,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:itemCount="5"
         android:clipToPadding="false"
-        android:paddingBottom="88dp"
+        android:paddingBottom="112dp"
         tools:listitem="@layout/item_actor"/>
 
     <TextView

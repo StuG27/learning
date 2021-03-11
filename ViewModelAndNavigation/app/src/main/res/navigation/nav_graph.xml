@@ -8,8 +8,8 @@
     <fragment
         android:id="@+id/linearLayoutFragment"
         android:name="com.skillbox.viewmodelandnavigation.ui.LinearLayoutFragment"
-        tools:layout="@layout/fragment_linear_layout"
-        android:label="LinearLayoutFragment" >
+        android:label="LinearLayoutFragment"
+        tools:layout="@layout/fragment_linear_layout">
         <action
             android:id="@+id/action_linearLayoutFragment_to_detailsFragment"
             app:destination="@id/detailsFragment" />
