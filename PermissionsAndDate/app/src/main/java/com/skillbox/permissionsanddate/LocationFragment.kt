@@ -57,7 +57,8 @@ class LocationFragment : Fragment() {
         val isGooglePlayServicesAvailable = GoogleApiAvailability
                 .getInstance()
                 .isGooglePlayServicesAvailable(requireContext())
-        Toast.makeText(context, "Сервисы $isGooglePlayServicesAvailable", Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, "Сервисы $isGooglePlayServicesAvailable", Toast.LENGTH_SHORT)
+                .show()
         if (isGooglePlayServicesAvailable == 1) {
             errorDialog()
         } else if (isGooglePlayServicesAvailable == 2) {
@@ -124,7 +125,12 @@ class LocationFragment : Fragment() {
         if (grantResults.all { it == PackageManager.PERMISSION_GRANTED }) {
             locationPermissionGranted()
         } else {
-            Toast.makeText(context, "Невозможно получить доступ к локации без разрешения", Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                    context,
+                    "Невозможно получить доступ к локации без разрешения",
+                    Toast.LENGTH_SHORT
+            )
+                    .show()
         }
     }
 
@@ -150,11 +156,14 @@ class LocationFragment : Fragment() {
         binding.tV1.visibility = View.GONE
         binding.tV2.visibility = View.VISIBLE
         binding.b1.visibility = View.GONE
-        binding.b2.visibility = View.VISIBLE
+        binding.bManualAdd.visibility = View.VISIBLE
+        binding.bAutoAdd.visibility = View.VISIBLE
 
-        binding.b2.setOnClickListener {
+        binding.bManualAdd.setOnClickListener {
             addLocationInfo()
-//            startLocationUpdates()  //Старт автоматического добавления локации в список.
+        }
+        binding.bAutoAdd.setOnClickListener {
+            startLocationUpdates()
         }
     }
 
@@ -175,10 +184,16 @@ class LocationFragment : Fragment() {
                         locations = (locations + mutableListOf(newLocation)).toMutableList()
                         isNotEmpty()
                         myAdapter.items = locations
-                    } ?: Toast.makeText(context, "Локация отсутствует", Toast.LENGTH_SHORT).show()
+                    } ?: Toast.makeText(context, "Локация отсутствует", Toast.LENGTH_SHORT)
+                            .show()
                 }
-                .addOnCanceledListener { Toast.makeText(context, "Запрос отменён", Toast.LENGTH_SHORT).show() }
-                .addOnFailureListener { Toast.makeText(context, "Запрос завершился неудачей", Toast.LENGTH_SHORT).show() }
+                .addOnCanceledListener {
+                    Toast.makeText(context, "Запрос отменён", Toast.LENGTH_SHORT).show()
+                }
+                .addOnFailureListener {
+                    Toast.makeText(context, "Запрос завершился неудачей", Toast.LENGTH_SHORT)
+                            .show()
+                }
     }
 
     private fun isNotEmpty() {
@@ -205,11 +220,8 @@ class LocationFragment : Fragment() {
     }
 
     private fun changeTime(position: Int) {
-        Toast.makeText(context, "Нажал на позицию $position", Toast.LENGTH_SHORT).show()
         val item = locations[position]
         val itemInstant = item.createdAt
-        locations.removeAt(position)
-        myAdapter.items = locations
         val currentDateTime = LocalDateTime.ofInstant(itemInstant, ZoneId.systemDefault())
         DatePickerDialog(
                 requireContext(),
@@ -217,15 +229,26 @@ class LocationFragment : Fragment() {
                     TimePickerDialog(
                             requireContext(),
                             { _, hourOfDay, minute ->
-                                val zoneDateTime = LocalDateTime.of(year, month + 1, dayOfMonth, hourOfDay, minute)
+                                val zoneDateTime = LocalDateTime.of(
+                                        year,
+                                        month + 1,
+                                        dayOfMonth,
+                                        hourOfDay,
+                                        minute
+                                )
                                         .atZone(ZoneId.systemDefault())
-                                Toast.makeText(context, "Время выбрано", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(context,
+                                        "Новые дата и время сохранены",
+                                        Toast.LENGTH_SHORT
+                                )
+                                        .show()
                                 selectedInstant = zoneDateTime.toInstant()
-                                val newItem = item.copy(id = Random.nextLong(), createdAt = selectedInstant
-                                        ?: itemInstant)
-                                locations.add(position, newItem)
+                                val newItem = item.copy(
+                                        createdAt = selectedInstant ?: itemInstant,
+                                )
+                                locations[position] = newItem
                                 selectedInstant = null
-                                myAdapter.items = locations
+                                myAdapter.notifyItemChanged(position)
                             },
                             currentDateTime.hour,
                             currentDateTime.minute,
@@ -240,7 +263,7 @@ class LocationFragment : Fragment() {
 
     @SuppressLint("MissingPermission")
     private fun startLocationUpdates() {
-        binding.b2.visibility = View.GONE
+        binding.bAutoAdd.visibility = View.GONE
         val mLocationRequest = LocationRequest()
         mLocationRequest.priority = LocationRequest.PRIORITY_HIGH_ACCURACY
         mLocationRequest.interval = 5000
@@ -254,12 +277,13 @@ class LocationFragment : Fragment() {
         settingsClient.checkLocationSettings(locationSettingsRequest)
 
 
-        getFusedLocationProviderClient(requireActivity()).requestLocationUpdates(mLocationRequest, object : LocationCallback() {
-            override fun onLocationResult(locationResult: LocationResult) {
-                onLocationChanged(locationResult.lastLocation)
-            }
-        },
-                Looper.myLooper())
+        getFusedLocationProviderClient(requireActivity())
+                .requestLocationUpdates(mLocationRequest, object : LocationCallback() {
+                    override fun onLocationResult(locationResult: LocationResult) {
+                        onLocationChanged(locationResult.lastLocation)
+                    }
+                },
+                        Looper.myLooper())
     }
 
     fun onLocationChanged(location: Location) {
@@ -271,7 +295,7 @@ class LocationFragment : Fragment() {
                 location.altitude.toString(),
                 ""
         )
-        locations = (mutableListOf(newLocation) + locations).toMutableList()
+        locations = (locations + mutableListOf(newLocation)).toMutableList()
         isNotEmpty()
         myAdapter.items = locations
     }

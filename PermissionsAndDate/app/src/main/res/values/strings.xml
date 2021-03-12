@@ -3,6 +3,7 @@
     <string name="image">Изображение</string>
     <string name="location">Разрешить</string>
     <string name="get_location">Получить локацию</string>
+    <string name="get_location_auto">Включить автодобавление</string>
     <string name="send">Послать</string>
     <string name="hint_eT">Введите сообщение</string>
     <string name="time_set">Выбрать время</string>
