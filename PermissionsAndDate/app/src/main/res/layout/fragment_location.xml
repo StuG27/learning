@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/f"
@@ -12,9 +11,9 @@
         android:id="@+id/rV"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone"
         android:clipToPadding="false"
-        android:paddingBottom="40dp"/>
+        android:paddingBottom="40dp"
+        android:visibility="gone" />
 
     <TextView
         android:id="@+id/tV1"
@@ -60,19 +59,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/get_location"
+        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/bAutoAdd"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:visibility="gone"/>
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/bAutoAdd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/get_location_auto"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:visibility="gone"/>
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

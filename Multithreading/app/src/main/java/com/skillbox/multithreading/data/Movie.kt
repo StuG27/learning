@@ -1,4 +1,4 @@
-package com.skillbox.multithreading.networking
+package com.skillbox.multithreading.data
 
 import com.google.gson.annotations.SerializedName
 
