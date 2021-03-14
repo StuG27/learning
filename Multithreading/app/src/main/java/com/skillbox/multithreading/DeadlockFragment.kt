@@ -12,12 +12,8 @@ class DeadlockFragment : Fragment() {
     override fun onResume() {
         super.onResume()
 
-        val friend1 = Person("Вася")
-        val friend2 = Person("Петя")
-
         val thread1 = Thread {
             Log.d("Deadlock", "Start1")
-
             (0..1000000).forEach {
                 synchronized(lock1) {
                     synchronized(lock2) {
@@ -27,7 +23,6 @@ class DeadlockFragment : Fragment() {
             }
             Log.d("Deadlock", "End1")
         }
-
         val thread2 = Thread {
             Log.d("Deadlock", "Start2")
             (0..1000000).forEach {
@@ -40,26 +35,31 @@ class DeadlockFragment : Fragment() {
 
             Log.d("Deadlock", "End2")
         }
-
         thread1.start()
         thread2.start()
-    }
 
+//      Fixed Deadlock
 
-    data class Person(
-        val name: String
-    ) {
-
-        fun throwBallTo(friend: Person) {
-            synchronized(this) {
-                Log.d(
-                    "Person",
-                    "$name бросает мяч ${friend.name} на потоке ${Thread.currentThread().name}"
-                )
-                Thread.sleep(500)
-            }
-            friend.throwBallTo(this)
-        }
-
+//        val thread1 = Thread {
+//            Log.d("Deadlock", "Start1")
+//            (0..1000000).forEach {
+//                synchronized(this) {
+//                    i++
+//                }
+//            }
+//            Log.d("Deadlock", "End1")
+//        }
+//        val thread2 = Thread {
+//            Log.d("Deadlock", "Start2")
+//            (0..1000000).forEach {
+//                synchronized(this) {
+//                    i++
+//                }
+//            }
+//
+//            Log.d("Deadlock", "End2")
+//        }
+//        thread1.start()
+//        thread2.start()
     }
 }

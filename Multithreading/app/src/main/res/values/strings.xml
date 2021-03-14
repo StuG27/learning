@@ -4,4 +4,10 @@
     <string name="race_condition">Race condition</string>
     <string name="deadlock">Deadlock</string>
     <string name="livelock">Livelock</string>
+    <string name="input_number_of_threads">Введите количество потоков</string>
+    <string name="input_increment">Введите инкремент</string>
+    <string name="result_hint">Тут появится результат</string>
+    <string name="not_synchronized">Без синхронизации</string>
+    <string name="with_synchronized">С синхронизацией</string>
+    <string name="result">Ожидал - %1$d Получил - %2$d Время - %3$d</string>
 </resources>
