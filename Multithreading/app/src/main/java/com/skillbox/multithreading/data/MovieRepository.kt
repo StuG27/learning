@@ -1,18 +1,19 @@
 package com.skillbox.multithreading.data
 
-import android.os.Handler
-import android.os.Looper
 import android.util.Log
 import com.skillbox.multithreading.networking.Network
 import java.util.*
+import java.util.concurrent.CountDownLatch
 import java.util.concurrent.Executors
 
 object MovieRepository {
 
     fun fetchMoviesThreadPool(
+
         ids: List<String>,
         onMoviesFetched: (movies: MutableList<Movie?>) -> Unit
     ) {
+        val latch = CountDownLatch(ids.size)
         val cores = Runtime.getRuntime().availableProcessors()
         Log.d("Pool", "$cores")
         val pool = Executors.newFixedThreadPool(cores)
@@ -21,10 +22,13 @@ object MovieRepository {
             pool.execute {
                 allMovies.add(Network.getMovieById(movieId))
                 Log.d("Pool", "${Thread.currentThread()}")
+                latch.countDown()
             }
         }
-        Handler(Looper.getMainLooper())
-            .postDelayed({ onMoviesFetched(allMovies) }, 1000)
+        Thread {
+            latch.await()
+            onMoviesFetched(allMovies)
+        }.start()
     }
 
     fun fetchMoviesThread(
