@@ -14,8 +14,8 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.skillbox.Multithreading"
-        minSdkVersion 24
+        applicationId "com.skillbox.Networking"
+        minSdkVersion 23
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
@@ -58,13 +58,12 @@ dependencies {
     implementation 'com.hannesdorfmann:adapterdelegates4-kotlin-dsl-viewbinding:4.3.0'
     implementation 'com.squareup.okhttp3:okhttp:4.8.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:4.8.0'
-    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
 
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.0"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.3.0"
     kapt "androidx.lifecycle:lifecycle-compiler:2.3.0"
     implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:2.3.0"
-    implementation "androidx.lifecycle:lifecycle-viewmodel-compose:1.0.0-alpha03"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-compose:1.0.0-alpha02"
     implementation "androidx.lifecycle:lifecycle-common-java8:2.3.0"
     implementation "androidx.lifecycle:lifecycle-service:2.3.0"
     implementation "androidx.lifecycle:lifecycle-process:2.3.0"
@@ -78,6 +77,4 @@ dependencies {
     releaseImplementation 'com.facebook.flipper:flipper-noop:0.79.1'
     debugImplementation 'com.facebook.flipper:flipper-network-plugin:0.79.1'
     releaseImplementation 'com.github.theGlenn:flipper-android-no-op:0.3.0'
-    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
 }

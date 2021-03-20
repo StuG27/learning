@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">Networking</string>
+    <string name="empty">Список пока пуст</string>
+    <string name="input_title">Введите название</string>
+    <string name="search_on_IMDB">Поиск на IMDB</string>
+    <string name="input_year">Введите год выхода</string>
+    <string name="choose_type">Выберите тип</string>
+    <string name="episode">Эпизод</string>
+    <string name="not_selected">Не выбрано</string>
+    <string name="movie">Фильм</string>
+    <string name="Series">Сериал</string>
+    <string name="poster">Постер</string>
+    <string-array name="movie_type">
+        <item>Фильм</item>
+        <item>Эпизод</item>
+        <item>Сериал</item>
+        <item>Не выбрано</item>
+    </string-array>
+</resources>

@@ -46,7 +46,6 @@ class ThreadingFragment : Fragment() {
 
     private fun initList() {
         movieAdapter = MovieAdapter()
-
         with(binding.rV) {
             adapter = movieAdapter
             layoutManager = LinearLayoutManager(requireContext()).apply {
@@ -68,6 +67,8 @@ class ThreadingFragment : Fragment() {
             itemAnimator = SlideInRightAnimator()
         }
     }
+
+
 
     private fun bindViewModel() {
         viewModel.movieList.observe(viewLifecycleOwner) { movieAdapter.items = it }
