@@ -6,10 +6,15 @@ import com.hannesdorfmann.adapterdelegates4.AbsListItemAdapterDelegate
 import com.skillbox.networking.data.RemoteMovie
 import com.skillbox.networking.databinding.ItemMovieBinding
 
-class MovieAdapterDelegate:
+
+class MovieAdapterDelegate :
     AbsListItemAdapterDelegate<RemoteMovie, RemoteMovie, MovieAdapterDelegate.MovieHolder>() {
 
-    override fun isForViewType(item: RemoteMovie, items: MutableList<RemoteMovie>, position: Int): Boolean {
+    override fun isForViewType(
+        item: RemoteMovie,
+        items: MutableList<RemoteMovie>,
+        position: Int
+    ): Boolean {
         return true
     }
 
@@ -20,19 +25,19 @@ class MovieAdapterDelegate:
     }
 
     override fun onBindViewHolder(
-            item: RemoteMovie,
-            holder: MovieHolder,
-            payloads: MutableList<Any>
+        item: RemoteMovie,
+        holder: MovieHolder,
+        payloads: MutableList<Any>
     ) {
         holder.bind(item)
     }
 
     class MovieHolder(
-            binding: ItemMovieBinding,
+        binding: ItemMovieBinding,
     ) : BaseMovieHolder(binding) {
 
         fun bind(movie: RemoteMovie) {
-            bindMainInfo(movie.id, movie.title, movie.year, movie.type, movie.poster )
+            bindMainInfo(movie.id, movie.title, movie.year, movie.type, movie.poster)
         }
     }
 }

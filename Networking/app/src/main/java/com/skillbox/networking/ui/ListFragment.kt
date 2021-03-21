@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
-import android.widget.ProgressBar
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
@@ -31,9 +30,9 @@ class ListFragment : Fragment() {
     private val viewModel: ViewModel by viewModels()
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View {
         super.onCreateView(inflater, container, savedInstanceState)
         binding = FragmentListBinding.inflate(inflater)
@@ -63,39 +62,26 @@ class ListFragment : Fragment() {
             }
             setHasFixedSize(true)
             val dividerItemDecoration =
-                    DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL)
+                DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL)
             addItemDecoration(dividerItemDecoration)
             addItemDecoration(ItemOffsetDecoration(requireContext()))
             itemAnimator = SlideInRightAnimator()
-//            val scrollListener = object : EndlessRecyclerViewScrollListener(layoutManager as LinearLayoutManager) {
-//                override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView?) {
-//                    loadNextDataFromApi(page)
-//                }
-//            }
-//            binding.rV.addOnScrollListener(scrollListener)
         }
     }
-
-//    private fun loadNextDataFromApi(page: Int) {
-//        val queryText = binding.eTTitle.text.toString()
-//        viewModel.search(queryText, page+1)
-//        viewModel.movieList.observe(viewLifecycleOwner) { movieAdapter.items = it }
-//        viewModel.isLoading.observe(viewLifecycleOwner, ::updateLoadingState)
-//        Toast.makeText(context, "Загружаю страницу $page", Toast.LENGTH_SHORT).show()
-//    }
 
     private fun bindViewModel() {
         checkET()
         binding.bSearch.setOnClickListener {
             val queryText = binding.eTTitle.text.toString()
-            val age = binding.eTTitle.text.toString()
-            var type = binding.tV.text.toString()
-            when (type) {
-                "Сериал" -> type = "series"
-                "Фильм" -> type = "movie"
-                "Эпизод" -> type = "episode"
+            val year = binding.eTYear.text.toString()
+            var type: String? = binding.tV.text.toString()
+            type = when (type) {
+                "Сериал" -> "series"
+                "Фильм" -> "movie"
+                "Эпизод" -> "episode"
+                else -> null
             }
-            viewModel.search(queryText, age, type, 1)
+            viewModel.search(queryText, year, type, 1)
         }
         viewModel.movieList.observe(viewLifecycleOwner) { movieAdapter.items = it }
         viewModel.isLoading.observe(viewLifecycleOwner, ::updateLoadingState)
@@ -114,24 +100,28 @@ class ListFragment : Fragment() {
     }
 
     private fun check() {
-        val isEnable = binding.tV.text.isNotEmpty()
-                && binding.eTTitle.text.isNotEmpty() || checkAge()
+        var isEnable = false
+        if (binding.tV.text.isNotEmpty() && binding.eTTitle.text.isNotEmpty()) {
+            isEnable = true
+            if (binding.eTYear.text.isNotEmpty()) {
+                isEnable = checkYear()
+            }
+        }
         binding.bSearch.isEnabled = isEnable
     }
 
-    private fun checkAge(): Boolean {
-        return if (binding.eTYear.text.isNotEmpty()) {
-            val year = binding.eTYear.text.toString().toInt()
-            year in 1874..2030
-        } else {
-            false
-        }
+    private fun checkYear(): Boolean {
+        val year = binding.eTYear.text.toString().toInt()
+        return year in 1874..2030
     }
 
     private fun updateLoadingState(isLoading: Boolean) {
         binding.rV.isVisible = isLoading.not()
         binding.pB.isVisible = isLoading
         binding.bSearch.isEnabled = isLoading.not()
+        binding.eTYear.isEnabled = isLoading.not()
+        binding.eTTitle.isEnabled = isLoading.not()
+        binding.tV.isEnabled = isLoading.not()
         if (MovieRepository.movies.isEmpty()) {
             binding.tVIsEmpty.visibility = View.VISIBLE
         } else {

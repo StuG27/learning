@@ -1,6 +1,5 @@
 package com.skillbox.networking.extensions
 
-
 import androidx.annotation.NonNull
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.DefaultLifecycleObserver
@@ -8,6 +7,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.observe
 import kotlin.properties.ReadWriteProperty
 import kotlin.reflect.KProperty
+
 
 /**
  * A lazy property that gets cleaned up when the fragment's view is destroyed.

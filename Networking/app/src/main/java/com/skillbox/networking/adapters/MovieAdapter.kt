@@ -5,7 +5,7 @@ import com.hannesdorfmann.adapterdelegates4.AsyncListDifferDelegationAdapter
 import com.skillbox.networking.data.RemoteMovie
 
 
-class MovieAdapter: AsyncListDifferDelegationAdapter<RemoteMovie>(PersonDiffUtilCallback()) {
+class MovieAdapter : AsyncListDifferDelegationAdapter<RemoteMovie>(PersonDiffUtilCallback()) {
 
     init {
         delegatesManager.addDelegate(MovieAdapterDelegate())

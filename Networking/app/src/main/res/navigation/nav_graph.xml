@@ -8,8 +8,9 @@
     <fragment
         android:id="@+id/ListFragment"
         android:name="com.skillbox.networking.ui.ListFragment"
-        tools:layout="@layout/fragment_list"
-        android:label="LinearLayoutFragment" >
+        android:label="LinearLayoutFragment"
+        tools:layout="@layout/fragment_list">
+
     </fragment>
 
 

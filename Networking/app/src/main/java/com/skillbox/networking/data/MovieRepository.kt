@@ -8,17 +8,21 @@ import okhttp3.Response
 import org.json.JSONException
 import org.json.JSONObject
 import java.io.IOException
-import java.util.Currency
 
 
 object MovieRepository {
 
     var movies: List<RemoteMovie> = emptyList()
 
-    fun searchMovie(text: String, page: Int, callback: (List<RemoteMovie>) -> Unit): Call {
-
+    fun searchMovie(
+        text: String,
+        year: String,
+        type: String?,
+        page: Int,
+        callback: (List<RemoteMovie>) -> Unit
+    ): Call {
 //        Network.getSearchMovieCall(text).execute() // К заданию 8 - NetworkOnMainThreadException
-        return Network.getSearchMovieCall(text, page).apply {
+        return Network.getSearchMovieCall(text, year, type, page).apply {
             enqueue(object : Callback {
                 override fun onFailure(call: Call, e: IOException) {
                     Log.d("Server", "execute request error = ${e.message}", e)
@@ -46,14 +50,14 @@ object MovieRepository {
             val movieArray = jsonObject.getJSONArray("Search")
 
             movies = (0 until movieArray.length()).map { index -> movieArray.getJSONObject(index) }
-                    .map { movieJsonObject ->
-                        val title = movieJsonObject.getString("Title")
-                        val year = movieJsonObject.getString("Year")
-                        val id = movieJsonObject.getString("imdbID")
-                        val type = movieJsonObject.getString("Type")
-                        val poster = movieJsonObject.getString("Poster")
-                        RemoteMovie(id, title, year, type, poster)
-                    }
+                .map { movieJsonObject ->
+                    val title = movieJsonObject.getString("Title")
+                    val year = movieJsonObject.getString("Year")
+                    val id = movieJsonObject.getString("imdbID")
+                    val type = movieJsonObject.getString("Type")
+                    val poster = movieJsonObject.getString("Poster")
+                    RemoteMovie(id, title, year, type, poster)
+                }
             return movies
         } catch (e: JSONException) {
             Log.d("Server", "parse response error = ${e.message}", e)
