@@ -1,7 +1,6 @@
-package com.skillbox.networking.ui
+package com.skillbox.moshi.ui
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,13 +13,13 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.skillbox.networking.R
-import com.skillbox.networking.adapters.MovieAdapter
-import com.skillbox.networking.data.RemoteMovie
-import com.skillbox.networking.extensions.ItemOffsetDecoration
-import com.skillbox.networking.extensions.autoCleared
-import com.skillbox.networking.data.ViewModel
-import com.skillbox.networking.databinding.FragmentListBinding
+import com.skillbox.moshi.R
+import com.skillbox.moshi.adapters.MovieAdapter
+import com.skillbox.moshi.data.MovieRepository
+import com.skillbox.moshi.data.ViewModel
+import com.skillbox.moshi.databinding.FragmentListBinding
+import com.skillbox.moshi.extensions.ItemOffsetDecoration
+import com.skillbox.moshi.extensions.autoCleared
 import jp.wasabeef.recyclerview.animators.SlideInRightAnimator
 
 
@@ -31,9 +30,9 @@ class ListFragment : Fragment() {
     private val viewModel: ViewModel by viewModels()
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater,
+            container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View {
         super.onCreateView(inflater, container, savedInstanceState)
         binding = FragmentListBinding.inflate(inflater)
@@ -63,31 +62,41 @@ class ListFragment : Fragment() {
             }
             setHasFixedSize(true)
             val dividerItemDecoration =
-                DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL)
+                    DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL)
             addItemDecoration(dividerItemDecoration)
             addItemDecoration(ItemOffsetDecoration(requireContext()))
             itemAnimator = SlideInRightAnimator()
+//            val scrollListener = object : EndlessRecyclerViewScrollListener(layoutManager as LinearLayoutManager) {
+//                override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView?) {
+//                    loadNextDataFromApi(page)
+//                }
+//            }
+//            binding.rV.addOnScrollListener(scrollListener)
         }
     }
+
+//    private fun loadNextDataFromApi(page: Int) {
+//        val queryText = binding.eTTitle.text.toString()
+//        viewModel.search(queryText, page+1)
+//        viewModel.movieList.observe(viewLifecycleOwner) { movieAdapter.items = it }
+//        viewModel.isLoading.observe(viewLifecycleOwner, ::updateLoadingState)
+//        Toast.makeText(context, "Загружаю страницу $page", Toast.LENGTH_SHORT).show()
+//    }
 
     private fun bindViewModel() {
         checkET()
         binding.bSearch.setOnClickListener {
             val queryText = binding.eTTitle.text.toString()
-            val year = binding.eTYear.text.toString()
-            var type: String? = binding.tV.text.toString()
-            type = when (type) {
-                "Сериал" -> "series"
-                "Фильм" -> "movie"
-                "Эпизод" -> "episode"
-                else -> null
+            val age = binding.eTTitle.text.toString()
+            var type = binding.tV.text.toString()
+            when (type) {
+                "Сериал" -> type = "series"
+                "Фильм" -> type = "movie"
+                "Эпизод" -> type = "episode"
             }
-            viewModel.search(queryText, year, type, 1)
+            viewModel.search(queryText, age, type, 1)
         }
-        viewModel.movieList.observe(viewLifecycleOwner) {
-            updateTVIsEmpty(it)
-            movieAdapter.items = it
-        }
+        viewModel.movieList.observe(viewLifecycleOwner) { movieAdapter.items = it }
         viewModel.isLoading.observe(viewLifecycleOwner, ::updateLoadingState)
     }
 
@@ -104,46 +113,28 @@ class ListFragment : Fragment() {
     }
 
     private fun check() {
-        var isEnable = false
-        if (binding.tV.text.isNotEmpty() && binding.eTTitle.text.isNotEmpty()) {
-            isEnable = true
-            if (binding.eTYear.text.isNotEmpty()) {
-                isEnable = checkYear()
-            }
-        }
+        val isEnable = binding.tV.text.isNotEmpty()
+                && binding.eTTitle.text.isNotEmpty() || checkAge()
         binding.bSearch.isEnabled = isEnable
     }
 
-    private fun checkYear(): Boolean {
-        val year = binding.eTYear.text.toString().toInt()
-        return year in 1874..2030
+    private fun checkAge(): Boolean {
+        return if (binding.eTYear.text.isNotEmpty()) {
+            val year = binding.eTYear.text.toString().toInt()
+            year in 1874..2030
+        } else {
+            false
+        }
     }
 
     private fun updateLoadingState(isLoading: Boolean) {
         binding.rV.isVisible = isLoading.not()
         binding.pB.isVisible = isLoading
         binding.bSearch.isEnabled = isLoading.not()
-        binding.eTYear.isEnabled = isLoading.not()
-        binding.eTTitle.isEnabled = isLoading.not()
-        binding.tV.isEnabled = isLoading.not()
-    }
-
-    private fun updateTVIsEmpty(movies: List<RemoteMovie>) {
-        Log.d("error", movies.first().id)
-        when {
-            movies.first().id == "error" -> {
-                binding.tVIsEmpty.visibility = View.VISIBLE
-                binding.tVIsEmpty.text = movies.first().title
-                binding.rV.isVisible = false
-            }
-            movies.isEmpty() -> {
-                binding.tVIsEmpty.visibility = View.VISIBLE
-                binding.tVIsEmpty.text = "Список пока пуст"
-            }
-            else -> {
-                binding.tVIsEmpty.visibility = View.GONE
-                binding.rV.isVisible = true
-            }
+        if (MovieRepository.movies.isEmpty()) {
+            binding.tVIsEmpty.visibility = View.VISIBLE
+        } else {
+            binding.tVIsEmpty.visibility = View.GONE
         }
     }
 }
