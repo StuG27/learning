@@ -3,7 +3,6 @@ package com.skillbox.networking.data
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import okhttp3.Call
 
 
 class ViewModel : ViewModel() {
