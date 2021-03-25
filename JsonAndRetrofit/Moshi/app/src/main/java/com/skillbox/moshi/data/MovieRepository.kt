@@ -1,64 +1,80 @@
 package com.skillbox.moshi.data
 
-import android.util.Log
+import com.skillbox.moshi.network.CustomMoshiMovieAdapter
 import com.skillbox.moshi.network.Network
+import com.squareup.moshi.Moshi
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.Response
-import org.json.JSONException
-import org.json.JSONObject
 import java.io.IOException
 
 
 object MovieRepository {
 
-    var movies: List<RemoteMovie> = emptyList()
-
-    fun searchMovie(text: String, page: Int, callback: (List<RemoteMovie>) -> Unit): Call {
-
-//        Network.getSearchMovieCall(text).execute() // К заданию 8 - NetworkOnMainThreadException
-        return Network.getSearchMovieCall(text, page).apply {
+    fun searchMovie(
+        text: String,
+        callback: (RemoteMovie) -> Unit
+    ): Call {
+        return Network.getSearchMovieCall(text).apply {
             enqueue(object : Callback {
                 override fun onFailure(call: Call, e: IOException) {
-                    Log.d("Server", "execute request error = ${e.message}", e)
-                    callback(emptyList())
+                    callback(
+                        RemoteMovie(
+                            "${e.message}",
+                            "error",
+                            CustomMoshiMovieAdapter.MovieRating.GENERAL,
+                            "",
+                            "",
+                            mutableMapOf()
+                        )
+                    )
                 }
 
                 override fun onResponse(call: Call, response: Response) {
-                    Log.d("Server", "response successful = ${response.isSuccessful}")
                     if (response.isSuccessful) {
                         val responseString = response.body?.string().orEmpty()
-                        val movies = parseMovieResponse(responseString)
-                        callback(movies)
-                        Log.d("Server", "response string = $responseString")
+                        val movie = parseMovieResponse(responseString)
+                        callback(movie)
                     } else {
-                        callback(emptyList())
+                        callback(
+                            RemoteMovie(
+                                "response.isSuccessful = false",
+                                "error",
+                                CustomMoshiMovieAdapter.MovieRating.GENERAL,
+                                "",
+                                "",
+                                mutableMapOf()
+                            )
+                        )
                     }
                 }
             })
         }
     }
 
-    private fun parseMovieResponse(responseBodyString: String): List<RemoteMovie> {
+    private fun parseMovieResponse(responseBodyString: String): RemoteMovie {
+        val moshi = Moshi.Builder().add(CustomMoshiMovieAdapter()).build()
+        val adapter = moshi.adapter(RemoteMovie::class.java).nonNull()
         try {
-            val jsonObject = JSONObject(responseBodyString)
-            val movieArray = jsonObject.getJSONArray("Search")
-
-            movies = (0 until movieArray.length()).map { index -> movieArray.getJSONObject(index) }
-                    .map { movieJsonObject ->
-                        val title = movieJsonObject.getString("Title")
-                        val year = movieJsonObject.getString("Year")
-                        val id = movieJsonObject.getString("imdbID")
-                        val type = movieJsonObject.getString("Type")
-                        val poster = movieJsonObject.getString("Poster")
-                        RemoteMovie(id, title, year, type, poster)
-                    }
-            return movies
-
-        } catch (e: JSONException) {
-            Log.d("Server", "parse response error = ${e.message}", e)
-            movies = emptyList()
-            return movies
+            return adapter.fromJson(responseBodyString)
+                ?: RemoteMovie(
+                    "error",
+                    "error",
+                    CustomMoshiMovieAdapter.MovieRating.GENERAL,
+                    "",
+                    "",
+                    mutableMapOf()
+                )
+        } catch (e: Exception) {
+            return RemoteMovie(
+                "${e.message}",
+                "error",
+                CustomMoshiMovieAdapter.MovieRating.GENERAL,
+                "",
+                "",
+                mutableMapOf()
+            )
         }
     }
+
 }

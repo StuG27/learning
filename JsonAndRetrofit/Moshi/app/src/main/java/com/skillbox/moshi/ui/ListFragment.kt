@@ -1,38 +1,36 @@
 package com.skillbox.moshi.ui
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
-import android.widget.AutoCompleteTextView
+import android.widget.EditText
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.skillbox.moshi.R
-import com.skillbox.moshi.adapters.MovieAdapter
-import com.skillbox.moshi.data.MovieRepository
 import com.skillbox.moshi.data.ViewModel
 import com.skillbox.moshi.databinding.FragmentListBinding
-import com.skillbox.moshi.extensions.ItemOffsetDecoration
-import com.skillbox.moshi.extensions.autoCleared
-import jp.wasabeef.recyclerview.animators.SlideInRightAnimator
+import com.skillbox.moshi.data.RemoteMovie
+import com.skillbox.moshi.network.CustomMoshiMovieAdapter
+import com.squareup.moshi.Moshi
 
 
 class ListFragment : Fragment() {
 
     private lateinit var binding: FragmentListBinding
-    private var movieAdapter: MovieAdapter by autoCleared()
     private val viewModel: ViewModel by viewModels()
+    private var movie: RemoteMovie? = null
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View {
         super.onCreateView(inflater, container, savedInstanceState)
         binding = FragmentListBinding.inflate(inflater)
@@ -41,100 +39,105 @@ class ListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initMenu()
-        initList()
         bindViewModel()
-    }
-
-    private fun initMenu() {
-        val type = resources.getStringArray(R.array.movie_type)
-        val adapter = ArrayAdapter(requireContext(), R.layout.item_list, type)
-        (binding.tV as? AutoCompleteTextView)?.setAdapter(adapter)
-    }
-
-    private fun initList() {
-        movieAdapter = MovieAdapter()
-
-        with(binding.rV) {
-            adapter = movieAdapter
-            layoutManager = LinearLayoutManager(requireContext()).apply {
-                orientation = RecyclerView.VERTICAL
-            }
-            setHasFixedSize(true)
-            val dividerItemDecoration =
-                    DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL)
-            addItemDecoration(dividerItemDecoration)
-            addItemDecoration(ItemOffsetDecoration(requireContext()))
-            itemAnimator = SlideInRightAnimator()
-//            val scrollListener = object : EndlessRecyclerViewScrollListener(layoutManager as LinearLayoutManager) {
-//                override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView?) {
-//                    loadNextDataFromApi(page)
-//                }
-//            }
-//            binding.rV.addOnScrollListener(scrollListener)
+        binding.bScore.setOnClickListener {
+            showAddScore()
         }
     }
-
-//    private fun loadNextDataFromApi(page: Int) {
-//        val queryText = binding.eTTitle.text.toString()
-//        viewModel.search(queryText, page+1)
-//        viewModel.movieList.observe(viewLifecycleOwner) { movieAdapter.items = it }
-//        viewModel.isLoading.observe(viewLifecycleOwner, ::updateLoadingState)
-//        Toast.makeText(context, "Загружаю страницу $page", Toast.LENGTH_SHORT).show()
-//    }
 
     private fun bindViewModel() {
         checkET()
         binding.bSearch.setOnClickListener {
             val queryText = binding.eTTitle.text.toString()
-            val age = binding.eTTitle.text.toString()
-            var type = binding.tV.text.toString()
-            when (type) {
-                "Сериал" -> type = "series"
-                "Фильм" -> type = "movie"
-                "Эпизод" -> type = "episode"
-            }
-            viewModel.search(queryText, age, type, 1)
+            viewModel.search(queryText)
         }
-        viewModel.movieList.observe(viewLifecycleOwner) { movieAdapter.items = it }
+        viewModel.movieList.observe(viewLifecycleOwner) {
+            movie = it
+            updateTVIsEmpty(it)
+            bind(it)
+        }
         viewModel.isLoading.observe(viewLifecycleOwner, ::updateLoadingState)
+    }
+
+    private fun showAddScore() {
+        val view = layoutInflater.inflate(R.layout.add_score_dialog, null)
+        AlertDialog.Builder(requireContext())
+            .setTitle("Добавление оценки")
+            .setView(view)
+            .setPositiveButton("Да") { _, _ ->
+                val eTSource: EditText = view.findViewById(R.id.eTSource)
+                val eTScore: EditText = view.findViewById(R.id.eTScore)
+                if (eTSource.text.isNotEmpty() && eTScore.text.isNotEmpty()) {
+                    movie?.scores?.set(eTSource.text.toString(), eTScore.text.toString())
+                    binding.tVScores.text = movie?.scores.toString()
+                    val moshi = Moshi.Builder().add(CustomMoshiMovieAdapter()).build()
+                    val adapter = moshi.adapter(RemoteMovie::class.java).nonNull()
+                    try {
+                        val answer = adapter.toJson(movie).toString()
+                        Log.d("Answer", answer)
+                    } catch (e: Exception) {
+                        val answer = e.message
+                        Log.d("Answer", "$answer")
+                    }
+                } else {
+                    Toast.makeText(context, "Необходимо заполнить все поля", Toast.LENGTH_SHORT)
+                        .show()
+                }
+            }
+            .setNegativeButton("Отмена") { _, _ -> }
+            .create()
+            .show()
     }
 
     private fun checkET() {
         binding.eTTitle.doOnTextChanged { _, _, _, _ ->
-            check()
-        }
-        binding.eTYear.doOnTextChanged { _, _, _, _ ->
-            check()
-        }
-        binding.tV.doOnTextChanged { _, _, _, _ ->
-            check()
-        }
-    }
-
-    private fun check() {
-        val isEnable = binding.tV.text.isNotEmpty()
-                && binding.eTTitle.text.isNotEmpty() || checkAge()
-        binding.bSearch.isEnabled = isEnable
-    }
-
-    private fun checkAge(): Boolean {
-        return if (binding.eTYear.text.isNotEmpty()) {
-            val year = binding.eTYear.text.toString().toInt()
-            year in 1874..2030
-        } else {
-            false
+            binding.bSearch.isEnabled = binding.eTTitle.text.isNotEmpty()
         }
     }
 
     private fun updateLoadingState(isLoading: Boolean) {
-        binding.rV.isVisible = isLoading.not()
         binding.pB.isVisible = isLoading
         binding.bSearch.isEnabled = isLoading.not()
-        if (MovieRepository.movies.isEmpty()) {
-            binding.tVIsEmpty.visibility = View.VISIBLE
-        } else {
-            binding.tVIsEmpty.visibility = View.GONE
+        binding.bScore.isEnabled = isLoading.not()
+        binding.eTTitle.isEnabled = isLoading.not()
+    }
+
+    private fun updateTVIsEmpty(movie: RemoteMovie) {
+        when (movie.year) {
+            "error" -> {
+                binding.tVIsEmpty.visibility = View.VISIBLE
+                updateVisibility(8)
+                binding.bScore.isEnabled = false
+                binding.tVIsEmpty.text = "Фильм не найден или ошибка сети"
+            }
+            else -> {
+                updateVisibility(0)
+                binding.bScore.isEnabled = true
+                binding.tVIsEmpty.visibility = View.GONE
+            }
         }
+    }
+
+    private fun bind(movie: RemoteMovie) {
+        binding.tVTitle.text = movie.title
+        binding.tVRating.text = movie.rating.name
+        binding.tVGenre.text = movie.genre
+        binding.tVScores.text = movie.scores.toString()
+        binding.tVYear.text = movie.year
+        Glide
+            .with(this)
+            .load(movie.poster)
+            .placeholder(R.drawable.ic_baseline_movie_24)
+            .error(R.drawable.ic_baseline_error_24)
+            .into(binding.iVPoster)
+    }
+
+    private fun updateVisibility(flag: Int) {
+        binding.tVTitle.visibility = flag
+        binding.tVRating.visibility = flag
+        binding.tVGenre.visibility = flag
+        binding.tVScores.visibility = flag
+        binding.tVYear.visibility = flag
+        binding.iVPoster.visibility = flag
     }
 }

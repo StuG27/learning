@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Moshi</string>
+    <string name="empty">Найдите Ваш первый фильм</string>
+    <string name="input_title">Введите название</string>
+    <string name="search_on_IMDB">Поиск на IMDB</string>
+    <string name="poster">Постер</string>
+    <string name="your_score">Укажите Вашу оценку</string>
+    <string name="your_source">Укажите Ваш источник</string>
+</resources>
