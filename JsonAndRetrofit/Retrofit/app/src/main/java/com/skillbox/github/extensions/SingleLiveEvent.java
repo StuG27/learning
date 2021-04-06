@@ -14,7 +14,7 @@
  *  limitations under the License.
  */
 
-package com.skillbox.github.utils;
+package com.skillbox.github.extensions;
 
 import android.util.Log;
 

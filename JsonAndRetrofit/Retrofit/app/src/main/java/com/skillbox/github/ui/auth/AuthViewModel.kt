@@ -8,20 +8,24 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.skillbox.github.R
-import com.skillbox.github.data.AuthRepository
-import com.skillbox.github.utils.SingleLiveEvent
+import com.skillbox.github.data.repo.AuthRepository
+import com.skillbox.github.extensions.SingleLiveEvent
 import net.openid.appauth.AuthorizationException
 import net.openid.appauth.AuthorizationService
 import net.openid.appauth.TokenRequest
 
+
 class AuthViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val authRepository = AuthRepository()
+    private val authRepository = AuthRepository
     private val authService: AuthorizationService = AuthorizationService(getApplication())
-    private val openAuthPageLiveEvent = SingleLiveEvent<Intent>()
-    private val toastLiveEvent = SingleLiveEvent<Int>()
+    private val openAuthPageLiveEvent =
+        SingleLiveEvent<Intent>()
+    private val toastLiveEvent =
+        SingleLiveEvent<Int>()
     private val loadingMutableLiveData = MutableLiveData(false)
-    private val authSuccessLiveEvent = SingleLiveEvent<Unit>()
+    private val authSuccessLiveEvent =
+        SingleLiveEvent<Unit>()
 
     val openAuthPageLiveData: LiveData<Intent>
         get() = openAuthPageLiveEvent

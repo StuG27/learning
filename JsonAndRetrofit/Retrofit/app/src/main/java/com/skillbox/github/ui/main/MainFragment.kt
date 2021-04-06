@@ -1,20 +1,35 @@
 package com.skillbox.github.ui.main
 
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.skillbox.github.R
-import kotlinx.android.synthetic.main.fragment_main.*
+import com.skillbox.github.databinding.FragmentMainBinding
 
-class MainFragment: Fragment(R.layout.fragment_main) {
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        currentUserInfoButton.setOnClickListener {
+class MainFragment : Fragment() {
+
+    private lateinit var binding: FragmentMainBinding
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        super.onCreateView(inflater, container, savedInstanceState)
+        binding = FragmentMainBinding.inflate(inflater)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.currentUserInfoButton.setOnClickListener {
             findNavController().navigate(MainFragmentDirections.actionMainFragmentToCurrentUserFragment())
         }
 
-        repositoryListButton.setOnClickListener {
+        binding.repositoryListButton.setOnClickListener {
             findNavController().navigate(MainFragmentDirections.actionMainFragmentToRepositoryListFragment())
         }
     }

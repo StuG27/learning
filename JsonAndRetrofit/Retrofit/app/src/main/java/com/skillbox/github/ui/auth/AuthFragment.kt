@@ -2,23 +2,37 @@ package com.skillbox.github.ui.auth
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.observe
 import androidx.navigation.fragment.findNavController
-import com.skillbox.github.R
+import com.skillbox.github.databinding.FragmentAuthBinding
 import com.skillbox.github.utils.toast
-import kotlinx.android.synthetic.main.fragment_auth.*
 import net.openid.appauth.AuthorizationException
 import net.openid.appauth.AuthorizationResponse
 
-class AuthFragment : Fragment(R.layout.fragment_auth) {
 
+class AuthFragment : Fragment() {
+
+    private lateinit var binding: FragmentAuthBinding
     private val viewModel: AuthViewModel by viewModels()
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        super.onCreateView(inflater, container, savedInstanceState)
+        binding = FragmentAuthBinding.inflate(inflater)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         bindViewModel()
     }
 
@@ -38,8 +52,8 @@ class AuthFragment : Fragment(R.layout.fragment_auth) {
     }
 
     private fun bindViewModel() {
-        loginButton.setOnClickListener { viewModel.openLoginPage() }
-        viewModel.loadingLiveData.observe(viewLifecycleOwner, ::updateIsLoading)
+        binding.loginButton.setOnClickListener { viewModel.openLoginPage() }
+        viewModel.loadingLiveData.observe(viewLifecycleOwner) { updateIsLoading(it) }
         viewModel.openAuthPageLiveData.observe(viewLifecycleOwner, ::openAuthPage)
         viewModel.toastLiveData.observe(viewLifecycleOwner, ::toast)
         viewModel.authSuccessLiveData.observe(viewLifecycleOwner) {
@@ -48,8 +62,8 @@ class AuthFragment : Fragment(R.layout.fragment_auth) {
     }
 
     private fun updateIsLoading(isLoading: Boolean) {
-        loginButton.isVisible = !isLoading
-        loginProgress.isVisible = isLoading
+        binding.loginButton.isVisible = !isLoading
+        binding.loginProgress.isVisible = isLoading
     }
 
     private fun openAuthPage(intent: Intent) {

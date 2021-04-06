@@ -4,4 +4,8 @@
     <string name="main_repositories">Список репозиториев</string>
     <string name="auth_login">Войти</string>
     <string name="auth_canceled">Аутентификация не выполнена</string>
+    <string name="avatar">avatar</string>
+    <string name="empty">Список пока пуст</string>
+    <string name="owner">Владелец - %1$s</string>
+    <string name="name">Название - %1$s</string>
 </resources>

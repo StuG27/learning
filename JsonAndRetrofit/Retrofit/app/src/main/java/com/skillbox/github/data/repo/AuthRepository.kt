@@ -1,6 +1,8 @@
-package com.skillbox.github.data
+package com.skillbox.github.data.repo
 
 import android.net.Uri
+import com.skillbox.github.network.AccessToken
+import com.skillbox.github.network.AuthConfig
 import net.openid.appauth.AuthorizationRequest
 import net.openid.appauth.AuthorizationService
 import net.openid.appauth.AuthorizationServiceConfiguration
@@ -8,7 +10,8 @@ import net.openid.appauth.ClientAuthentication
 import net.openid.appauth.ClientSecretPost
 import net.openid.appauth.TokenRequest
 
-class AuthRepository {
+
+object AuthRepository {
 
     fun getAuthRequest(): AuthorizationRequest {
         val serviceConfiguration = AuthorizationServiceConfiguration(
@@ -37,8 +40,7 @@ class AuthRepository {
         authService.performTokenRequest(tokenRequest, getClientAuthentication()) { response, ex ->
             when {
                 response != null -> {
-                    //TODO save access token
-                    val accessToken = response.accessToken.orEmpty()
+                    AccessToken.token = response.accessToken.orEmpty()
                     onComplete()
                 }
                 else -> onError()
